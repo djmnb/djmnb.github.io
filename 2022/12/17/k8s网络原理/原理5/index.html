@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>深入理解kubernetes（k8s）网络原理之五-flannel原理 | 戴晶明的个人博客</title><meta name="author" content="戴晶明"><meta name="copyright" content="戴晶明"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言 此文章转载于https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;inventory&#x2F;21543&#x2F;article&#x2F;1871939,我觉得写得非常好,怕他哪天不见了,就记录下来了  flannel有udp、vxlan和host-gw三种模式，udp模式因为性能较低现在已经比较少用到，host-gw我们在前面简单介绍过，因为使用场景比较受限，所以vxlan模式是flannel使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解kubernetes（k8s）网络原理之五-flannel原理">
+<meta property="og:url" content="https://djmnb.github.io/2022/12/17/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%865/index.html">
+<meta property="og:site_name" content="戴晶明的个人博客">
+<meta property="og:description" content="前言 此文章转载于https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;inventory&#x2F;21543&#x2F;article&#x2F;1871939,我觉得写得非常好,怕他哪天不见了,就记录下来了  flannel有udp、vxlan和host-gw三种模式，udp模式因为性能较低现在已经比较少用到，host-gw我们在前面简单介绍过，因为使用场景比较受限，所以vxlan模式是flannel使">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://djmnb.github.io/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A22.png">
+<meta property="article:published_time" content="2022-12-17T14:09:00.000Z">
+<meta property="article:modified_time" content="2022-12-17T14:09:59.521Z">
+<meta property="article:author" content="戴晶明">
+<meta property="article:tag" content="k8s">
+<meta property="article:tag" content="k8s网络原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://djmnb.github.io/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A22.png"><link rel="shortcut icon" href="/img/site/icon.jfif"><link rel="canonical" href="https://djmnb.github.io/2022/12/17/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%865/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '深入理解kubernetes（k8s）网络原理之五-flannel原理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-12-17 22:09:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/site/touxiang.gif" onerror="onerror=null;src='/404.html'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A22.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">戴晶明的个人博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">深入理解kubernetes（k8s）网络原理之五-flannel原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-17T14:09:00.000Z" title="发表于 2022-12-17 22:09:00">2022-12-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-12-17T14:09:59.521Z" title="更新于 2022-12-17 22:09:59">2022-12-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/">k8s网络原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="深入理解kubernetes（k8s）网络原理之五-flannel原理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>此文章转载于<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/inventory/21543/article/1871939,%E6%88%91%E8%A7%89%E5%BE%97%E5%86%99%E5%BE%97%E9%9D%9E%E5%B8%B8%E5%A5%BD,%E6%80%95%E4%BB%96%E5%93%AA%E5%A4%A9%E4%B8%8D%E8%A7%81%E4%BA%86,%E5%B0%B1%E8%AE%B0%E5%BD%95%E4%B8%8B%E6%9D%A5%E4%BA%86">https://cloud.tencent.com/developer/inventory/21543/article/1871939,我觉得写得非常好,怕他哪天不见了,就记录下来了</a></p>
+</blockquote>
+<p>flannel有udp、vxlan和host-gw三种模式，udp模式因为性能较低现在已经比较少用到，host-gw我们在前面简单介绍过，因为使用场景比较受限，所以vxlan模式是flannel使用最多的模式，本章我们来介绍一下vxlan模式的原理。</p>
+<p>我们在第三篇文章中已经详细介绍过vxlan如何完成跨主机pod通信，所以在这我们主要介绍flannel的几个组件的工作原理，最后也会简要介绍一下udp模式。</p>
+<p>在vlan模式下，每个节点会有一个符合cni规范的二进制可执行文件flannel（下面简称flannel-cni），一个以k8s的daemonset方式运行的kube-flannel，下面来分别介绍下它们是干啥的：</p>
+<h2 id="flannel-cni"><a href="#flannel-cni" class="headerlink" title="flannel-cni"></a>flannel-cni</h2><p>flannel文件存放在每个节点的&#x2F;opt&#x2F;cni&#x2F;bin目录下，这个目录下还有cni官方默认提供的其它插件，这些cni插件分为三类：</p>
+<ul>
+<li>ipam，负责地址分配，主要有：host-local、dhcp、static</li>
+<li>main，负责主机和<a target="_blank" rel="noopener" href="https://cloud.tencent.com/product/tke?from=10680">容器</a>网络的编织，主要有：bridge、ptp、ipvlan、macvlan、host-device、</li>
+<li>meta，其它，主要有：flannel、bandwidth、firewall、portmap、tuning、sbr</li>
+</ul>
+<p>这些文件是我们在安装kubeadm和kubelet时自动安装的，如果发现这个目录为空，也可以用下面的命令手动安装：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install kubernetes-cni -y</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<p>这个文件不做具体的容器网络编织的工作，而是生成其它cni插件需要的配置文件，然后调用其它的cni插件（通常是bridge和host-local），完成主机内容器到主机的网络互通，这个flannel-cni文件的源码已经不在flannel项目上了，而是在cni的plugins中，地址如下：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/containernetworking/plugins/tree/master/plugins/meta/flannel">https://github.com/containernetworking/plugins/tree/master/plugins/meta/flannel</a></p>
+<h3 id="flannel-cni工作流程"><a href="#flannel-cni工作流程" class="headerlink" title="flannel-cni工作流程"></a>flannel-cni工作流程</h3><p>kubelet创建一个pod时，先会创建一个pause容器，然后用pause容器的网络命名空间为入参（类似：&#x2F;var&#x2F;run&#x2F;<a target="_blank" rel="noopener" href="https://cloud.tencent.com/product/tke?from=10680">docker</a>&#x2F;netns&#x2F;xxxx，用docker inspect nginx|grep Sandbox能获取到），加上其它一些参数，调用&#x2F;etc&#x2F;cni&#x2F;net.d&#x2F;目录下的配置文件指定的cni插件，内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/cni/net.<span class="property">d</span>/<span class="number">10</span>-flannel.<span class="property">conflist</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;cbr0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;cniVersion&quot;</span>: <span class="string">&quot;0.3.1&quot;</span>,</span><br><span class="line">  <span class="string">&quot;plugins&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;flannel&quot;</span>,</span><br><span class="line">      <span class="string">&quot;delegate&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;hairpinMode&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="string">&quot;isDefaultGateway&quot;</span>: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;portmap&quot;</span>,</span><br><span class="line">      <span class="string">&quot;capabilities&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;portMappings&quot;</span>: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<blockquote>
+<p>这个配置文件是kube-flannel启动时复制进去的，我们编写cni时也要生成这个文件</p>
+</blockquote>
+<p>这个文件中指定的cni插件叫flannel，于是kubelet就调用了&#x2F;opt&#x2F;cni&#x2F;bin&#x2F;flannel文件，这个文件先会读取&#x2F;run&#x2F;flannel&#x2F;subnet.env文件，里面主要包含当前节点的子网信息，内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat /run/flannel/subnet.<span class="property">env</span></span><br><span class="line"></span><br><span class="line"><span class="variable constant_">FLANNEL_NETWORK</span>=<span class="number">10.244</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">16</span></span><br><span class="line"><span class="variable constant_">FLANNEL_SUBNET</span>=<span class="number">10.244</span><span class="number">.1</span><span class="number">.1</span>/<span class="number">24</span></span><br><span class="line"><span class="variable constant_">FLANNEL_MTU</span>=<span class="number">1450</span></span><br><span class="line"><span class="variable constant_">FLANNEL_IPMASQ</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<blockquote>
+<p>这个文件也是kube-flannel启动时写入的</p>
+</blockquote>
+<p>flannel读取该文件内容后，紧接着会生成一个符合cni标准的配置文件，内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;cniVersion&quot;</span>: <span class="string">&quot;0.3.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;networks&quot;</span>,</span><br><span class="line">  <span class="string">&quot;type&quot;</span>: <span class="string">&quot;bridge&quot;</span>,</span><br><span class="line">  <span class="string">&quot;bridge&quot;</span>: <span class="string">&quot;cni0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;isDefaultGateway&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="string">&quot;ipam&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;host-local&quot;</span>,</span><br><span class="line">    <span class="string">&quot;subnet&quot;</span>: <span class="string">&quot;10.244.1.0/24&quot;</span>,</span><br><span class="line">    <span class="string">&quot;dataDir&quot;</span>: <span class="string">&quot;/var/lib/cni/&quot;</span>,</span><br><span class="line">    <span class="string">&quot;routes&quot;</span>: [&#123; <span class="string">&quot;dst&quot;</span>: <span class="string">&quot;0.0.0.0/0&quot;</span> &#125;]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<blockquote>
+<p>其实可以一步到位，直接生成这个格式的文件放在&#x2F;etc&#x2F;cni&#x2F;net.d&#x2F;目录下，flannel这样处理应该是为了节点子网发生变化时不用重启kubelet吧</p>
+</blockquote>
+<p>然后像kubelet调用flannel的方式一样调用另一个cni插件bridge，并把上面的配置文件的内容用标准输入的方式传递过去，调用方式如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="string">&#x27;&#123; &quot;cniVersion&quot;: &quot;0.3.0&quot;, &quot;name&quot;: &quot;network&quot;, &quot;type&quot;:&quot;bridge&quot;,&quot;bridge&quot;:&quot;cni0&quot;, &quot;ipam&quot;:&#123;&quot;type&quot;:&quot;host-local&quot;,&quot;subnet&quot;: &quot;10.244.1.0/24&quot;,&quot;dataDir&quot;: &quot;/var/lib/cni/&quot;,&quot;routes&quot;: [&#123; &quot;dst&quot;: &quot;0.0.0.0/0&quot; &#125;]&#125;&#125;&#x27;</span> | <span class="variable constant_">CNI_COMMAND</span>=<span class="variable constant_">ADD</span></span><br><span class="line"><span class="variable constant_">CNI_CONTAINERID</span>=xxx </span><br><span class="line"><span class="variable constant_">CNI_NETNS</span>=<span class="regexp">/var/</span>run/docker/netns/xxxx </span><br><span class="line"><span class="variable constant_">CNI_IFNAME</span>=xxx </span><br><span class="line"><span class="variable constant_">CNI_ARGS</span>=<span class="string">&#x27;IgnoreUnknown=1;K8S_POD_NAMESPACE=applife;K8S_POD_NAME=redis-59b4c86fd9-wrmr9&#x27;</span> </span><br><span class="line"><span class="variable constant_">CNI_PATH</span>=<span class="regexp">/opt/</span>cni/bin/ </span><br><span class="line">./bridge</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<blockquote>
+<p>后面我们动手编写cni插件时，可以用上述的方式来模拟kubelet调用cni，这样测试会方便很多</p>
+</blockquote>
+<p>剩余的工作就会由&#x2F;opt&#x2F;cni&#x2F;bin&#x2F;bridge插件完成，它会：</p>
+<ul>
+<li>在主机上创建一个名为cni0的linux bridge，然后把子网的第一个地址（如示例中：10.244.1.1）绑到cni0上，这样cni0同时也是该节点上所有pod的默认网关；</li>
+<li>在主机上创建一条主机路由：<code>ip route add 10.244.1.0/24 dev cni0 scope link src 10.244.1.1</code>，这样一来，节点到本节点所有的pod就都会走cni0了；</li>
+<li>创建veth网卡对，把一端插到新创建的pod的ns中，另一端插到cni0网桥上；</li>
+<li>在pod的ns为刚刚创建的veth网卡设置IP，IP为host-local分配的值，默认网关设置为cni0的IP地址：10.244.1.1；</li>
+<li>设置网卡的mtu，这个很关键，跟使用哪种跨节点通信方案相关，如果使用vxlan，一般就是1460，如果是host-gw，就是1500；</li>
+</ul>
+<p>然后pod到主机、同主机的pod的通信就完成了，这就是flannel-cni完成的工作，只负责同节点pod的通信，对于跨节点pod通信由kube-flannel完成。</p>
+<blockquote>
+<p>host-local是以写本地文件的方式来标识哪些IP已经被占用，它会在&#x2F;var&#x2F;lib&#x2F;cni&#x2F;network&#x2F;host-local&#x2F;（这个目录其实是上面的dataDir参数指定的）目录下生成一些文件，文件名为已分配的IP，文件内容为使用该IP的容器ID，有一个指示当前已分配最新的IP的文件。</p>
+</blockquote>
+<h2 id="kube-flannel"><a href="#kube-flannel" class="headerlink" title="kube-flannel"></a>kube-flannel</h2><p>kube-flannel以k8s的daemonset方式运行，主要负责编织跨节点pod通信，启动后会完成以下几件事情：</p>
+<ul>
+<li>启动容器会把&#x2F;etc&#x2F;kube-flannel&#x2F;cni-conf.json文件复制到&#x2F;etc&#x2F;cni&#x2F;net.d&#x2F;10-flannel.conflist，这个文件是容器启动时从配置项挂载到容器上的，可以通过修改flannel部署的yaml文件来修改配置，选择使用其它的cni插件。</li>
+<li>运行容器会从api-server中获取属于本节点的pod-cidr，然后写一个配置文件&#x2F;run&#x2F;flannel&#x2F;subnet.env给flannel-cni用</li>
+<li>如果是vxlan模式，则创建一个名为flannel.1的vxlan设备（关闭了自动学习机制），把这个设备的MAC地址和IP以及本节点的IP记录到节点的注解中。</li>
+<li>启动一个协程，不断地检查本机的路由信息是否被删除，如果检查到缺失，则重新创建，防止误删导致网络不通的情况。</li>
+<li>从api-server或etcd订阅资源变化的事件，维护路由表项、邻居表项、fdb表项</li>
+</ul>
+<p>接下来介绍一下当kube-flannel收到节点新增事件时会完成的事情。</p>
+<p>假设现在有一个k8s集群拥有master、node1和node2三个节点，这时候新增了一个节点node3，node3的IP为：192.168.3.10，node3上的kube-flannel为node3创建的vxlan设备IP地址为10.244.3.0，mac地址为：02:3f:39:67:7d:f9 ，相关的信息已经保存在节点的annotation上，用kubectl查看node3的节点信息如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@node1]# kubectl describe node node3</span><br><span class="line"></span><br><span class="line"><span class="title class_">Name</span>:               node3</span><br><span class="line">...</span><br><span class="line"><span class="title class_">Annotations</span>:        flannel.<span class="property">alpha</span>.<span class="property">coreos</span>.<span class="property">com</span>/backend-<span class="attr">data</span>: &#123;<span class="string">&quot;VtepMAC&quot;</span>:<span class="string">&quot;02:3f:39:67:7d:f9&quot;</span>&#125;</span><br><span class="line">                    flannel.<span class="property">alpha</span>.<span class="property">coreos</span>.<span class="property">com</span>/backend-<span class="attr">type</span>: vxlan</span><br><span class="line">                    flannel.<span class="property">alpha</span>.<span class="property">coreos</span>.<span class="property">com</span>/kube-subnet-<span class="attr">manager</span>: <span class="literal">true</span></span><br><span class="line">                    flannel.<span class="property">alpha</span>.<span class="property">coreos</span>.<span class="property">com</span>/public-<span class="attr">ip</span>: <span class="number">192.168</span><span class="number">.3</span><span class="number">.10</span></span><br><span class="line">...</span><br><span class="line"><span class="title class_">PodCIDR</span>: <span class="number">10.244</span><span class="number">.3</span><span class="number">.0</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<p>node1上的kube-flannel收到node3的新增事件，会完成以下几件事：</p>
+<ul>
+<li>新增一条到10.244.3.0&#x2F;24的主机路由，并指示通过flannel.1设备走，下一跳为node3上的vxlan设备的IP地址<code>10.244.3.0</code>：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip route add <span class="number">10.244</span><span class="number">.3</span><span class="number">.0</span>/<span class="number">24</span> via <span class="number">10.244</span><span class="number">.3</span><span class="number">.0</span> dev flannel<span class="number">.1</span> onlink</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<ul>
+<li>新增一条邻居表信息，指示node3的vxlan设备10.244.3.0的mac地址为：<code>02:3f:39:67:7d:f9</code>,并用<code>nud permanent</code>指明该arp记录不会过期，不用做存活检查：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip neigh add <span class="number">10.244</span><span class="number">.3</span><span class="number">.0</span> lladdr <span class="number">02</span>:3<span class="attr">f</span>:<span class="number">39</span>:<span class="number">67</span>:7<span class="attr">d</span>:f9 dev flannel<span class="number">.1</span> nud permanent</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<ul>
+<li>新增一条fdb（forwarding database)记录，指明到node3的vxlan设备的mac地址的下一跳主机为node3的ip：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bridge fdb append  <span class="number">02</span>:3<span class="attr">f</span>:<span class="number">39</span>:<span class="number">67</span>:7<span class="attr">d</span>:f9 dev vxlan0 dst <span class="number">192.168</span><span class="number">.3</span><span class="number">.10</span> self permanent</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<ul>
+<li>如果在配置中启用了Directrouting，那么在这里会判断新增节点与当前节点是否在同一子网，如果是，则前面三步都不会发生，取而代之的是：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip route add <span class="number">10.244</span><span class="number">.3</span><span class="number">.0</span>/<span class="number">24</span> via <span class="number">192.168</span><span class="number">.3</span><span class="number">.10</span> dev eth0 onlink</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<blockquote>
+<p>注意这里的下一跳node3的节点IP，出口设备为eth0，这就是主机路由与vxlan模式下kube-flannel的主要区别</p>
+</blockquote>
+<p>下面我们通过一个例子来介绍一下上面新增的这些记录的实际用途，假设：</p>
+<ul>
+<li>pod1运行在节点node1上，pod1的IP为<code>10.244.1.3</code>；</li>
+<li>pod2运行在节点node3，pod2的IP为<code>10.244.3.3</code>；</li>
+</ul>
+<p>来看一下在vxlan模式下从pod1发送数据包到pod2的详细流程；</p>
+<h3 id="发送"><a href="#发送" class="headerlink" title="发送"></a>发送</h3><ol>
+<li>数据包从pod1出来，到达node1的协议栈，node1发现目标地址并非本机地址，且本机开启了流量转发功能，于是查找路由并转发；</li>
+<li>目标IP为<code>10.244.3.3</code>,主机路由匹配到应该走flannel.1设备，下一跳为<code>10.244.3.0</code>（上面的node3新增时，步骤一添加的路由表项就用上了）</li>
+<li>数据包到达flannel.1设备，它会先查找下一跳IP<code>10.244.3.0</code>的mac地址，在arp表中找到了匹配的记录为<code>02:3f:39:67:7d:f9</code>（上面节点新增时，步骤二添加的ARP记录在这里就用上了）,然后完成mac头封装，准备发送。</li>
+<li>因为是vxlan设备，发送方法与普通的网卡有些区别（详见下面的代码<code>vxlan_xmit</code>），数据包没有被提交到网卡的发送队列，而是由vxlan设备进一步封装成一个udp数据包，它会根据目标mac地址来反查下一跳的主机地址以决定把这个udp数据包发给哪个主机，这时候就会用到上面提到的fdb表了，它查到去往<code>02:3f:39:67:7d:f9</code>的下一跳主机地址为<code>192.168.3.10</code>（节点新增时，步骤三添加的FDB记录就用上了）,于是封装udp包，走<code>ip_local_out</code>，发往node3 。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// linux-4.18\drivers\net\vxlan.c</span></span><br><span class="line"><span class="keyword">static</span> netdev_tx_t <span class="title function_">vxlan_xmit</span>(<span class="params">struct sk_buff *skb, struct net_device *dev</span>)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//取链路层头部</span></span><br><span class="line">    eth = <span class="title function_">eth_hdr</span>(skb);</span><br><span class="line">    <span class="comment">// 根据目标mac地址查找fdb表项</span></span><br><span class="line">    f = <span class="title function_">vxlan_find_mac</span>(vxlan, eth-&gt;h_dest, vni);</span><br><span class="line">    ...</span><br><span class="line">    <span class="title function_">vxlan_xmit_one</span>(skb, dev, vni, fdst, did_rsc);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">vxlan_xmit_one</span>(<span class="params">struct sk_buff *skb, struct net_device *dev,</span></span><br><span class="line"><span class="params">               __be32 default_vni, struct vxlan_rdst *rdst,bool did_rsc</span>)</span><br><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line">        <span class="comment">// 封装vxlan头</span></span><br><span class="line">        err = <span class="title function_">vxlan_build_skb</span>(skb, ndst, <span class="title function_">sizeof</span>(struct iphdr),</span><br><span class="line">                      vni, md, flags, udp_sum);</span><br><span class="line">        <span class="keyword">if</span> (err &lt; <span class="number">0</span>)</span><br><span class="line">            goto tx_error;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 封装UDP头、外部IP头，最后走ip_local_out</span></span><br><span class="line">        <span class="title function_">udp_tunnel_xmit_skb</span>(rt, sock4-&gt;sock-&gt;sk, skb, local_ip.<span class="property">sin</span>.<span class="property">sin_addr</span>.<span class="property">s_addr</span>,</span><br><span class="line">                    dst-&gt;sin.<span class="property">sin_addr</span>.<span class="property">s_addr</span>, tos, ttl, df,</span><br><span class="line">                    src_port, dst_port, xnet, !udp_sum);</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<h3 id="接收"><a href="#接收" class="headerlink" title="接收"></a>接收</h3><ol>
+<li>node3接收到udp包后，走主机协议栈，发现目标地址为本机，于是走INPUT方向，最终发到UDP层处理。</li>
+<li>当我们创建vxlan设备时，vxlan的设备驱动会注册一个UDP的socket，端口默认为4789，然后为这个udp的socket的接收流程注册一个vxlan的接收函数；当linux协议栈的收包流程走到<code>udp_rcv</code>时，会调用<code>vxlan_rcv</code>处理，<code>vxlan_rcv</code>做的事情就是剥去vxlan头，将内部的一个完整的二层包重新送入主机协议栈（见下面的源码）。</li>
+<li>剥去vxlan头部后的包重新来到主机协议栈，此时包的目标地址是10.244.3.3，经过路由判决时，发现不是本机地址，走转发，找到合适的路由，最终发往pod2。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// linux-4.18\drivers\net\vxlan.c</span></span><br><span class="line"><span class="comment">//创建vxlan设备时，会调用vxlan_open -&gt; vxlan_sock_add -&gt; __vxlan_sock_add -&gt; vxlan_socket_create，最终会在这个方法中创建一个udp的socket，然后把vxlan的收包函数注册进来</span></span><br><span class="line"><span class="keyword">static</span> struct vxlan_sock *<span class="title function_">vxlan_socket_create</span>(<span class="params">struct net *net, bool ipv6,</span></span><br><span class="line"><span class="params">                          __be16 port, u32 flags</span>)</span><br><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line">    tunnel_cfg.<span class="property">encap_rcv</span> = vxlan_rcv;   <span class="comment">//这是最关键的点，收包的时候，会把vxlan的包给vxlan_rcv处理</span></span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int <span class="title function_">udp_rcv</span>(<span class="params">struct sk_buff *skb</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="title function_">__udp4_lib_rcv</span>(skb, &amp;udp_table, <span class="variable constant_">IPPROTO_UDP</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//udp包接收方法，从udp_rcv -&gt; __udp4_lib_rcv -&gt; udp_queue_rcv_skb，在这里，如果是vxlan设备创建的端口收的包，会给vxlan_rcv处理</span></span><br><span class="line"><span class="keyword">static</span> int <span class="title function_">udp_queue_rcv_skb</span>(<span class="params">struct sock *sk, struct sk_buff *skb</span>)</span><br><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line">		<span class="comment">/* if we&#x27;re overly short, let UDP handle it */</span></span><br><span class="line">		encap_rcv = <span class="title function_">READ_ONCE</span>(up-&gt;encap_rcv);</span><br><span class="line">		<span class="keyword">if</span> (encap_rcv) &#123;</span><br><span class="line">			int ret;</span><br><span class="line"></span><br><span class="line">			<span class="comment">/* Verify checksum before giving to encap */</span></span><br><span class="line">			<span class="keyword">if</span> (<span class="title function_">udp_lib_checksum_complete</span>(skb))</span><br><span class="line">				goto csum_error;</span><br><span class="line"></span><br><span class="line">			ret = <span class="title function_">encap_rcv</span>(sk, skb);  <span class="comment">//这里就会走到vxlan_rcv函数去</span></span><br><span class="line">			<span class="keyword">if</span> (ret &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">				<span class="title function_">__UDP_INC_STATS</span>(<span class="title function_">sock_net</span>(sk),</span><br><span class="line">						<span class="variable constant_">UDP_MIB_INDATAGRAMS</span>,</span><br><span class="line">						is_udplite);</span><br><span class="line">				<span class="keyword">return</span> -ret;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Callback from net/ipv4/udp.c to receive packets */</span></span><br><span class="line"><span class="keyword">static</span> int <span class="title function_">vxlan_rcv</span>(<span class="params">struct sock *sk, struct sk_buff *skb</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//剥vxlan头    </span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">__iptunnel_pull_header</span>(skb, <span class="variable constant_">VXLAN_HLEN</span>, protocol, raw_proto,</span><br><span class="line">                   !<span class="title function_">net_eq</span>(vxlan-&gt;net, <span class="title function_">dev_net</span>(vxlan-&gt;dev))))</span><br><span class="line">            goto drop;</span><br><span class="line">     ...</span><br><span class="line">     <span class="title function_">gro_cells_receive</span>(&amp;vxlan-&gt;gro_cells, skb);</span><br><span class="line">     ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int <span class="title function_">gro_cells_receive</span>(<span class="params">struct gro_cells *gcells, struct sk_buff *skb</span>)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (!gcells-&gt;cells || <span class="title function_">skb_cloned</span>(skb) || <span class="title function_">netif_elide_gro</span>(dev))</span><br><span class="line">        <span class="comment">//非NAPI收包处理，linux虚拟网络设备接收如果需要软中断触发通常会走这里</span></span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">netif_rx</span>(skb);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<h2 id="udp模式"><a href="#udp模式" class="headerlink" title="udp模式"></a>udp模式</h2><p>在udp模式下，每个节点还运行了一个叫<code>flanneld</code>的守护进程，这个守护进程并非以容器的方式运行，而且是实实在在地参与数据包的转发工作，这个守护进程要是挂了，通信就会中断；</p>
+<p>这个守护进程会：</p>
+<ul>
+<li>开启一个unix domain socket服务，接受来自kube-flannel同步的路由信息；</li>
+<li>打开&#x2F;dev&#x2F;net&#x2F;tun文件；</li>
+<li>打开一个udp端口并监听（默认是8285）</li>
+<li>并且总会把udp端口收到的数据写到tun文件，从tun文件读到的数据，通过udp发出去；</li>
+</ul>
+<p>每个节点同样存在一个名叫flannel.1的虚拟设备，只不过不是vxlan设备，而是一个tun设备，tun设备的工作原理是：用户态程序打开&#x2F;dev&#x2F;net&#x2F;tun文件，主机就会多一张名为tun0的网卡，任何时候往这个打开的文件写的内容都会直接被内核协议栈收包，效果就是相当于上面代码中调用了<code>netif_rx(skb)</code>的效果，而发往这个tun0网卡的数据，都会被打开&#x2F;dev&#x2F;net&#x2F;tun文件的用户程序读到，读到的内容包含IP包头及以上的全部内容（如果想读到链路层的帧头，这里就应该打开一个tap设备，tun&#x2F;tap的主要区别就在这）；</p>
+<p>udp模式下，kube-flannel也不再写fdb表和邻居表，而是通过unix domain socket 与本节点的<code>flanneld</code>守护进程通信，把从etcd订阅到的路由信息同步给flanneld。</p>
+<p>我们继续用上面的场景举例，说明一下udp模式下的数据包发送流程：</p>
+<ul>
+<li>pod1发送给pod2的数据给会被主机路由引导通过tun设备（flannel.1）发送；</li>
+<li><code>flanneld</code>进程从打开的&#x2F;dev&#x2F;net&#x2F;tun文件收到来自pod1的数据包，目标地址是10.244.3.3，于是它要查找去往这个目标的下一跳是哪里，这个信息kube-flannel已同步，kube-flannel通过etcd可以获取到每一个pod在哪个节点中，并把pod和节点的IP的映射关系同步给flanneld；</li>
+<li>它知道下一跳是node3后，就把从tun设备收到的包作为payload向node3的<code>flanneld</code>（端口8285）发送udp包，跟vxlan的封包的区别就是这里是没有链路层包头的相关信息的（上面说了，tun只能拿到三层及以上）</li>
+<li>node3运行的flanneld守护进程会收到这个来自node1的包，然后把payload向打开的&#x2F;dev&#x2F;net&#x2F;tun文件写，根据tun设备的工作原理，它的另一端flannel.1网卡会收到这个包，然后就通过主机协议栈转发到pod2。</li>
+</ul>
+<p>flanneld是由c语言直接实现的，关键代码在&#x2F;backend&#x2F;udp&#x2F;proxy_adm64.c</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//tun网卡的包通过udp发给对端</span></span><br><span class="line"><span class="keyword">static</span> int <span class="title function_">tun_to_udp</span>(<span class="params">int tun, int sock, char *buf, size_t buflen</span>) &#123;</span><br><span class="line">  struct iphdr *iph;</span><br><span class="line">  struct sockaddr_in *next_hop;</span><br><span class="line">  ssize_t pktlen = <span class="title function_">tun_recv_packet</span>(tun, buf, buflen);</span><br><span class="line">  <span class="keyword">if</span>( pktlen &lt; <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  iph = (struct iphdr *)buf;</span><br><span class="line">  next_hop = <span class="title function_">find_route</span>((in_addr_t) iph-&gt;daddr);</span><br><span class="line">  <span class="keyword">if</span>( !next_hop ) &#123;</span><br><span class="line">    <span class="title function_">send_net_unreachable</span>(tun, buf);</span><br><span class="line">    goto _active;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>( !<span class="title function_">decrement_ttl</span>(iph) ) &#123;</span><br><span class="line">    <span class="comment">/* TTL went to 0, discard.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">TODO:</span> send back ICMP Time Exceeded</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    goto _active;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">sock_send_packet</span>(sock, buf, pktlen, next_hop);</span><br><span class="line"><span class="attr">_active</span>:</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//从对端收到的包写到tun网卡</span></span><br><span class="line"><span class="keyword">static</span> int <span class="title function_">udp_to_tun</span>(<span class="params">int sock, int tun, char *buf, size_t buflen</span>) &#123;</span><br><span class="line">  struct iphdr *iph;</span><br><span class="line">  ssize_t pktlen = <span class="title function_">sock_recv_packet</span>(sock, buf, buflen);</span><br><span class="line">  <span class="keyword">if</span>( pktlen &lt; <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  iph = (struct iphdr *)buf;</span><br><span class="line">  <span class="keyword">if</span>( !<span class="title function_">decrement_ttl</span>(iph) ) &#123;</span><br><span class="line">    <span class="comment">/* TTL went to 0, discard.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">TODO:</span> send back ICMP Time Exceeded</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    goto _active;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">tun_send_packet</span>(tun, buf, pktlen);</span><br><span class="line"><span class="attr">_active</span>:</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<p>udp模式中守护进程<code>flanneld</code>发挥的作用与vxlan设备很接近，都是在封包拆包，只不过vxlan封包拆包全程在内核态完成，而udp模式会经过4次用户与内核态切换，性能就下降了，而且udp模式下，flanneld挂了，通信就会中断；</p>
+<h2 id="0-9-0之前的版本"><a href="#0-9-0之前的版本" class="headerlink" title="0.9.0之前的版本"></a>0.9.0之前的版本</h2><p>特别介绍一下flannel在0.9.0版本之前，用的策略完全不一样：</p>
+<ul>
+<li>kube-flannel不会在新增节点的时候就增加arp表和fdb表，而是在数据包传递的过程中，需要目标ip的mac地址但没有找到时会发送一个l3miss的消息（RTM_GETNEIGH）给用户态的进程，让用户进程补充邻居表信息； </li>
+<li>在封装udp包时，在fdb表找不到mac地址对应的fdb表项时，会发送一个l2miss消息给用户态进程，让用户态的进程补充fdb表项，让流程接着往下走。</li>
+</ul>
+<p>它启动时会打开下面的标志位：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="number">3</span> &gt; <span class="regexp">/proc/</span>sys/net/ipv4/neigh/flannel<span class="number">.1</span>/app_solicit</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<p>这样vxlan在封包过程中如果缺少arp记录和fdb记录就会往用户进程发送消息</p>
+<p>从0.9.0版本开始，flannel取消了监听netlink消息：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/coreos/flannel/releases/tag/v0.9.0">https://github.com/coreos/flannel/releases/tag/v0.9.0</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>可以看出，从0.9.0版本后的flannel在vxlan模式下，容器的通信完全由linux内核完成，已经不用kube-flannel参与了，这就意味着，哪怕在运行的过程中，kube-flannel挂掉了，也不会影响现有容器的通信，只会影响新加入的节点和新创建的容器。</p>
+<p>了解了flannel的原理后，接下来我们照着撸一个cni吧。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://djmnb.github.io">戴晶明</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://djmnb.github.io/2022/12/17/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%865/">https://djmnb.github.io/2022/12/17/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%865/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://djmnb.github.io" target="_blank">戴晶明的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/k8s/">k8s</a><a class="post-meta__tags" href="/tags/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/">k8s网络原理</a></div><div class="post_share"><div class="social-share" data-image="/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A22.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/12/17/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%864/"><img class="prev-cover" src="/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A22.png" onerror="onerror=null;src='/404.html'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">深入理解kubernetes（k8s）网络原理之四-pod流量控制</div></div></a></div><div class="next-post pull-right"><a href="/2022/12/17/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%866/"><img class="next-cover" src="/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A22.png" onerror="onerror=null;src='/404.html'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">深入理解kubernetes（k8s）网络原理之六-同主机pod连接的几种方式及性能对比</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/12/17/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%861/" title="深入理解kubernetes（k8s）网络原理之一-pod连接主机"><img class="cover" src="/img/site/%E4%B9%94%E4%B8%B9%E7%BB%9D%E6%9D%80%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A2.jfif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-17</div><div class="title">深入理解kubernetes（k8s）网络原理之一-pod连接主机</div></div></a></div><div><a href="/2022/12/17/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%863/" title="深入理解kubernetes（k8s）网络原理之三-跨主机pod连接"><img class="cover" src="/img/site/%E4%B9%94%E4%B8%B9%E7%BB%9D%E6%9D%80%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A2.jfif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-17</div><div class="title">深入理解kubernetes（k8s）网络原理之三-跨主机pod连接</div></div></a></div><div><a href="/2022/12/17/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%864/" title="深入理解kubernetes（k8s）网络原理之四-pod流量控制"><img class="cover" src="/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A22.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-17</div><div class="title">深入理解kubernetes（k8s）网络原理之四-pod流量控制</div></div></a></div><div><a href="/2022/12/17/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%866/" title="深入理解kubernetes（k8s）网络原理之六-同主机pod连接的几种方式及性能对比"><img class="cover" src="/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A22.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-17</div><div class="title">深入理解kubernetes（k8s）网络原理之六-同主机pod连接的几种方式及性能对比</div></div></a></div><div><a href="/2022/12/17/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%862/" title="深入理解kubernetes（k8s）网络原理之二-service原理"><img class="cover" src="/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A21.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-17</div><div class="title">深入理解kubernetes（k8s）网络原理之二-service原理</div></div></a></div><div><a href="/2022/12/19/%E4%BA%91%E5%8E%9F%E7%94%9F/k8s-2/" title="k8s"><img class="cover" src="/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A2-%E4%B9%94%E4%B8%B91.jfif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-19</div><div class="title">k8s</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/site/touxiang.gif" onerror="this.onerror=null;this.src='/404.html'" alt="avatar"/></div><div class="author-info__name">戴晶明</div><div class="author-info__description">不积跬步,无以至千里</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="/img/site/weixin.jpg" target="_blank" title="WeChat"><i class="fab fa-weixin"></i></a><a class="social-icon" href="/img/site/qq.jpg" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎光临</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flannel-cni"><span class="toc-number">2.</span> <span class="toc-text">flannel-cni</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#flannel-cni%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">flannel-cni工作流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kube-flannel"><span class="toc-number">3.</span> <span class="toc-text">kube-flannel</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E9%80%81"><span class="toc-number">3.1.</span> <span class="toc-text">发送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6"><span class="toc-number">3.2.</span> <span class="toc-text">接收</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#udp%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">udp模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0-9-0%E4%B9%8B%E5%89%8D%E7%9A%84%E7%89%88%E6%9C%AC"><span class="toc-number">5.</span> <span class="toc-text">0.9.0之前的版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/04/01/%E5%89%8D%E7%AB%AF/vue%E5%AD%A6%E4%B9%A0/" title="vue学习总结">vue学习总结</a><time datetime="2023-03-31T16:00:00.000Z" title="发表于 2023-04-01 00:00:00">2023-04-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/30/%E5%89%8D%E7%AB%AF/html+css%E5%AD%A6%E4%B9%A0/" title="html+css学习">html+css学习</a><time datetime="2023-03-29T16:00:00.000Z" title="发表于 2023-03-30 00:00:00">2023-03-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/" title="Django 学习">Django 学习</a><time datetime="2023-03-23T16:00:00.000Z" title="发表于 2023-03-24 00:00:00">2023-03-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/14/python/python%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" title="python实用技巧">python实用技巧</a><time datetime="2023-03-13T16:00:00.000Z" title="发表于 2023-03-14 00:00:00">2023-03-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/04/python/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96/" title="Python编程快速上手 总结">Python编程快速上手 总结</a><time datetime="2023-03-03T16:00:00.000Z" title="发表于 2023-03-04 00:00:00">2023-03-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By 戴晶明</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'BkV10wtzbo9nuKwtsBG04Idw-gzGzoHsz',
+      appKey: 'CLv4OkdYGyropWktyqSDf2af',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
