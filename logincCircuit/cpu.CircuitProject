@@ -3,15 +3,17 @@
 	<lc:Project>
 		<lc:ProjectId>2e015009-951d-4b3e-b452-4959da2113c8</lc:ProjectId>
 		<lc:Name>cpu</lc:Name>
-		<lc:Zoom>0.8</lc:Zoom>
 		<lc:Frequency>5</lc:Frequency>
-		<lc:LogicalCircuitId>96e694cd-9f2b-4c0a-ac14-999391fde311</lc:LogicalCircuitId>
+		<lc:LogicalCircuitId>dfb14647-c4f3-41fe-a678-f3ff65c545b8</lc:LogicalCircuitId>
 	</lc:Project>
 	<lc:CollapsedCategory>
 		<lc:Name>test</lc:Name>
 	</lc:CollapsedCategory>
 	<lc:CollapsedCategory>
 		<lc:Name>Basic</lc:Name>
+	</lc:CollapsedCategory>
+	<lc:CollapsedCategory>
+		<lc:Name>ALU</lc:Name>
 	</lc:CollapsedCategory>
 	<lc:LogicalCircuit>
 		<lc:LogicalCircuitId>2bfaa822-107d-4234-b4a9-430b983ab25b</lc:LogicalCircuitId>
