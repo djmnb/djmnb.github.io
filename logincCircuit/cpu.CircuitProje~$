@@ -3,14 +3,12 @@
 	<lc:Project>
 		<lc:ProjectId>2e015009-951d-4b3e-b452-4959da2113c8</lc:ProjectId>
 		<lc:Name>cpu</lc:Name>
-		<lc:Frequency>5</lc:Frequency>
-		<lc:LogicalCircuitId>a2013a19-ee68-48d6-9abe-e4495a466cdd</lc:LogicalCircuitId>
+		<lc:Zoom>0.7</lc:Zoom>
+		<lc:Frequency>50</lc:Frequency>
+		<lc:LogicalCircuitId>dfb14647-c4f3-41fe-a678-f3ff65c545b8</lc:LogicalCircuitId>
 	</lc:Project>
 	<lc:CollapsedCategory>
 		<lc:Name>test</lc:Name>
-	</lc:CollapsedCategory>
-	<lc:CollapsedCategory>
-		<lc:Name>Basic</lc:Name>
 	</lc:CollapsedCategory>
 	<lc:LogicalCircuit>
 		<lc:LogicalCircuitId>2bfaa822-107d-4234-b4a9-430b983ab25b</lc:LogicalCircuitId>
@@ -2113,7 +2111,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</lc
 		<lc:OnStart>Data</lc:OnStart>
 		<lc:AddressBitWidth>8</lc:AddressBitWidth>
 		<lc:DataBitWidth>8</lc:DataBitWidth>
-		<lc:Data>BAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+		<lc:Data>BAMDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
