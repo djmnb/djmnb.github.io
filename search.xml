@@ -170,7 +170,7 @@
       <link href="/2023/10/05/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vscode/"/>
       <url>/2023/10/05/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vscode/</url>
       
-        <content type="html"><![CDATA[<h1>前言</h1><p>这里主要介绍一些配置项和好用插件</p><h1>外观</h1><h2 id="主题选择">主题选择</h2><h3 id="文件主题">文件主题</h3><ul><li>vscode-icons</li><li>Material Icon Theme</li></ul><h1>插件</h1><h1>运行和调试</h1><p>vscode  是通过 配置launch.json  和  task.json 来  进行调试和 运行程序</p>]]></content>
+        <content type="html"><![CDATA[<h1>前言</h1><p>这里主要介绍一些配置项和好用插件</p><h1>外观</h1><h2 id="主题选择">主题选择</h2><h3 id="文件主题">文件主题</h3><ul><li>vscode-icons</li><li>Material Icon Theme</li></ul><h1>插件</h1><h1>运行和调试</h1><p>vscode  是通过 配置launch.json  和  task.json 来  进行调试和 运行程序</p><h2 id="python配置">python配置</h2>]]></content>
       
       
       
