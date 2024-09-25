@@ -43,6 +43,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  document.querySelectorAll("img").forEach((img)=>{
+		if(img == null)return;
+		let pos = img.src.indexOf("/img/"); // 这个路径要跟你hexo生成的图片路径对应上哈
+		if (pos < 0)
+		{
+			return;
+		}
+		img.src = img.src.substring(pos);
+		
+	})
+	document.querySelectorAll("video").forEach((video)=>{
+		if(video == null)return;
+		let pos = video.src.indexOf("/img/");
+		if (pos < 0)
+		{
+			return;
+		}
+		video.src = video.src.substring(pos);
+		
+	})
+
   /**
    * 首頁top_img底下的箭頭
    */
