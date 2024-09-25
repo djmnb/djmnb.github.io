@@ -1,0 +1,1140 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>计算机组成原理 | 戴晶明的个人博客</title><meta name="author" content="戴晶明"><meta name="copyright" content="戴晶明"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="计算机系统概述 计算机系统层次结构 计算机系统的组成 硬件系统+软件系统,   硬件是指有形的物理设备, 软件是指硬件上运行的程序和数据 计算机组成和计算机体系结构 计算机组成（Computer Organization）和计算机体系结构（Computer Architecture）是两个相关但又有所区别的领域。它们都关注计算机系统的设计，但从不同的角度。以下是这两者的主要差异：   定义与焦点：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理">
+<meta property="og:url" content="https://djmnb.github.io/2023/06/27/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="戴晶明的个人博客">
+<meta property="og:description" content="计算机系统概述 计算机系统层次结构 计算机系统的组成 硬件系统+软件系统,   硬件是指有形的物理设备, 软件是指硬件上运行的程序和数据 计算机组成和计算机体系结构 计算机组成（Computer Organization）和计算机体系结构（Computer Architecture）是两个相关但又有所区别的领域。它们都关注计算机系统的设计，但从不同的角度。以下是这两者的主要差异：   定义与焦点：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://djmnb.github.io/img/site/touxiang.gif">
+<meta property="article:published_time" content="2023-06-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-19T08:25:10.364Z">
+<meta property="article:author" content="戴晶明">
+<meta property="article:tag" content="需要复习">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://djmnb.github.io/img/site/touxiang.gif"><link rel="shortcut icon" href="/img/site/icon.jfif"><link rel="canonical" href="https://djmnb.github.io/2023/06/27/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '计算机组成原理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-19 16:25:10'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/site/touxiang.gif" onerror="onerror=null;src='/404.html'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: /img/site/beijing.jfif"><nav id="nav"><span id="blog-info"><a href="/" title="戴晶明的个人博客"><span class="site-name">戴晶明的个人博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">计算机组成原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-26T16:00:00.000Z" title="发表于 2023-06-27 00:00:00">2023-06-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-19T08:25:10.364Z" title="更新于 2024-09-19 16:25:10">2024-09-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">12.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>37分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="计算机组成原理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>计算机系统概述</h1>
+<h2 id="计算机系统层次结构">计算机系统层次结构</h2>
+<h3 id="计算机系统的组成">计算机系统的组成</h3>
+<p>硬件系统+软件系统,   硬件是指有形的物理设备, 软件是指硬件上运行的程序和数据</p>
+<h3 id="计算机组成和计算机体系结构">计算机组成和计算机体系结构</h3>
+<p>计算机组成（Computer Organization）和计算机体系结构（Computer Architecture）是两个相关但又有所区别的领域。它们都关注计算机系统的设计，但从不同的角度。以下是这两者的主要差异：</p>
+<ol>
+<li>
+<p><strong>定义与焦点</strong>：</p>
+<ul>
+<li><strong>计算机体系结构</strong>：关注系统的高层设计，如指令集、数据类型、寻址模式和计算机的功能抽象。简而言之，它是描述硬件和软件如何交互以及如何实现功能的接口和规范。</li>
+<li><strong>计算机组成</strong>：更注重硬件组件的具体实现和组织，如数据路径、控制逻辑、内存组织、输入/输出处理和流水线设计等。</li>
+</ul>
+</li>
+<li>
+<p><strong>抽象层级</strong>：</p>
+<ul>
+<li><strong>计算机体系结构</strong>：在更高的抽象层级。它定义了指令集以及如何进行高级运算，但不涉及具体如何在硬件上实现这些运算。</li>
+<li><strong>计算机组成</strong>：在较低的抽象层级。它关注如何使用电子部件和逻辑来实现体系结构中定义的功能。</li>
+</ul>
+</li>
+<li>
+<p><strong>应用领域</strong>：</p>
+<ul>
+<li><strong>计算机体系结构</strong>：对于编译器设计师、操作系统开发者和应用程序开发者来说，理解体系结构是非常重要的，因为他们需要确保他们的软件与给定的体系结构兼容。</li>
+<li><strong>计算机组成</strong>：对于硬件设计师和电子工程师来说，理解计算机组成是关键的，因为他们需要构建和组织硬件来满足体系结构的要求。</li>
+</ul>
+</li>
+<li>
+<p><strong>示例</strong>：</p>
+<ul>
+<li><strong>计算机体系结构</strong>：定义一台机器应该有哪些指令（例如，加法、乘法、加载、存储等）以及这些指令应该如何工作。</li>
+<li><strong>计算机组成</strong>：描述如何在硬件中实现这些指令，例如，为了实现加法指令，我们可能需要一个加法器、数据寄存器和其他控制逻辑。</li>
+</ul>
+</li>
+</ol>
+<p>总之，计算机体系结构关注“设计的是什么”，而计算机组成关注“如何实现这个设计”。两者紧密相关，但各自关注不同的设计和实现细节。</p>
+<h2 id="概念">概念</h2>
+<ul>
+<li><strong>存储元件</strong>用来存储一位二进制代码,   <strong>存储单元</strong>包含若干个存储元件,  它能够包含一连串二进制代码,  这串二进制代码被称为<strong>存储字</strong>,  位数称为<strong>存储字长</strong>, 存储字长一般是一个字节或者是字节的偶数倍</li>
+<li>机器字长(简称为字长)  是指一次整数运算能够处理的位数, 通常等于运算器位数,</li>
+</ul>
+<h2 id="做题总结">做题总结</h2>
+<ul>
+<li>CPU执行时间 = 总指令时间周期数/主频  = 总指令时间周期数*时钟周期 = cpi * 指令数量 / 主频</li>
+<li>MIPS = 指令条数 / (执行时间 * 10 ^ 6) = x/(x*CPI*T * 10^6 ) = 主频 / (CPI*10^6)</li>
+<li>(M,G,T,P,E,Z)FLOPS  每秒执行浮点数次数   M = 10^6 G = 10^9 T = 10^12 P = 10^15 E = 10^18 Z = 10^21</li>
+</ul>
+<h1>数据的表示和运算</h1>
+<h2 id="数制与编码">数制与编码</h2>
+<h3 id="采用二进制编码原因">采用二进制编码原因</h3>
+<p>计算机采用二进制编码有多种原因，其中最主要的是基于实际硬件实现的便利性和效率。以下是使用二进制的主要原因：</p>
+<ol>
+<li>
+<p><strong>简化硬件设计</strong>：二进制只有两个状态：0 和 1，这与电子开关的基本工作原理相匹配，即开（ON）或关（OFF）。使用二进制编码可以轻松地用这些开关状态表示信息。例如，一个开关处于关闭状态可以表示0，而开启状态可以表示1。</p>
+</li>
+<li>
+<p><strong>可靠性</strong>：由于只有两种状态，二进制系统在处理噪声或其他干扰时更加鲁棒。例如，一个模拟系统可能受到细微的电压变化的影响，而二进制系统只需区分两种状态，因此更能够容忍小的误差或干扰。</p>
+</li>
+<li>
+<p><strong>逻辑运算</strong>：基于二进制的电子逻辑门（如AND、OR和NOT门）的设计和实现相对简单。这些逻辑门是计算机运行的基础。</p>
+</li>
+<li>
+<p><strong>简化算术运算</strong>：在二进制下，算术运算（如加法和乘法）可以通过简单的位操作实现，这在硬件上更易于实现。</p>
+</li>
+<li>
+<p><strong>存储和传输</strong>：二进制编码使得信息的存储和传输更加一致和简单。不论是处理文本、图像、音频还是视频，所有信息最终都可以转换为二进制形式并通过相同的基础硬件进行处理。</p>
+</li>
+<li>
+<p><strong>历史和技术进展</strong>：早期的计算机和计算机设备（如继电器和真空管）更容易以二进制方式工作。随着技术的进步，这种方法已经被证明是非常有效的，因此被继续沿用。</p>
+</li>
+</ol>
+<p>尽管二进制是最常用的编码方式，但在特定的应用和技术中，也有使用其他编码系统（如三进制、四进制等）的尝试。然而，由于上述原因，二进制已经成为了主流的选择。</p>
+<h3 id="进制转换">进制转换</h3>
+<p>进制转换是计算机科学中的基础概念，尤其在考研408中也是经常被考察的内容。以下是常用的进制转换方法，包括整数和小数部分：</p>
+<ol>
+<li>
+<p><strong>二进制与十进制之间的转换</strong>：</p>
+<ul>
+<li><strong>整数部分</strong>：
+<ul>
+<li>从二进制转为十进制：按权展开，即从最低位开始，每一位的值乘以2的相应次方，然后求和。</li>
+<li>从十进制转为二进制：通过连续除以2并取余数的方法。<strong>除基取余法</strong></li>
+</ul>
+</li>
+<li><strong>小数部分</strong>：
+<ul>
+<li>从二进制转为十进制：从小数点后的第一位开始，每一位的值乘以2的相应负次方，然后求和。</li>
+<li>从十进制转为二进制：通过连续乘以2并取整数部分的方法。<strong>乘积取整法</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>二进制与八进制之间的转换</strong>：</p>
+<ul>
+<li><strong>整数部分</strong>：每三位二进制数对应一位八进制数。</li>
+<li><strong>小数部分</strong>：同样，每三位二进制小数对应一位八进制小数。</li>
+</ul>
+</li>
+<li>
+<p><strong>二进制与十六进制之间的转换</strong>：</p>
+<ul>
+<li><strong>整数部分</strong>：每四位二进制数对应一位十六进制数。</li>
+<li><strong>小数部分</strong>：同样，每四位二进制小数对应一位十六进制小数。</li>
+</ul>
+</li>
+<li>
+<p><strong>十进制与八进制、十六进制之间的转换</strong>：</p>
+<ul>
+<li>通常先将十进制数转为二进制，然后再从二进制转为八进制或十六进制。</li>
+</ul>
+</li>
+</ol>
+<p>注意：在进行进制转换时，尤其是涉及小数部分，可能会遇到无法精确转换的情况，这时通常会取一个近似值。</p>
+<p>在考研408的复习中，掌握这些基本的进制转换方法是非常重要的，因为它们是很多计算机科学概念的基础。</p>
+<h3 id="真值和机器数">真值和机器数</h3>
+<ol>
+<li><strong>真值</strong>：
+<ul>
+<li>真值是一个数学上的概念，表示数的实际值，包括它的正负。(也就是带有&quot;+&quot;,&quot;-&quot;的数)</li>
+<li>例如，+5的真值是+5，-5的真值是-5。</li>
+</ul>
+</li>
+<li><strong>机器数</strong>：
+<ul>
+<li>机器数是计算机中用来表示一个数的二进制形式。对于正数，其真值和机器数是相同的；但对于负数，机器数是其补码形式。(使用数字代替正负号)</li>
+<li>在大多数现代计算机系统中，负数的表示采用的是“二进制补码”形式。这意味着负数的机器数是其绝对值的二进制反码加1得到的。</li>
+<li>例如，假设我们要在一个8位的系统中表示数字-5：
+<ol>
+<li>+5的二进制形式是：0101</li>
+<li>取反得到：1010</li>
+<li>加1得到：1011 因此，-5的机器数是1011。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="原码-反码-补码-移码">原码,反码,补码,移码</h3>
+<p>当我们在计算机中表示和处理整数，特别是负整数时，就会涉及到原码、反码、补码和移码这些表示方法。以下是这些概念的总结：</p>
+<ol>
+<li>
+<p><strong>原码</strong>：</p>
+<ul>
+<li>原码是最直观的二进制表示方法。最高位是符号位：0表示正数，1表示负数。其余位表示该数的绝对值。</li>
+<li>例如：+7的原码为：0111，-7的原码为：1111（假设我们使用4位表示）。</li>
+</ul>
+</li>
+<li>
+<p><strong>反码</strong>：</p>
+<ul>
+<li>正数的反码与其原码相同。</li>
+<li>负数的反码是保持符号位不变，然后对原码的数值部分取反。</li>
+<li>例如：+7的反码为：0111，-7的反码为：1000。</li>
+</ul>
+</li>
+<li>
+<p><strong>补码</strong>：</p>
+<ul>
+<li>正数的补码与其原码相同。</li>
+<li>负数的补码是其反码加1。</li>
+<li>例如：+7的补码为：0111，-7的补码为：1001。</li>
+<li>补码是现代计算机中最常用的表示方法，因为它使得加法和减法运算更为简单。</li>
+</ul>
+</li>
+<li>
+<p><strong>移码</strong>：</p>
+<ul>
+<li>移码常用于浮点数的指数部分。它是通过将原码加上一个固定的偏移量（通常是2的(n-1)次方，其中n是位数）来得到的。</li>
+<li>对于4位表示，偏移量是2^3 = 8。所以，+7的移码是：0111 + 1000 = 1111，-7的移码是：1111 + 1000 = 0111。</li>
+<li>移码的主要优点是它可以使得负数的排序和正数相同。</li>
+</ul>
+</li>
+</ol>
+<h2 id="运算">运算</h2>
+<h3 id="移位运算">移位运算</h3>
+<ul>
+<li>逻辑移位</li>
+<li>算数移位</li>
+<li>循环移位</li>
+</ul>
+<h3 id="加减运算">加减运算</h3>
+<ul>
+<li>原码加减法(了解即可)</li>
+<li>补码加减法</li>
+</ul>
+<p>溢出方法判别  两个相同符号位运算数的结果符号位不同 就是溢出</p>
+<ul>
+<li>一位符号法:  两种情况  1 1 0  和 0 0 1  所以表达式为 V = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>B</mi><mover accent="true"><mi>S</mi><mo stretchy="true">‾</mo></mover><mo>+</mo><mover accent="true"><mi>A</mi><mo stretchy="true">‾</mo></mover><mover accent="true"><mi>B</mi><mo stretchy="true">‾</mo></mover><mi>S</mi></mrow><annotation encoding="application/x-tex">AB\overline{S} + \overline{A} \overline{B} S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9666600000000001em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord overline"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8833300000000001em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span><span style="top:-3.80333em;"><span class="pstrut" style="height:3em;"></span><span class="overline-line" style="border-bottom-width:0.04em;"></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8833300000000001em;vertical-align:0em;"></span><span class="mord overline"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8833300000000001em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">A</span></span></span><span style="top:-3.80333em;"><span class="pstrut" style="height:3em;"></span><span class="overline-line" style="border-bottom-width:0.04em;"></span></span></span></span></span></span><span class="mord overline"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8833300000000001em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span><span style="top:-3.80333em;"><span class="pstrut" style="height:3em;"></span><span class="overline-line" style="border-bottom-width:0.04em;"></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span></li>
+<li>双符号法:  只有两个符号位不同的时候才算溢出  1 0 代表负溢出  0 1 代表正溢出  1 1 代表负数不溢出  0 0 代表正数不溢出</li>
+<li>符号进位与最高位进位判别法 (做异或操作, 0 代表不溢出 1 代表溢出)</li>
+</ul>
+<p><strong>无论采用什么方法判断溢出,   存储的时候都是存放一位符号位,  只是在运算的时候,才把符号位的值同时放到ALU中(因为一个正确的数, 双符号位相同), 所以也就是说只在ALU中采用双符号位</strong></p>
+<h3 id="乘除运算">乘除运算</h3>
+<h4 id="原码一位乘法">原码一位乘法</h4>
+<p>符号位和数值为分开计算   乘积符号位由符号位运算得出  数值位由数值绝对值计算得出</p>
+<p>这个过程其实就是累加的过程</p>
+<ol>
+<li>部分积和被乘数在计算过程中采用双符号位,部分积初始值为0, 部分积最终存放的是高位数值</li>
+<li>如果当前乘数最低位为1, 则部分积加上被被乘数,   然后部分积和乘数都<strong>逻辑右移一位</strong> ( 部分积右移 溢出的是低位部分积)</li>
+<li>重复步骤2  n次</li>
+<li>将最终部分积高位与低位合并的结果的符号位设置成 符号位异或的结果</li>
+</ol>
+<p><strong>可以发现一共做n次加法 n次移动</strong></p>
+<h4 id="补码一位乘法-booth算法">补码一位乘法(Booth算法)</h4>
+<p>这个算法步骤中符号位是参与运算的, 而且运算数都是补码计算, 它和原码一位乘法累加过程相似, 但是每一步是加法还是减法是需要另外计算的</p>
+<ol>
+<li>部分积和被乘数在计算过程中采用双符号位,部分积初始值为0, 部分积最终存放的是高位数值</li>
+<li>乘数末尾新增一位0(不参与计算,用于确定是加被乘数还是减被乘数)</li>
+<li>靠乘数最后两位选出部分积是加被乘数还是减被乘数, 1 1 和 0 0 代表 + 0 ,  1 0 代表 - 被乘数 , 0 1 代表 + 被乘数</li>
+<li>将乘数 逻辑右移, 部分积 <strong>算数右移一位</strong>(溢出的是低位部分积)</li>
+<li>重复3,4步骤 n次</li>
+<li>最后将部分积  再进行一次3步骤</li>
+<li>最终部分积高位与低位合并的结果 <strong>就是计算结果的补码</strong></li>
+</ol>
+<p><strong>可以发现一共做n+1次加法 n次移动</strong></p>
+<blockquote>
+<p>我发现一个问题就是, 书上貌似都是小数乘法, 但是如果是整数乘法,我感觉这些乘法是不太对的 我觉得应该要左移被乘数然后和部分积相加,   或者说需要改一下第7步, 低位就是最终结果</p>
+</blockquote>
+<h4 id="原码除法-不恢复余数法">原码除法(不恢复余数法)</h4>
+<p>除法其实就是做减法</p>
+<p>数值位计算过程</p>
+<ol>
+<li>取两个数的绝对值</li>
+<li>先将被除数的绝对值-除数绝对值 相当于 +除数绝对值的补码</li>
+<li>根据计算出来的值称为余数  如果是正数  商的最后一位为1  商和余数都左移一位  然后-除数绝对值,  如果是负数 商的最后一位为0  商和余数都左移一位  然后 + 除数绝对值  (<strong>逻辑左移</strong>)</li>
+<li>重复 3步骤 n 次  (最后一步得到余数后, 还要给商设置一次值,根据3的规则)</li>
+<li>如果最后的余数为负数, 需要再加上除数绝对值</li>
+<li>最后将符号位做异或运算当做商的符号位</li>
+</ol>
+<h4 id="补码除法-加减交替法">补码除法(加减交替法)</h4>
+<p>符号位与数值位一起参加运算</p>
+<ol>
+<li>如果被除数与除数同号就 - 除数, 异号就加上除数</li>
+<li>根据计算出来的值称为余数  如果与除数同号就  商的最后一位为1  商和余数都左移一位  然后-除数,  如果与除数异号就 商的最后一位为0  商和余数都左移一位  然后 + 除数  (<strong>算数左移</strong>)</li>
+<li>重复 2 步骤 n次( 最后一步得到余数后, 如果对商没有特殊要求,  最后一位置1 )</li>
+</ol>
+<h2 id="数据类型转换">数据类型转换</h2>
+<h3 id="有符号数与无符号数相互转换">有符号数与无符号数相互转换</h3>
+<p>二者在内存中的二进制表示方式还是相同,  但是解释方式不同</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">-1</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> b = (<span class="type">unsigned</span> <span class="type">int</span>)a;  <span class="comment">// b = 2^32-1</span></span><br></pre></td></tr></table></figure>
+<h3 id="不同字长整数之间的转换">不同字长整数之间的转换</h3>
+<p>大字长向小字长转换 直接截取大字长低位给小字长</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = (<span class="type">int</span>)<span class="number">0b11000000000000000000000000000000</span>; <span class="comment">//-1073741824</span></span><br><span class="line"><span class="type">short</span> b = (<span class="type">short</span>)a; <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<p>小字长向大字长转换  将小字长数据放入到大字长低位,  高位用小字长符号位填充(如果小字长是无符号数就用0填充)</p>
+<p>(char 类型就是8位无符号整数)</p>
+<h2 id="数据的存储与排列">数据的存储与排列</h2>
+<h3 id="大端小端存储">大端小端存储</h3>
+<p>由于每个数据只会有一个内存地址, 如果是多字节数据接下来的连续若干个地址构成了这个数据,  这样就会涉及到排列问题</p>
+<ul>
+<li>大端方式   从大大小排列  高位在前  低位在后   也就是高位在低地址, 低位在高地址</li>
+<li>小端方式  从小到大排列  低位在前 高位在后  也就是低位在低地址 高位在高地址</li>
+</ul>
+<p>如果地址从左到右依次增加,  那么大端方式的话 就相当于顺序存放一个数,   小端就相当于逆序**(字节内有序)**</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0x01234567</span></span><br><span class="line"><span class="comment">// 01 23 45 67  大端</span></span><br><span class="line"><span class="comment">// 67 45 23 01  小端 </span></span><br></pre></td></tr></table></figure>
+<h3 id="边界对齐方式存储">边界对齐方式存储</h3>
+<ul>
+<li>边界对齐方式能够使  半字数据和字数据都能各自存放在一个存储单元中, 不会分布在不同的存储单元中, 但是会浪费一定的空间, 优点是提高指令和数据的读写速度</li>
+<li>边界不对齐方式  可以充分利用存储空间,   但是一个字或者半字数据会存放在不同的存储单元中, 这样读取一个字或者半字的指令或者数据的时候,需要多次访存</li>
+</ul>
+<h2 id="浮点数的表示与运算">浮点数的表示与运算</h2>
+<blockquote>
+<p>浮点数就是小数点位置不固定的数,  这里的不固定不是指小数点会真正的移动,  而是指通过缩放数据, 让小数点逻辑移动</p>
+</blockquote>
+<h3 id="表示格式">表示格式</h3>
+<p>符号位 阶码  尾数</p>
+<ul>
+<li>符号位取值 0 1 代表正负</li>
+<li>阶码或者叫指数   用移码表示  这里还隐约包含了  基数  通常采用 2    阶码就反应了浮点数小数点实际位置</li>
+<li>尾数的位数反应了精度  尾数部分通常用原码表示</li>
+</ul>
+<h3 id="浮点数的规格化">浮点数的规格化</h3>
+<p>定义:  通过调整尾数和阶码的大小,  让非零浮点数的尾数部分最高位是一个有效值</p>
+<p>规范化的尾数绝对值肯定满足   1/R &lt;= |M| &lt;= 1   R代表基数   M代表尾数值</p>
+<h3 id="ieee754标准">IEEE754标准</h3>
+<p>IEEE 754标准是一个定义浮点数算术的国际标准，广泛应用于计算机和数字系统中。以下是该标准的总结：</p>
+<ol>
+<li>
+<p><strong>基本组成</strong>：</p>
+<ul>
+<li><strong>符号位（Sign bit）</strong>：决定浮点数的正负。0表示正数，1表示负数。</li>
+<li><strong>指数（Exponent）</strong>：表示浮点数的阶数。使用一个偏移（bias）格式来表示。2^(n-1) - 1</li>
+<li><strong>尾数（Mantissa 或 Fraction）</strong>：表示浮点数的有效数字。</li>
+</ul>
+</li>
+<li>
+<p><strong>主要格式</strong>：</p>
+<ul>
+<li><strong>单精度（32位）</strong>：
+<ul>
+<li>符号位：1位</li>
+<li>指数：8位，偏移值为127   2^7 -1</li>
+<li>尾数：23位</li>
+</ul>
+</li>
+<li><strong>双精度（64位）</strong>：
+<ul>
+<li>符号位：1位</li>
+<li>指数：11位，偏移值为1023   2^10 -1</li>
+<li>尾数：52位</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>特殊值</strong>：</p>
+<ul>
+<li><strong>零（0）</strong>：有正零和负零，指数和尾数都为0。</li>
+<li><strong>无穷（Infinity）</strong>：正无穷和负无穷，指数为最大值，尾数为0。</li>
+<li><strong>NaN（Not a Number）</strong>：表示不是一个数的值，如0除以0的结果。指数为最大值，尾数不为0。</li>
+</ul>
+</li>
+<li>
+<p><strong>规格化与非规格化数</strong>：</p>
+<ul>
+<li><strong>规格化数</strong>：<strong>尾数部分的隐含的最高位是1</strong>。例如，对于单精度，它是1.xxxxx的形式。</li>
+<li><strong>非规格化数</strong>：当指数部分为全0时，表示的数是非规格化的，隐含的最高位是0。这允许表示接近于0的非常小的数。</li>
+</ul>
+</li>
+<li>
+<p><strong>舍入模式</strong>：<br>
+IEEE 754标准定义了多种舍入模式，包括最近偶数舍入（默认模式）和向正无穷、向负无穷、向零舍入等。</p>
+</li>
+<li>
+<p><strong>操作和异常</strong>：<br>
+标准定义了浮点数的基本操作（如加、减、乘、除等）以及可能的异常情况（如溢出、下溢、除以零等）和它们的处理方式。</p>
+</li>
+</ol>
+<p>IEEE 754标准为浮点数的表示和运算提供了一个统一和一致的框架，被广泛采用于现代计算机和数字系统中。理解这个标准的基本概念和特点对于计算机科学和工程领域是非常重要的。</p>
+<h3 id="浮点数的加减运算">浮点数的加减运算</h3>
+<p>对阶:  小阶通过尾数右移 阶码增加 像大阶对其   这样的话会舍弃掉有效位 产生误差影响精度</p>
+<p>尾数求和:  将对阶后的尾数运算即可   运算后的尾数不一定是规格化的,  此后还需要规格化</p>
+<p>舍入: 在对阶和尾数右规式, 为了保证运算精度, 一般将低位溢出的两位保留下来参加中间运算过程, 最后将运算结果舍入</p>
+<p>常见舍入方法:</p>
+<ul>
+<li>0舍1入法:  类似于四舍五入, 保留位的最高位为0则舍去  保留位的最高位为1 <strong>尾数末位+1</strong>   这样可能导致尾数溢出, 需要再一次右规</li>
+<li>恒置1法:  如果保留的两位中 存在一个1, 则<strong>尾数末位设置为1</strong></li>
+<li>截断法: 直接舍去</li>
+</ul>
+<p>溢出判断:  浮点数的溢出判断是根据阶码来判断的,  如果阶码全0  则表示下溢出,  全1 则表示上溢出</p>
+<h2 id="浮点数和定点数的区别">浮点数和定点数的区别</h2>
+<p>浮点数和定点数是数字系统中两种不同的数值表示方法。它们各自有其优点和缺点，适用于不同的应用场景。以下是它们之间的主要区别：</p>
+<ol>
+<li>
+<p><strong>定义</strong>：</p>
+<ul>
+<li><strong>浮点数</strong>：浮点数的表示方式类似于科学记数法，其中数值的小数点位置可以“浮动”。一个浮点数由符号位、指数和尾数三部分组成。</li>
+<li><strong>定点数</strong>：定点数的小数点位置是固定的。它由整数部分和小数部分组成，小数点的位置在表示中是固定不变的。</li>
+</ul>
+</li>
+<li>
+<p><strong>表示范围和精度</strong>：</p>
+<ul>
+<li><strong>浮点数</strong>：由于其指数的存在，浮点数可以表示非常大或非常小的数值，但精度可能会受到限制，特别是对于非常大或非常小的数值。</li>
+<li><strong>定点数</strong>：定点数的表示范围受到其整数和小数部分的位数的限制，但在其表示范围内，精度是固定的。</li>
+</ul>
+</li>
+<li>
+<p><strong>计算复杂性</strong>：</p>
+<ul>
+<li><strong>浮点数</strong>：浮点数的算术运算（如加、减、乘、除）相对复杂，需要专门的硬件支持，如浮点数算术单元（FPU）。</li>
+<li><strong>定点数</strong>：定点数的算术运算相对简单，可以在没有专门浮点硬件的系统上高效地执行。</li>
+</ul>
+</li>
+<li>
+<p><strong>应用场景</strong>：</p>
+<ul>
+<li><strong>浮点数</strong>：适用于需要处理大范围数值或高精度计算的应用，如科学计算、图形处理等。</li>
+<li><strong>定点数</strong>：常用于嵌入式系统、数字信号处理等领域，其中硬件资源可能有限，但需要快速、确定的计算性能。</li>
+</ul>
+</li>
+<li>
+<p><strong>硬件和存储</strong>：</p>
+<ul>
+<li><strong>浮点数</strong>：通常需要更多的硬件资源和存储空间来表示和处理。</li>
+<li><strong>定点数</strong>：通常更加紧凑，需要较少的硬件资源和存储空间。</li>
+</ul>
+</li>
+<li>
+<p><strong>误差和精度</strong>：</p>
+<ul>
+<li><strong>浮点数</strong>：可能会引入舍入误差，特别是在连续的算术运算中。</li>
+<li><strong>定点数</strong>：误差通常是固定的，但数值范围受到限制。</li>
+</ul>
+</li>
+</ol>
+<p>总的来说，浮点数和定点数都是数字系统中表示数值的方法，选择哪种方法取决于特定的应用需求、硬件资源和性能要求。</p>
+<h2 id="做题技巧">做题技巧</h2>
+<ul>
+<li>对于补码反码来说,  数值部分越大, 对应的真值也越大</li>
+<li>对于正数来说, 反码,补码,原码是相同的, 只有移码不同,  而对于负数来说, 就都有可能不同了,   移码和补码只有符号位相反</li>
+<li>对于并行加法器来说,  加法器没有区别,  只是进位的产生不再是串行产生了,  而是并行产生, 由一个CLA电路根据各位数值计算而来</li>
+<li>对于减法运算来说,  低位进位都是1, 代表选用减法运算, 然后减少要取反+1</li>
+<li>对于边界对齐的计算机来说, 一般按照机器字长来对齐, 不够的就用空白来填</li>
+<li><strong>对于IEEE754标准, 将其他数据转换为 浮点数的时候,  阶码一定要加上偏移值,   浮点数转换为其他数的时候, 阶码一定要减去偏移值</strong></li>
+<li>浮点数变成定点数  尾数左移阶码表示数量    定点数变成浮点数  右移尾数   阶码增加</li>
+</ul>
+<h1>存储器系统</h1>
+<h2 id="存储器的概述">存储器的概述</h2>
+<h3 id="存储器的分类">存储器的分类</h3>
+<h4 id="按照作用层次分类">按照作用层次分类</h4>
+<p>存储器按照作用层次可以分为几个不同的级别，每个级别都有其特定的性能特点、容量和成本。以下是按作用层次分类的存储器：</p>
+<ol>
+<li>
+<p><strong>寄存器（Registers）</strong>：</p>
+<ul>
+<li><strong>位置</strong>：位于CPU内部。</li>
+<li><strong>特点</strong>：访问速度极快，但容量非常有限。</li>
+<li><strong>用途</strong>：存储即将被处理的指令、数据或地址。</li>
+</ul>
+</li>
+<li>
+<p><strong>高速缓存（Cache Memory）</strong>：</p>
+<ul>
+<li><strong>位置</strong>：位于CPU芯片上或接近CPU的位置。</li>
+<li><strong>特点</strong>：访问速度快，但容量相对有限且成本较高。</li>
+<li><strong>用途</strong>：暂存经常访问的数据和指令，减少CPU与主存之间的速度差异。</li>
+</ul>
+</li>
+<li>
+<p><strong>主存储器（Main Memory，通常指RAM）</strong>：</p>
+<ul>
+<li><strong>位置</strong>：位于CPU外部，通过内存总线与CPU连接。</li>
+<li><strong>特点</strong>：访问速度比高速缓存慢，但容量较大且成本较低。</li>
+<li><strong>用途</strong>：存储操作系统、应用程序和当前处理的数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>辅助存储器（Secondary Memory 或 Mass Storage）</strong>：</p>
+<ul>
+<li><strong>位置</strong>：通常位于计算机的外部。</li>
+<li><strong>特点</strong>：访问速度比主存储器慢得多，但提供大量的存储空间，成本较低。</li>
+<li><strong>用途</strong>：长期存储数据、程序和信息。常见的辅助存储器包括硬盘、SSD、光盘和磁带。</li>
+</ul>
+</li>
+<li>
+<p><strong>离线存储（Offline Storage）</strong>：</p>
+<ul>
+<li><strong>位置</strong>：不直接连接到计算机系统。</li>
+<li><strong>特点</strong>：需要人工干预才能访问，通常用于备份或长期存储。</li>
+<li><strong>用途</strong>：数据备份、归档。例如，外部硬盘、光盘、磁带等。</li>
+</ul>
+</li>
+</ol>
+<p>这些存储器层次形成了一个存储器层次结构，从上到下，访问速度逐渐减慢，但容量逐渐增大，成本每位逐渐降低。这种层次结构的设计是为了平衡性能和成本，确保计算机系统能够高效地运行。</p>
+<h4 id="按照存储介质">按照存储介质</h4>
+<p>按照存储介质分类，存储器可以分为以下几种类型：</p>
+<ol>
+<li>
+<p><strong>半导体存储器</strong>：</p>
+<ul>
+<li><strong>特点</strong>：基于半导体技术，如硅。</li>
+<li><strong>例子</strong>：
+<ul>
+<li><strong>RAM（Random Access Memory）</strong>：
+<ul>
+<li><strong>SRAM（Static RAM）</strong>：使用触发器作为存储单元，速度快，常用作CPU的高速缓存。</li>
+<li><strong>DRAM（Dynamic RAM）</strong>：使用电容作为存储单元，需要定期刷新，主要用作主存储器。</li>
+</ul>
+</li>
+<li><strong>ROM（Read-Only Memory）</strong>：只读存储器，用于存储固定数据或程序。</li>
+<li><strong>Flash Memory</strong>：可以电擦写的非易失性存储器，常用于USB驱动器、SD卡和SSD。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>磁性存储器</strong>：</p>
+<ul>
+<li><strong>特点</strong>：使用磁介质来存储数据。</li>
+<li><strong>例子</strong>：
+<ul>
+<li><strong>硬盘驱动器（HDD）</strong>：使用磁盘片和读写头来存储和访问数据。</li>
+<li><strong>磁带</strong>：主要用于数据备份和长期存储。</li>
+<li><strong>磁芯存储</strong>：早期计算机中使用的存储技术，现已过时。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>光学存储器</strong>：</p>
+<ul>
+<li><strong>特点</strong>：使用光介质和激光技术来存储数据。</li>
+<li><strong>例子</strong>：
+<ul>
+<li><strong>CD（Compact Disc）</strong></li>
+<li><strong>DVD（Digital Versatile Disc）</strong></li>
+<li><strong>Blu-ray Disc</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>机械存储器</strong>：</p>
+<ul>
+<li><strong>特点</strong>：基于机械移动部件。</li>
+<li><strong>例子</strong>：早期的打孔卡和打孔纸带。</li>
+</ul>
+</li>
+<li>
+<p><strong>固态驱动器（SSD）</strong>：</p>
+<ul>
+<li><strong>特点</strong>：没有机械部件，基于闪存技术。</li>
+<li><strong>例子</strong>：现代的SSD驱动器，用于替代传统的硬盘驱动器，提供更快的读写速度。</li>
+</ul>
+</li>
+<li>
+<p><strong>相变存储器</strong>：</p>
+<ul>
+<li><strong>特点</strong>：使用材料的相变（从结晶态到非结晶态）来存储数据。</li>
+<li><strong>例子</strong>：某些特定的光盘技术和新型非易失性存储器。</li>
+</ul>
+</li>
+<li>
+<p><strong>磁阻和自旋转移磁阻存储器</strong>：</p>
+<ul>
+<li><strong>特点</strong>：基于磁阻效应或自旋转移磁阻效应。</li>
+<li><strong>例子</strong>：MRAM（磁阻随机存取存储器）。</li>
+</ul>
+</li>
+</ol>
+<p>这些存储介质类型涵盖了从早期计算机技术到现代高速存储解决方案的各种技术。选择哪种存储介质取决于特定的应用需求、性能要求和成本考虑。</p>
+<h4 id="按照存储方式分类">按照存储方式分类</h4>
+<p>按照访问方式分类，存储器可以分为以下几种类型：</p>
+<ol>
+<li>
+<p><strong>随机访问存储器（Random Access Memory, RAM）</strong>：</p>
+<ul>
+<li><strong>特点</strong>：可以在任意顺序下访问任何地址的存储位置，每次访问的时间基本相同。</li>
+<li><strong>例子</strong>：DRAM（Dynamic RAM）、SRAM（Static RAM）。</li>
+</ul>
+</li>
+<li>
+<p><strong>只读存储器（Read Only Memory, ROM）</strong>：</p>
+<ul>
+<li><strong>特点</strong>：数据被预先写入，通常在生产过程中，并且在正常操作中不可更改。</li>
+<li><strong>例子</strong>：PROM（Programmable ROM）、EPROM（Erasable PROM）、EEPROM（Electrically Erasable PROM）。</li>
+</ul>
+</li>
+<li>
+<p><strong>顺序访问存储器（Sequential Access Memory）</strong>：</p>
+<ul>
+<li><strong>特点</strong>：数据只能按照一定的顺序访问，不像RAM那样可以随机访问。</li>
+<li><strong>例子</strong>：磁带是典型的顺序访问存储器。</li>
+</ul>
+</li>
+<li>
+<p><strong>直接访问存储器（Direct Access Memory）</strong>：</p>
+<ul>
+<li><strong>特点</strong>：可以直接访问到存储器的某个位置，但访问时间可能会根据位置的不同而有所变化。(先找到一个局部位置,  然后局部位置顺序访问)</li>
+<li><strong>例子</strong>：硬盘驱动器（HDD）。</li>
+</ul>
+</li>
+<li>
+<p><strong>关联存储器（Associative Memory 或 Content-Addressable Memory, CAM）</strong>：</p>
+<ul>
+<li><strong>特点</strong>：基于数据内容而不是地址来进行搜索。当提供一个数据片段或关键字时，关联存储器可以快速找到与之匹配的完整记录。</li>
+<li><strong>例子</strong>：某些高速缓存实现和路由器中的查找表。</li>
+</ul>
+</li>
+<li>
+<p><strong>寄存器存储器（Register Memory）</strong>：</p>
+<ul>
+<li><strong>特点</strong>：位于CPU内部，为CPU提供快速访问的小块存储空间。</li>
+<li><strong>例子</strong>：指令寄存器、累加器、数据寄存器等。</li>
+</ul>
+</li>
+</ol>
+<p>这些分类基于存储器的访问机制和特性。在实际应用中，不同的访问方式适用于不同的用途和性能要求。</p>
+<h4 id="按信息可保存性分类">按信息可保存性分类</h4>
+<p>按照信息的可保存性分类，存储器可以分为以下几种类型：</p>
+<ol>
+<li>
+<p><strong>易失性存储器（Volatile Memory）</strong>：</p>
+<ul>
+<li><strong>特点</strong>：当电源关闭或断电时，存储在其中的数据会丢失。</li>
+<li><strong>例子</strong>：
+<ul>
+<li><strong>RAM</strong>：包括DRAM（Dynamic RAM）和SRAM（Static RAM）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>非易失性存储器（Non-Volatile Memory）</strong>：</p>
+<ul>
+<li><strong>特点</strong>：即使在断电或关闭电源后，数据仍然可以被保存。</li>
+<li><strong>例子</strong>：
+<ul>
+<li><strong>ROM（Read-Only Memory）</strong>：包括PROM、EPROM、EEPROM等。</li>
+<li><strong>Flash Memory</strong>：如USB闪存驱动器、SSD和SD卡。</li>
+<li><strong>硬盘驱动器（HDD）</strong></li>
+<li><strong>光盘</strong>：如CD、DVD和Blu-ray Disc。</li>
+<li><strong>磁带</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>半易失性存储器（Semi-Volatile Memory）</strong>：</p>
+<ul>
+<li><strong>特点</strong>：介于易失性和非易失性存储器之间。在正常情况下，它表现得像非易失性存储器，但在某些条件下（如高温或特定的电子操作）数据可能会丢失。</li>
+<li><strong>例子</strong>：某些特定的Flash Memory或磁阻存储器（MRAM）可能被认为是半易失性的，尽管这种分类不太常见。</li>
+</ul>
+</li>
+</ol>
+<p>这些分类基于存储器保存数据的能力，特别是在断电或关闭电源时。在实际应用中，选择哪种类型的存储器取决于特定的数据保存需求和应用场景。</p>
+<h3 id="存储器性能指标">存储器性能指标</h3>
+<p>主要有三个指标: 存储容量, 单位成本, 存储速度</p>
+<ol>
+<li>存储容量 = 存储字数 * 存储字长   字数代表存储空间大小   字长代表一次存取操作数据量</li>
+<li>单位成本 = 总成本 / 总容量</li>
+<li>存储速度:  数据传输率 = 数据宽度 / 存储周期
+<ul>
+<li><strong>存取时间</strong>:    是从发出读取或写入请求到存储器响应并提供所需数据或确认写入完成的时间。简单地说，它是从请求开始到数据可用（对于读操作）或数据被成功写入（对于写操作）的时间。</li>
+<li><strong>存取周期</strong>: 是连续两次存储访问操作之间所需的最小时间间隔。它包括了<strong>存取时间</strong>以及为<strong>下一个访问操作预留的额外时间</strong>。这个额外的时间通常是为了确保<strong>存储器内部的操作完成，如数据线和地址线的稳定</strong>。</li>
+</ul>
+</li>
+</ol>
+<h3 id="多级层次存储系统">多级层次存储系统</h3>
+<p>多级层次存储系统主要是为了解决  容量大 速度快 成本低 三个相互制约的矛盾</p>
+<p>多级层次存储系统是计算机存储的一个设计概念，它通过组合不同性能和成本的存储技术，旨在提供接近最快存储速度的性能，同时保持较低的总体成本。这种系统的核心思想是：经常访问的数据应该存储在快速但昂贵的存储介质中，而不经常访问的数据则存储在慢速但便宜的存储介质中。</p>
+<p>以下是多级层次存储系统的主要层次：</p>
+<ol>
+<li>
+<p><strong>寄存器</strong>：</p>
+<ul>
+<li><strong>位置</strong>：CPU内部。</li>
+<li><strong>特点</strong>：极高的访问速度，但容量非常有限。</li>
+<li><strong>用途</strong>：存储即将处理的指令和数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>高速缓存（Cache）</strong>：</p>
+<ul>
+<li><strong>位置</strong>：位于CPU内部或接近CPU。</li>
+<li><strong>特点</strong>：高速访问，但容量有限且成本较高。</li>
+<li><strong>用途</strong>：存储经常访问的数据和指令，减少CPU与主存之间的速度差异。</li>
+</ul>
+</li>
+<li>
+<p><strong>主存储器（RAM）</strong>：</p>
+<ul>
+<li><strong>位置</strong>：位于CPU外部。</li>
+<li><strong>特点</strong>：访问速度较快，容量大于Cache但小于辅助存储器，成本适中。</li>
+<li><strong>用途</strong>：存储操作系统、应用程序和正在处理的数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>辅助存储器（如硬盘、SSD）</strong>：</p>
+<ul>
+<li><strong>位置</strong>：通常位于计算机的外部。</li>
+<li><strong>特点</strong>：较大的存储容量，访问速度慢于RAM但快于离线存储，成本较低。</li>
+<li><strong>用途</strong>：长期存储数据和程序。</li>
+</ul>
+</li>
+<li>
+<p><strong>离线存储/备份存储（如磁带、光盘）</strong>：</p>
+<ul>
+<li><strong>位置</strong>：可能需要人工干预才能访问。</li>
+<li><strong>特点</strong>：巨大的存储容量，但访问速度最慢，成本最低。</li>
+<li><strong>用途</strong>：数据备份、归档和长期存储。</li>
+</ul>
+</li>
+</ol>
+<p>在多级层次存储系统中，数据会根据其访问频率和重要性在不同的层次之间移动。例如，当CPU需要某个数据项时，它首先会在寄存器或高速缓存中查找。如果没有找到，它会继续在RAM中查找，然后是硬盘或SSD，以此类推。</p>
+<p>这种层次结构的设计是为了平衡性能和成本，确保计算机系统能够以最低的成本提供最高的性能。</p>
+<p>cache - 主存层 数据调动  是由 硬件自动完成, 对任何程序员透明(也就是不能也不需要干涉)   主存-辅存层之间的数据调用是硬件+操作系统共同完成,  所以对应用程序员是透明的</p>
+<h2 id="主存储器">主存储器</h2>
+<p>主存储器由DRAM 实现  cache层则由 SRAM实现,   DRAM的每位价格是低于SRAM的,速度也慢,  价格差异主要在SRAM集成度低,需要多个元器件, 需要更多的硅, 而DRAM里面就一个电容和晶体管</p>
+<h3 id="sram-和-dram">SRAM 和 DRAM</h3>
+<h4 id="sram">SRAM</h4>
+<p>SRAM（Static Random Access Memory）是一种随机访问存储器，与DRAM相比，它有其独特的特点和应用。以下是对SRAM的总结：</p>
+<ol>
+<li>
+<p><strong>基本结构</strong>：</p>
+<ul>
+<li>SRAM单元通常由<strong>六个晶体管</strong>组成，而不是像DRAM那样由一个电容和一个晶体管组成。</li>
+</ul>
+</li>
+<li>
+<p><strong>静态性质</strong>：</p>
+<ul>
+<li>SRAM的“静态”名称意味着它不需要定期刷新来保持其内容。<strong>只要电源供应持续，数据就会保持不变</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>速度</strong>：</p>
+<ul>
+<li>SRAM比DRAM快。这是因为SRAM不需要刷新，并且其内部结构允许更快速的数据访问。</li>
+</ul>
+</li>
+<li>
+<p><strong>成本与密度</strong>：</p>
+<ul>
+<li>由于SRAM单元需要更多的晶体管，它的密度低于DRAM，这也使得其成本相对较高。</li>
+</ul>
+</li>
+<li>
+<p><strong>功耗</strong>：</p>
+<ul>
+<li>在待机模式下，SRAM通常消耗的功率比DRAM少，但在活动模式下，由于不需要刷新，SRAM的功率消耗可能较低。</li>
+</ul>
+</li>
+<li>
+<p><strong>应用</strong>：</p>
+<ul>
+<li>由于其速度优势，SRAM通常用作CPU的高速缓存（如L1、L2或L3缓存）。</li>
+<li>它也用于其他需要快速访问的应用，如实时系统的数据存储。</li>
+</ul>
+</li>
+<li>
+<p><strong>稳定性</strong>：</p>
+<ul>
+<li>SRAM比DRAM更稳定，因为它不依赖于电容来存储数据，因此不受电容放电的影响。</li>
+</ul>
+</li>
+<li>
+<p><strong>物理大小</strong>：</p>
+<ul>
+<li>由于SRAM单元需要更多的晶体管，它通常比DRAM大，这限制了它在某些高密度应用中的使用。</li>
+</ul>
+</li>
+</ol>
+<p>总的来说，SRAM由于其速度和稳定性优势，主要用于高速缓存和其他需要快速数据访问的应用，但其高成本和低密度使其不适合作为主存储器。</p>
+<h4 id="dram">DRAM</h4>
+<p>DRAM（Dynamic Random Access Memory）是一种随机访问存储器，广泛用于计算机和其他电子设备的主存储器。以下是对DRAM的总结：</p>
+<ol>
+<li>
+<p><strong>基本结构</strong>：</p>
+<ul>
+<li>DRAM单元通常由一个电容和一个晶体管组成。电容存储数据（充电表示1，放电表示0），而晶体管作为控制开关，决定是否访问电容。</li>
+</ul>
+</li>
+<li>
+<p><strong>动态性质</strong>：</p>
+<ul>
+<li>DRAM的“动态”名称来源于其需要定期刷新来保持其内容。电容会随时间自然放电，因此需要定期重新充电以保持存储的数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>速度</strong>：</p>
+<ul>
+<li>DRAM的访问速度比SRAM慢，部分原因是由于刷新操作。但与硬盘和其他非易失性存储相比，其速度仍然非常快。</li>
+</ul>
+</li>
+<li>
+<p><strong>成本与密度</strong>：</p>
+<ul>
+<li>由于DRAM单元的结构简单（只需要一个电容和一个晶体管），它具有较高的密度，这使得其成本相对较低，尤其是在大容量配置中。</li>
+</ul>
+</li>
+<li>
+<p><strong>功耗</strong>：</p>
+<ul>
+<li>DRAM在刷新时会消耗功率，但其功率需求通常低于SRAM，尤其是在高性能操作中。</li>
+</ul>
+</li>
+<li>
+<p><strong>应用</strong>：</p>
+<ul>
+<li>DRAM是现代计算机、游戏机、服务器和许多其他设备的主要主存储器形式。</li>
+<li>它也被用于图形卡中，称为GDDR（与标准DRAM有所不同，特别优化用于图形数据）。</li>
+</ul>
+</li>
+<li>
+<p><strong>稳定性</strong>：</p>
+<ul>
+<li>由于需要定期刷新，DRAM在无电情况下不能长时间保持数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>物理大小</strong>：</p>
+<ul>
+<li>DRAM的物理尺寸较小，这使得它能够在有限的空间内提供大量的存储容量。</li>
+</ul>
+</li>
+</ol>
+<p>总的来说，DRAM由于其成本效益、高密度和合理的速度，成为了现代电子设备中的主要存储技术。但其需要定期刷新的特性也为系统设计带来了额外的考虑。</p>
+<p>刷新方式</p>
+<ol>
+<li><strong>集中刷新（Concentrated Refresh）</strong>：
+<ul>
+<li><strong>描述</strong>：在一个短时间内连续进行所有必要的刷新操作，然后在较长的时间段内不进行任何刷新。这意味着在一个特定的时间窗口内，DRAM会连续地进行多次刷新操作。</li>
+<li><strong>优点</strong>：在刷新之外的时间，DRAM完全可用于正常的读/写操作，不会受到刷新的干扰。</li>
+<li><strong>缺点</strong>：在集中刷新期间，DRAM可能无法响应正常的读/写请求，从而导致性能下降。 <strong>存在死时间</strong></li>
+</ul>
+</li>
+<li><strong>分散刷新（Distributed Refresh）</strong>：
+<ul>
+<li><strong>描述</strong>：刷新操作在时间上均匀分布，而不是集中在一个短时间内。这意味着在一个给定的时间段内，刷新操作会定期发生，但每次只刷新一小部分。(<strong>前半段时间正常读写, 后半段用来刷新, 这样整个系统的存取周期增长了)</strong></li>
+<li><strong>优点</strong>：由于刷新操作被分散，DRAM大部分时间都可以响应正常的读/写请求，从而减少了刷新对性能的影响。 <strong>不存在死时间</strong></li>
+<li><strong>缺点</strong>：需要更复杂的控制逻辑来确保在整个操作期间都进行了足够的刷新。</li>
+</ul>
+</li>
+<li><strong>异步刷新（Asynchronous Refresh）</strong>：
+<ul>
+<li><strong>描述</strong>：刷新操作与正常的读/写操作完全独立，可以在任何时间进行。这意味着刷新操作不必等待当前的读/写操作完成，反之亦然。(<strong>内部有一个逻辑电路, 每隔一段时间发起一次刷新请求</strong>)</li>
+<li><strong>优点</strong>：提供了极大的灵活性，允许DRAM在高负载条件下优化性能。<strong>降低了死时间</strong></li>
+<li><strong>缺点</strong>：可能需要更复杂的控制逻辑和更高的带宽来同时处理读/写和刷新操作。</li>
+</ul>
+</li>
+</ol>
+<p><strong>刷新操作对CPU是透明的,</strong>  刷新的单位是行, 由芯片内部自动生成行地址, 而且刷新操作不需要选片</p>
+<h3 id="主存储器的基本组成">主存储器的基本组成</h3>
+<p>存储元 -&gt; 存储单元 -&gt; 存储体</p>
+<p>地址单元是指 具有相同地址的存储单元构成的一个单位   可以按照字节编址, 也可以按照字编址. 现代计算机基本使用字节编址</p>
+<h3 id="多模块存储器">多模块存储器</h3>
+<p>多模块存储器是一种空间并行技术, 利用多个结构完全相同的存储模块的并行工作来提高存储器的吞吐率</p>
+<h4 id="单体多字存储器">单体多字存储器</h4>
+<p>单体多字存储器是一种存储器结构，其中一个存储体内部包含多个字（数据单元）。这种结构的主要目的是提高数据传输的带宽和效率。</p>
+<p>在单体多字存储器中，每个存储地址可以访问一个数据块，而不仅仅是一个单独的数据字。例如，如果我们说一个存储器是“4字存储器”，那么每个存储地址可能会映射到4个连续的数据字。</p>
+<p><strong>特点</strong>：</p>
+<ol>
+<li>
+<p><strong>并行性</strong>：在单体多字存储器中，尽管数据是顺序存储的，但多个数据字可以<strong>并行地被读取或写入</strong>。例如，如果一个存储器配置为4字存储器，那么在一个时钟周期内，它可能能够并行地读取或写入4个数据字。这与传统的存储器不同，后者可能在同一个时钟周期内只能访问一个数据字。( <strong>访问的字会放到缓存中,如果没有全部处理的话,下一次就是访问缓存, 而不是访问内存</strong>)</p>
+</li>
+<li>
+<p><strong>高带宽</strong>：由于每次访问可以获取多个数据字，因此数据的传输率得到提高。</p>
+</li>
+<li>
+<p><strong>连续存储</strong>：在物理存储中，相关的数据字通常是连续存储的，这有助于提高顺序访问的效率。</p>
+</li>
+<li>
+<p><strong>复杂的控制逻辑</strong>：由于每个地址映射到多个数据字，所以控制逻辑可能会变得更复杂，特别是在数据需要被分散到不同的位置或从多个位置收集时。</p>
+</li>
+</ol>
+<p><strong>应用</strong>：</p>
+<p>单体多字存储器在需要高带宽和高数据传输率的应用中特别有用，例如图形处理或某些高性能计算任务。</p>
+<p>然而，这种存储器结构并不总是最优的选择，因为它可能会增加成本和复杂性，尤其是在不需要连续高带宽的应用中。在选择存储器结构时，设计者需要权衡这些优缺点。</p>
+<h4 id="多体并行存储器">多体并行存储器</h4>
+<p>多体并行存储器由 多体模块组成, 每个模块都有相同的容量和存取速度, 各个模块又有独立的读写控制电路, 地址寄存器和数据寄存器,  他们既能并行工作, 又能交叉工作</p>
+<p>高位交叉编址:   高位地址决定模块号 低位地址决定块内地址    如果是顺序访问主存块的话, 我们会发现 基本都是在同一个模块里面访问,这个跟普通的存储器没有区别, 也就是说没有利用到并行的优点   (顺序方式)</p>
+<p>低位交叉编址:  低位地址决定模块号 高位地址决定块内地址  如果是顺序访问主存块的话,  我们会发现它基本会依次访问各个模块, 这样就能利用到并行的优点, 在上一个模块的还在等待可以被访问的时候,  我们可以访问下一个模块. 采用这种方式编址的存储器称为  <strong>交叉存储器</strong></p>
+<p>假设各个模块的存取周期为 T, 总线的传输周期为r  如果要满足流水线方式存取, 那就需要  <strong>模块数 m &gt;= T/r</strong>   证明:  在第一个模块被访问后  需要T时间后才能访问,  那么这个时间内我们需要访问其他模块,  也就是  (m-1) * r &gt;= T-r.     所以连续访问m个字需要的时间为  T+(m-1)*r  (书上是这么写) ,  但是还有另外一种说法,  就是在一定时间t内能够访问多少个字,  那就是  t/r个字</p>
+<h2 id="主存与cpu的连接">主存与CPU的连接</h2>
+<h3 id="主存的扩展">主存的扩展</h3>
+<h3 id="存储芯片的地址分配与片选">存储芯片的地址分配与片选</h3>
+<h2 id="外部存储器">外部存储器</h2>
+<h3 id="磁盘存储器">磁盘存储器</h3>
+<h3 id="固态硬盘">固态硬盘</h3>
+<p>基于闪存的技术,和U盘没有本质区别,  本质上还是一个ROM</p>
+<h2 id="高速缓冲区">高速缓冲区</h2>
+<h3 id="局部性原理">局部性原理</h3>
+<h3 id="cache的基本工作原理">cache的基本工作原理</h3>
+<ul>
+<li>数据查找</li>
+<li>地址映射</li>
+<li>替换策略</li>
+<li>写入策略</li>
+</ul>
+<h2 id="做题技巧">做题技巧</h2>
+<ol>
+<li>DRAM的芯片容量较大,  地址位数多,  为了减少芯片地址引脚数, 通常采用地址引脚复用技术,  行列地址使用相同的引脚先后两次输入, 这样可以减少一半的引脚数</li>
+<li>关于DRAM 与 SRAM 最小引脚数问题 一般涉及几个方面</li>
+</ol>
+<ul>
+<li><strong>片选线（Chip Select, CS）</strong>：用于选择特定的存储器芯片。在多芯片配置中，片选线可以帮助确定哪个芯片被选中进行读写操作。</li>
+<li><strong>读写控制线</strong>：
+<ul>
+<li><strong>R/W</strong>：这是一个双向控制线，用于指示是读操作还是写操作。对于某些存储器，读写控制可能会分为两个单独的线（例如，一个读控制线和一个写控制线）。</li>
+</ul>
+</li>
+<li><strong>地址线</strong>：
+<ul>
+<li><strong>DRAM</strong>：由于DRAM通常使用多路复用技术，所以它的地址线数量通常是总地址位数的一半。例如，一个有16M个存储位置的DRAM可能只需要11根地址线（因为2^11 = 2048，而2048x2048 = 16M）。</li>
+<li><strong>SRAM</strong>：SRAM不使用多路复用，所以它的地址线数量等于其地址位数。</li>
+</ul>
+</li>
+<li><strong>数据线</strong>：数据线的数量通常与存储器的数据宽度相匹配。例如，8位宽的存储器会有8条数据线。</li>
+<li><strong>电源和地线</strong>：这些线为存储器提供电源。通常有VCC（或VDD）和GND。</li>
+<li><strong>输出使能线（Output Enable, OE）</strong>：在某些设计中，这个线用于控制数据线上的输出。当OE被激活时，存储器的输出被放到数据线上。</li>
+<li><strong>其他控制线</strong>：根据特定的存储器设计和应用，可能还有其他的控制线，如刷新控制线（特别是对于DRAM）。</li>
+<li><strong>行选通线（Row Address Strobe, RAS）</strong>：当RAS信号被激活时，它告诉DRAM接下来的地址信息是行地址。这个行地址确定了DRAM中的一个特定行。</li>
+<li><strong>列选通线（Column Address Strobe, CAS）</strong>：当CAS信号被激活时，它告诉DRAM接下来的地址信息是列地址。这个列地址与之前的行地址一起确定了DRAM中的一个特定单元。(<strong>对于DRAM地址复用来说, 我们可以使用行列选通线与片选线共用</strong>)</li>
+</ul>
+<ol start="3">
+<li>ROM 只读存储器具有随机访问的功能,  但是他不是随机访问存储器RAM</li>
+<li>DRAM一次完整的刷新占用一个存储周期,  相当于读出来之后立即写回,<strong>其实就相当于一次访存</strong></li>
+<li><strong>切莫粗心大意, 对于  8K 这种 一定不要写成了  2^18  它是 2^13</strong></li>
+<li>cache只是主存的副本, 所以它算不上存储系统的容量</li>
+<li>在计算cache总容量的时候, 一定要考虑每行还有对应的标记项,  有效位一定有,  标记位一定有   替换位和修改位 要看采用的替换策略和写回策略</li>
+</ol>
+<h1>指令系统</h1>
+<h1>中央处理器(CPU)</h1>
+<h2 id="做题总结">做题总结</h2>
+<ul>
+<li>微处理器是相对于大型处理器来说的,  无论是采用微程序控制器还是硬布线控制器,  微机的CPU都是微处理器</li>
+<li>uPC决定微指令的执行顺序   PC 决定指令的执行顺序</li>
+<li>指令周期是指CPU从主存取出并执行一条指令的时间,  指令周期由若干个机器周期(也称CPU周期) 组成,  比如取值周期, 间址周期,执行周期,中断周期, 这些都是机器周期,   机器周期由若干个时钟周期组成,  一般机器周期由存储周期决定</li>
+</ul>
+<h1>总线</h1>
+<h1>输入输出(I/O)系统</h1>
+<h1>额外补充</h1>
+<h2 id="组合逻辑电路和时序逻辑电路">组合逻辑电路和时序逻辑电路</h2>
+<p>组合逻辑电路和时序逻辑电路是数字逻辑设计中的两个基本概念。它们的主要区别在于是否涉及时间或时序的概念。</p>
+<ol>
+<li>
+<p><strong>组合逻辑电路</strong>：</p>
+<ul>
+<li>
+<p><strong>定义</strong>：组合逻辑电路的输出仅仅依赖于当前的输入值，而与先前的输入或状态无关。</p>
+</li>
+<li>
+<p>特点</p>
+<p>：</p>
+<ul>
+<li>没有记忆功能。</li>
+<li>任何时候，相同的输入都会产生相同的输出。</li>
+</ul>
+</li>
+<li>
+<p><strong>常见元件</strong>：基本逻辑门（如AND、OR、NOT）、多路复用器、解码器、编码器等。</p>
+</li>
+<li>
+<p><strong>应用</strong>：算术逻辑单元（ALU）、解码器、编码器等。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>时序逻辑电路</strong>：</p>
+<ul>
+<li>
+<p><strong>定义</strong>：时序逻辑电路的输出不仅依赖于当前的输入，还依赖于先前的输入或状态。这意味着它具有记忆功能。</p>
+</li>
+<li>
+<p>特点</p>
+<p>：</p>
+<ul>
+<li>有记忆功能，能够存储信息。</li>
+<li>输出取决于当前输入和先前的状态。</li>
+</ul>
+</li>
+<li>
+<p><strong>常见元件</strong>：触发器（如D触发器、JK触发器、T触发器）、计数器、寄存器、时钟等。</p>
+</li>
+<li>
+<p><strong>应用</strong>：存储元件、计数器、状态机等。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>总结</strong>：</p>
+<ul>
+<li>组合逻辑电路是“无记忆”的，其输出完全由当前输入决定。</li>
+<li>时序逻辑电路具有“记忆”功能，其输出由当前输入和先前的状态共同决定。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://djmnb.github.io">戴晶明</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://djmnb.github.io/2023/06/27/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">https://djmnb.github.io/2023/06/27/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://djmnb.github.io" target="_blank">戴晶明的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9C%80%E8%A6%81%E5%A4%8D%E4%B9%A0/">需要复习</a><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a></div><div class="post_share"><div class="social-share" data-image="/img/site/touxiang.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/27/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计算机网络</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/22/C%E5%92%8CC++/c++/" title="c++"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">c++</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/06/12/C%E5%92%8CC++/MFC/" title="MFC学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-12</div><div class="title">MFC学习</div></div></a></div><div><a href="/2023/06/22/C%E5%92%8CC++/c++/" title="c++"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-22</div><div class="title">c++</div></div></a></div><div><a href="/2023/06/12/C%E5%92%8CC++/c%E8%AF%AD%E8%A8%80/" title="c语言学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-12</div><div class="title">c语言学习</div></div></a></div><div><a href="/2023/06/27/English/%E8%AF%AD%E6%B3%95/" title="考研英语语法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-27</div><div class="title">考研英语语法</div></div></a></div><div><a href="/2022/11/25/git/git%E6%80%BB%E7%BB%93/" title="git"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-25</div><div class="title">git</div></div></a></div><div><a href="/2024/09/19/java/thinking%20in%20java/" title="thinking in java"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-19</div><div class="title">thinking in java</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/site/touxiang.gif" onerror="this.onerror=null;this.src='/404.html'" alt="avatar"/></div><div class="author-info__name">戴晶明</div><div class="author-info__description">不积跬步,无以至千里</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="/img/site/weixin.jpg" target="_blank" title="WeChat"><i class="fab fa-weixin"></i></a><a class="social-icon" href="/img/site/qq.jpg" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎光临</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">计算机系统概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">计算机系统层次结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">1.1.1.</span> <span class="toc-text">计算机系统的组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%92%8C%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.2.</span> <span class="toc-text">计算机组成和计算机体系结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.2.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E9%A2%98%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.</span> <span class="toc-text">做题总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">数据的表示和运算</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%88%B6%E4%B8%8E%E7%BC%96%E7%A0%81"><span class="toc-number">2.1.</span> <span class="toc-text">数制与编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%87%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%E5%8E%9F%E5%9B%A0"><span class="toc-number">2.1.1.</span> <span class="toc-text">采用二进制编码原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.1.2.</span> <span class="toc-text">进制转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%80%BC%E5%92%8C%E6%9C%BA%E5%99%A8%E6%95%B0"><span class="toc-number">2.1.3.</span> <span class="toc-text">真值和机器数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%A0%81-%E5%8F%8D%E7%A0%81-%E8%A1%A5%E7%A0%81-%E7%A7%BB%E7%A0%81"><span class="toc-number">2.1.4.</span> <span class="toc-text">原码,反码,补码,移码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E7%AE%97"><span class="toc-number">2.2.</span> <span class="toc-text">运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="toc-number">2.2.1.</span> <span class="toc-text">移位运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97"><span class="toc-number">2.2.2.</span> <span class="toc-text">加减运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%98%E9%99%A4%E8%BF%90%E7%AE%97"><span class="toc-number">2.2.3.</span> <span class="toc-text">乘除运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%A0%81%E4%B8%80%E4%BD%8D%E4%B9%98%E6%B3%95"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">原码一位乘法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E7%A0%81%E4%B8%80%E4%BD%8D%E4%B9%98%E6%B3%95-booth%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.3.2.</span> <span class="toc-text">补码一位乘法(Booth算法)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%A0%81%E9%99%A4%E6%B3%95-%E4%B8%8D%E6%81%A2%E5%A4%8D%E4%BD%99%E6%95%B0%E6%B3%95"><span class="toc-number">2.2.3.3.</span> <span class="toc-text">原码除法(不恢复余数法)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E7%A0%81%E9%99%A4%E6%B3%95-%E5%8A%A0%E5%87%8F%E4%BA%A4%E6%9B%BF%E6%B3%95"><span class="toc-number">2.2.3.4.</span> <span class="toc-text">补码除法(加减交替法)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.3.</span> <span class="toc-text">数据类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B0%E4%B8%8E%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B0%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.3.1.</span> <span class="toc-text">有符号数与无符号数相互转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E5%AD%97%E9%95%BF%E6%95%B4%E6%95%B0%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.3.2.</span> <span class="toc-text">不同字长整数之间的转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%82%A8%E4%B8%8E%E6%8E%92%E5%88%97"><span class="toc-number">2.4.</span> <span class="toc-text">数据的存储与排列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8"><span class="toc-number">2.4.1.</span> <span class="toc-text">大端小端存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%B9%E7%95%8C%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F%E5%AD%98%E5%82%A8"><span class="toc-number">2.4.2.</span> <span class="toc-text">边界对齐方式存储</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%BF%90%E7%AE%97"><span class="toc-number">2.5.</span> <span class="toc-text">浮点数的表示与运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%A4%BA%E6%A0%BC%E5%BC%8F"><span class="toc-number">2.5.1.</span> <span class="toc-text">表示格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A7%84%E6%A0%BC%E5%8C%96"><span class="toc-number">2.5.2.</span> <span class="toc-text">浮点数的规格化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ieee754%E6%A0%87%E5%87%86"><span class="toc-number">2.5.3.</span> <span class="toc-text">IEEE754标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97"><span class="toc-number">2.5.4.</span> <span class="toc-text">浮点数的加减运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E5%92%8C%E5%AE%9A%E7%82%B9%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.6.</span> <span class="toc-text">浮点数和定点数的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7"><span class="toc-number">2.7.</span> <span class="toc-text">做题技巧</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">存储器系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%A6%82%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text">存储器的概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">3.1.1.</span> <span class="toc-text">存储器的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E7%85%A7%E4%BD%9C%E7%94%A8%E5%B1%82%E6%AC%A1%E5%88%86%E7%B1%BB"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">按照作用层次分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E7%85%A7%E5%AD%98%E5%82%A8%E4%BB%8B%E8%B4%A8"><span class="toc-number">3.1.1.2.</span> <span class="toc-text">按照存储介质</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E7%85%A7%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E5%88%86%E7%B1%BB"><span class="toc-number">3.1.1.3.</span> <span class="toc-text">按照存储方式分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E4%BF%A1%E6%81%AF%E5%8F%AF%E4%BF%9D%E5%AD%98%E6%80%A7%E5%88%86%E7%B1%BB"><span class="toc-number">3.1.1.4.</span> <span class="toc-text">按信息可保存性分类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="toc-number">3.1.2.</span> <span class="toc-text">存储器性能指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E5%B1%82%E6%AC%A1%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.1.3.</span> <span class="toc-text">多级层次存储系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-number">3.2.</span> <span class="toc-text">主存储器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sram-%E5%92%8C-dram"><span class="toc-number">3.2.1.</span> <span class="toc-text">SRAM 和 DRAM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#sram"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">SRAM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dram"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">DRAM</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><span class="toc-number">3.2.2.</span> <span class="toc-text">主存储器的基本组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%A8%A1%E5%9D%97%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-number">3.2.3.</span> <span class="toc-text">多模块存储器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E4%BD%93%E5%A4%9A%E5%AD%97%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-number">3.2.3.1.</span> <span class="toc-text">单体多字存储器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E4%BD%93%E5%B9%B6%E8%A1%8C%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-number">3.2.3.2.</span> <span class="toc-text">多体并行存储器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E4%B8%8Ecpu%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-number">3.3.</span> <span class="toc-text">主存与CPU的连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E7%9A%84%E6%89%A9%E5%B1%95"><span class="toc-number">3.3.1.</span> <span class="toc-text">主存的扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%8A%AF%E7%89%87%E7%9A%84%E5%9C%B0%E5%9D%80%E5%88%86%E9%85%8D%E4%B8%8E%E7%89%87%E9%80%89"><span class="toc-number">3.3.2.</span> <span class="toc-text">存储芯片的地址分配与片选</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-number">3.4.</span> <span class="toc-text">外部存储器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-number">3.4.1.</span> <span class="toc-text">磁盘存储器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98"><span class="toc-number">3.4.2.</span> <span class="toc-text">固态硬盘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-number">3.5.</span> <span class="toc-text">高速缓冲区</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86"><span class="toc-number">3.5.1.</span> <span class="toc-text">局部性原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cache%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">3.5.2.</span> <span class="toc-text">cache的基本工作原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7"><span class="toc-number">3.6.</span> <span class="toc-text">做题技巧</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">指令系统</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">中央处理器(CPU)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E9%A2%98%E6%80%BB%E7%BB%93"><span class="toc-number">5.1.</span> <span class="toc-text">做题总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">总线</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">输入输出(I&#x2F;O)系统</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">额外补充</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%92%8C%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF"><span class="toc-number">8.1.</span> <span class="toc-text">组合逻辑电路和时序逻辑电路</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E9%9B%B6%E9%9B%B6%E6%95%A3%E6%95%A3/plantuml/" title="plantuml">plantuml</a><time datetime="2024-09-19T08:25:10.368Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AF%BB%E6%96%87%E7%8C%AE%E6%8C%87%E4%BB%A4/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.366Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%82%A1%E7%A5%A8/temp/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.365Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 戴晶明</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'BkV10wtzbo9nuKwtsBG04Idw-gzGzoHsz',
+      appKey: 'CLv4OkdYGyropWktyqSDf2af',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

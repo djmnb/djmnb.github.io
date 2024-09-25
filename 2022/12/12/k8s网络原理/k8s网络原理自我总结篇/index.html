@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>k8s网络基础 | 戴晶明的个人博客</title><meta name="author" content="戴晶明"><meta name="copyright" content="戴晶明"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="文章一 基础知识 向外发送一个数据包  查找目的地址的路由信息,如果是直连路由,则在邻居表中找到他的Mac地址,然后把数据包直接发给他 如果不是直连路由,则在邻居表中找默认路由的Mac地址,把数据包发给默认路由对应的设备 如果找不到路由信息,那么就是不可达 如果邻居表中找不到Mac地址,就发起ARP请求询问 发出去的数据帧,Mac地址一直在变,但是只要不经历nat(snat和dnat),那么ip地">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s网络基础">
+<meta property="og:url" content="https://djmnb.github.io/2022/12/12/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93%E7%AF%87/index.html">
+<meta property="og:site_name" content="戴晶明的个人博客">
+<meta property="og:description" content="文章一 基础知识 向外发送一个数据包  查找目的地址的路由信息,如果是直连路由,则在邻居表中找到他的Mac地址,然后把数据包直接发给他 如果不是直连路由,则在邻居表中找默认路由的Mac地址,把数据包发给默认路由对应的设备 如果找不到路由信息,那么就是不可达 如果邻居表中找不到Mac地址,就发起ARP请求询问 发出去的数据帧,Mac地址一直在变,但是只要不经历nat(snat和dnat),那么ip地">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://djmnb.github.io/img/site/touxiang.gif">
+<meta property="article:published_time" content="2022-12-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-19T08:25:10.341Z">
+<meta property="article:author" content="戴晶明">
+<meta property="article:tag" content="linux网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://djmnb.github.io/img/site/touxiang.gif"><link rel="shortcut icon" href="/img/site/icon.jfif"><link rel="canonical" href="https://djmnb.github.io/2022/12/12/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93%E7%AF%87/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'k8s网络基础',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-19 16:25:10'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/site/touxiang.gif" onerror="onerror=null;src='/404.html'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: /img/site/beijing.jfif"><nav id="nav"><span id="blog-info"><a href="/" title="戴晶明的个人博客"><span class="site-name">戴晶明的个人博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">k8s网络基础</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-11T16:00:00.000Z" title="发表于 2022-12-12 00:00:00">2022-12-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-19T08:25:10.341Z" title="更新于 2024-09-19 16:25:10">2024-09-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="k8s网络基础"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="文章一">文章一</h2>
+<h3 id="基础知识">基础知识</h3>
+<h4 id="向外发送一个数据包">向外发送一个数据包</h4>
+<ul>
+<li>查找目的地址的路由信息,如果是直连路由,则在邻居表中找到他的Mac地址,然后把数据包直接发给他</li>
+<li>如果不是直连路由,则在邻居表中找默认路由的Mac地址,把数据包发给默认路由对应的设备</li>
+<li>如果找不到路由信息,那么就是不可达</li>
+<li>如果邻居表中找不到Mac地址,就发起ARP请求询问</li>
+<li>发出去的数据帧,Mac地址一直在变,但是只要不经历nat(snat和dnat),那么ip地址是全程不会变的</li>
+</ul>
+<h4 id="接收到一个数据包">接收到一个数据包</h4>
+<ul>
+<li>如果数据帧的目标Mac地址不是自己的Mac地址,而且也不是广播Mac地址(ff:ff:ff:ff),且网卡没有开启混杂模式,则拒绝收包,混杂模式就是所有的帧我都接受</li>
+<li>如果是目标地址是广播Mac地址,那就进入ARP请求处理</li>
+<li>如果目标Mac地址就是自己的Mac地址,也要分几种情况讨论</li>
+<li>
+<ul>
+<li>目标ip地址是本机,则上送到上一层协议继续处理</li>
+<li>如果目标ip不在本机,如果开启了路由转发,则转发这个分组,否则就丢弃这个分组</li>
+</ul>
+</li>
+</ul>
+<p>对于一台linux主机来说，影响网络方面的配置主要有以下几个:</p>
+<ul>
+<li>网卡,网卡的配置,ip地址啊,是否开启,也可以虚拟出一张网卡</li>
+<li>端口: 1-65535 所有进程共用</li>
+<li>iptabels 规则,配置主机的防火墙策略和NAT规则</li>
+<li>路由表</li>
+<li>邻居表,就是跟主机在同一个交换机下的ip与Mac地址的对应关系表</li>
+</ul>
+<p>拥有一个网络隔离空间,就相当于拥有了一台新的主机,它的网络都是全新的</p>
+<h3 id="pod与主机互通">pod与主机互通</h3>
+<p>模拟一个pod出来</p>
+<blockquote>
+<p>主机ip为192.168.100.100</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建一个ns</span></span><br><span class="line">ip netns add ns1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看这个ns的网卡信息</span></span><br><span class="line">ip netns exec ns1 ip link show</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">增加两张互连的虚拟网卡</span></span><br><span class="line">ip link add ns1-eth0 type veth peer name veth-ns1 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将其中一张网卡插到ns1中</span></span><br><span class="line">ip link set ns1-eth0 netns ns1 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动ns1中的网卡</span></span><br><span class="line">ip netns exec ns1 ip link set ns1-eth0 up</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动留在主机中的网卡</span></span><br><span class="line">ip link set veth-ns1 up </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">给ns1中的网卡添加ip地址</span></span><br><span class="line">ip netns exec ns1 ip addr add 172.20.1.10/24 dev ns1-eth0  </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此时还是无法ping通主机的,会显示网络不可达(找不到路由信息,就会出现不可达,验证了前面我们说的),因为我们还没有配置路由表,数据包不知道往哪里发送</span></span><br><span class="line">ip netns exec ns1 ping -c 3 192.168.100.100 </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">我们需要配置ns1中的路由表,增加一条默认路由,这下就能找到路由信息了</span></span><br><span class="line">ip netns exec ns1 ip route add default via 172.20.1.1 dev ns1-eth0 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">现在去ping已经不是不可达了,而是一直等待,没有响应,这是为什么呢?,我们填的网关地址是不存在的,当然找不到他的物理地址,我们有两种方式,一种是给另一端的网卡(也就是我们的网关)设置这个ip地址,还有就是给另一端的网卡的ARP开启一切都应答,不管什么ip地址,我都答复)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">方式一,给对端网卡这是ip</span></span><br><span class="line">ip addr add 172.20.1.1/24 dev veth-ns1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">方式二,开启一切应答模式</span></span><br><span class="line">echo 1 &gt; /proc/sys/net/ipv4/conf/veth-ns1/proxy_arp </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">现在查看邻居表中有没有对端网卡的Mac地址</span></span><br><span class="line">ip netns exec ns1 ip neigh </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果使用了方式一,那么直接就能ping通主机了,因为添加ip的时候,会自带添加一条路由信息,如果使用方式二,我们还得自己添加路由信息,不然主机不知道数据包往哪发送,我们得告诉主句,来自172.20.1.10的数据都忘veth-ns1这个网卡发送</span></span><br><span class="line">ip route add 172.20.1.10 dev veth-ns1</span><br></pre></td></tr></table></figure>
+<h3 id="pod访问外网">pod访问外网</h3>
+<p>如果pod需要访问外网,我们需要开启主机的转发功能,不然是无法访问外网的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 1 &gt; /proc/sys/net/ipv4/ip_forward</span><br></pre></td></tr></table></figure>
+<p>然后还要开启snat</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A POSTROUTING -t nat -s 172.20.1.10 -j MASQUERADE</span><br></pre></td></tr></table></figure>
+<p>我们现在进入ns1 ping 百度就可以啦</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ip netns exec ns1 ping -c 4  www.baidu.com</span><br><span class="line">PING www.baidu.com (198.18.0.74) 56(84) bytes of data.</span><br><span class="line">64 bytes from 198.18.0.74 (198.18.0.74): icmp_seq=1 ttl=127 time=0.452 ms</span><br><span class="line">64 bytes from 198.18.0.74 (198.18.0.74): icmp_seq=2 ttl=127 time=1.01 ms</span><br><span class="line">64 bytes from 198.18.0.74 (198.18.0.74): icmp_seq=3 ttl=127 time=0.788 ms</span><br><span class="line">^C</span><br><span class="line">--- www.baidu.com ping statistics ---</span><br><span class="line">3 packets transmitted, 3 received, 0% packet loss, time 2003ms</span><br><span class="line">rtt min/avg/max/mdev = 0.452/0.750/1.012/0.232 ms</span><br></pre></td></tr></table></figure>
+<h2 id="文章二">文章二</h2>
+<h3 id="基础知识">基础知识</h3>
+<h4 id="netfilter">netfilter</h4>
+<p>linux的收发包是非常复杂的,为了让用户可以在收发包的过程中对数据包进行修改和过滤,linux引入了netfilter子系统,在收发包的过程中,添加了五个扩展点:</p>
+<ul>
+<li>
+<p>NF_INET_PRE_ROUTING（PREROUTING,数据包刚到达的时候会经过这个点,<strong>主要用来做DNAT</strong></p>
+</li>
+<li>
+<p>NF_INET_LOCAL_IN（INPUT） 数据要经过本机的传输层的时候会经过这个点,通常用于完成防火墙的入站检测</p>
+</li>
+<li>
+<p>NF_INET_FORWARD（FORWARD） 数据包要经过本机转发的时候会经过这个点,通常用于防火墙的转发过滤</p>
+</li>
+<li>
+<p>NF_INET_LOCAL_OUT（OUTPUT） 从本机发送的数据包都要经过这个点,通常用来做DNAT和防火墙出站检测</p>
+</li>
+<li>
+<p>NF_INET_POST_ROUTING（POSTROUTING） 数据包离开本机的时候要经过的点,通常用来做<strong>SNAT</strong>,注意和上面这个OUTPUT的区别,output是从本机发送的数据,POSTROUTING还包括转发的数据包</p>
+</li>
+</ul>
+<p>几个关键流程:</p>
+<ul>
+<li>主机应用程序发送数据到外部会经过的点:  OUTPUT-&gt;POSTROUTING</li>
+<li>主机应用程序接受外部数据会经历的点: POSTROUTING-&gt;INPUT</li>
+<li>主机上的其他pod(可以理解为其他虚拟机器)发送数据到外部,也就是转发数据: PREROUTING-&gt;FORWARD-&gt;POSTROUTING</li>
+</ul>
+<blockquote>
+<p>pod虽然是主机的一个进程,但是在收发包的流程却和普通的进程大不相同,pod相当于一台虚拟主机</p>
+</blockquote>
+<h4 id="iptables">iptables</h4>
+<p>虽然linux为我们预留了5个扩展点,但是扩展函数编写起来非常困难,我们可以通过iptables简化(但是我也觉得比较麻烦)</p>
+<p><img src="/2022/12/12/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93%E7%AF%87/../img/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93%E7%AF%87assets/1620.jpeg" alt="img"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -t filter -s 192.168.1.10 -j DROP</span><br></pre></td></tr></table></figure>
+<p>固定前缀参数</p>
+<ul>
+<li>-A 追加一条规则到后面</li>
+<li>-I 前面插入一条规则,让它的优先级更高</li>
+<li>-D 删除规则</li>
+<li>-N 删除链</li>
+<li>-F 清空所有规则或者链</li>
+<li>-X 删除一条用户自定义链</li>
+<li>-P 更改链的默认策略</li>
+<li>-L 展示这条链的规则</li>
+</ul>
+<p>五条链(就是对应的五个拓展点):</p>
+<ul>
+<li>PREROUTING</li>
+<li>INPUT</li>
+<li>FORWORD</li>
+<li>OUTPUT</li>
+<li>POSTROUTING</li>
+</ul>
+<p>-t 后面表示要操作的表:</p>
+<ul>
+<li>filter 表  用于拦截或者放行,不修改包,如果不指定,模式是filter表</li>
+<li>nat表 用于修改ip数据包的源/目地址</li>
+<li>mangle表 主要用于给数据打标记</li>
+</ul>
+<p>数据包的匹配规则:</p>
+<ul>
+<li>-s 代表匹配源ip地址</li>
+<li>–sport 代表匹配源端口</li>
+<li>-dport 代表匹配目标端口</li>
+<li>-p 代表匹配协议类型</li>
+<li>-d 代表匹配目标地址</li>
+</ul>
+<p>-j 后面接动作:</p>
+<ul>
+<li>DROP 丢弃这个数据包</li>
+<li>ACCEPT 接收这个数据包</li>
+<li>RETURN 返回上一条数据链</li>
+<li>SNAT 源地址转换 后面要跟 转换的地址</li>
+<li>DNAT 目标地址转化,后面要跟指定的目标地址</li>
+<li>MASQUERADE 对进入该链的包进行数据源地址转换,但是不需要指定源地址,会自动根据发送网卡的源地址作为转化源地址</li>
+</ul>
+<p>举几个例子:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 增加一条规则: 将本机应用程序待发送到10.96.0.100 的包的目标地址变成10.244.3.10 ( OUTPUT 代表发送出去的数据包, -t表示要进行nat转化,-j代表DNAT转化)</span><br><span class="line">iptables -A OUTPUT -t nat -d 10.96.0.100 -j DNAT --to-destination 10.244.3.10</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 将来到本机的数据包的目标地址为10.96.0.100变成10.244.3.10</span><br><span class="line">iptables -A PREROUTING -t nat -d 10.96.0.100 -j DNAT --to-destination 10.244.3.10</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 将源地址是172.20.1.10 的数据包进行snat转化,并且自动选取网卡ip为源ip</span><br><span class="line">iptables -A POSTROUTING -t nat -s 172.20.1.10 -j MASQUERADE</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 本机应用接收来自192.168.8.166:80协议是tcp的数据包</span><br><span class="line">iptables -A INPUT -t filter -s 192.168.8.166 -p tcp --dport 80 -j ACCEPT</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/12/12/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93%E7%AF%87/../img/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93%E7%AF%87assets/image-20221230154925783.png" alt="image-20221230154925783"></p>
+<p>这个就是</p>
+<h3 id="主机间的pod进行通信">主机间的pod进行通信</h3>
+<p>创建pod-a</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ip netns add pod-a</span><br><span class="line">ip link add eth0 type veth peer name veth-pod-a  </span><br><span class="line">ip link set eth0 netns pod-a  </span><br><span class="line">ip link set veth-pod-a up </span><br><span class="line">ip netns exec pod-a ip addr add 10.244.1.10/24 dev eth0 </span><br><span class="line">ip netns exec pod-a ip link set eth0 up </span><br><span class="line"></span><br><span class="line">ip netns exec pod-a ip route add default via 169.254.10.24 dev eth0 onlink</span><br><span class="line">echo 1 &gt; /proc/sys/net/ipv4/conf/veth-pod-a/proxy_arp</span><br><span class="line">ip route add 10.244.1.10 dev veth-pod-a</span><br></pre></td></tr></table></figure>
+<p>创建pod-b</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ip netns add pod-b</span><br><span class="line">ip link add eth0 type veth peer name veth-pod-b  </span><br><span class="line">ip link set eth0 netns pod-b  </span><br><span class="line">ip link set veth-pod-b up </span><br><span class="line">ip netns exec pod-b ip addr add 10.244.1.11/24 dev eth0 </span><br><span class="line">ip netns exec pod-b ip link set eth0 up </span><br><span class="line"></span><br><span class="line">ip netns exec pod-b ip route add default via 169.254.10.24 dev eth0 onlink</span><br><span class="line">echo 1 &gt; /proc/sys/net/ipv4/conf/veth-pod-b/proxy_arp</span><br><span class="line">ip route add 10.244.1.11 dev veth-pod-b</span><br></pre></td></tr></table></figure>
+<p>主机进行的操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo 1 &gt; /proc/sys/net/ipv4/ip_forward</span><br><span class="line"># 这个代表允许转发源网络地址是10.244.1开头的目标地址是10.244开头的数据包</span><br><span class="line">iptables -I FORWARD -s 10.244.1.0/24 -d 10.244.1.0/24 -j ACCEPT </span><br></pre></td></tr></table></figure>
+<p>测试能不能ping通</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ip netns exec pod-a  ping 10.244.1.11 -c 3</span><br><span class="line">ip netns exec pod-b  ping 10.244.1.10 -c 3</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/12/12/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93%E7%AF%87/../img/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93%E7%AF%87assets/image-20221230162040636.png" alt="image-20221230162040636"></p>
+<p>没问题的</p>
+<h3 id="用iptables-模拟k8s的service">用iptables 模拟k8s的service</h3>
+<p>其实我们只需要将service对应的ip做dnat转换,转换到对应的pod就OK了,用10.96.0.10 代替service的ip地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -A PREROUTING -t nat -d 10.96.0.100 -j DNAT --to-destination 10.244.1.11</span><br><span class="line"># 将请求10.96.0.100的流量转发给pod-b就可以了</span><br></pre></td></tr></table></figure>
+<h4 id="pod-a-ping-service">pod-a ping  service</h4>
+<p>这个时候我们用pod-a ping 10.96.0.100那肯定是没问题的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip netns exec pod-a ping -c 5 10.96.0.100</span><br></pre></td></tr></table></figure>
+<h4 id="主机ping-service">主机ping service</h4>
+<p>我们这个时候用主机ping这个ip地址应该是不可以的,但是我的虚拟机不知道为啥就可以,很神奇,按照流程来说,我们应该要在output这个链上加上DNAT才行,</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A OUTPUT -t nat -d 10.96.0.100 -j DNAT --to-destination 10.244.1.11</span><br></pre></td></tr></table></figure>
+<h4 id="pod-b-ping-service">pod-b ping service</h4>
+<p>我们用pod-b 去ping service,这个能不能ping通呢? 答案是不可以哦,因为经过了DNAT转化后,pod-b发送的数据包的源ip和目的ip都是自己的ip地址了,一般连接外面的网卡默认都不会接收源ip是自己的数据包</p>
+<p>查看开关情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip netns exec pod-b sysctl net.ipv4.conf.eth0.accept_local</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>ip netns exec pod-b sysctl -w net.ipv4.conf.eth0.accept_local=1 按理说我把这个值变成1是不是就行了,但是我测试后发现不行</p>
+</blockquote>
+<p>我们可以通过修改源ip地址的方式,做一次snat就可以了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># iptables -d POSTROUTING -t nat -s 10.244.1.11 -j MASQUERADE  这种方式其实不太好,这是将所有源地址是10.244.1.11都变成本机ip了,这样有缺陷的,我们需要将源地址与目的地址都是10.244.1.11 做一次转化</span><br><span class="line">iptables -A POSTROUTING -t nat -d 10.244.1.11 -s 10.244.1.11 -j MASQUERADE</span><br></pre></td></tr></table></figure>
+<p>我们可以发现使用podip 和 clusterip 的区别就在与clusterip 仅仅多做了了一次地址转换在PREROUTING这条链上做了dnat转换,走的转发路径也都是一样的</p>
+<h2 id="文章三">文章三</h2>
+<h3 id="跨主机pod通信">跨主机pod通信</h3>
+<p>准备两台结点</p>
+<p>node1: 192.168.100.100</p>
+<p>node2: 192.168.100.101</p>
+<h4 id="node1创建pod-a-192-168-10-10">node1创建pod-a(192.168.10.10)</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ip netns add pod-a</span><br><span class="line">ip link add eth0 type veth peer name veth-pod-a</span><br><span class="line">ip link set eth0 netns pod-a</span><br><span class="line">ip netns exec pod-a ip addr add 192.168.10.10/24 dev eth0</span><br><span class="line">ip netns exec pod-a ip link set eth0 up</span><br><span class="line">ip netns exec pod-a ip route add default via 169.254.10.24 dev eth0 onlink</span><br><span class="line">ip link set veth-pod-a up</span><br><span class="line">echo 1 &gt; /proc/sys/net/ipv4/conf/veth-pod-a/proxy_arp</span><br><span class="line">echo 1 &gt; /proc/sys/net/ipv4/ip_forward</span><br><span class="line">iptables -I FORWARD -s 192.168.0.0/16 -d 192.168.0.0/16 -j ACCEPT</span><br><span class="line">ip route add 192.168.10.10 dev veth-pod-a scope link</span><br></pre></td></tr></table></figure>
+<h4 id="node2创建pod-b-192-168-11-10">node2创建pod-b(192.168.11.10)</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ip netns add pod-b</span><br><span class="line">ip link add eth0 type veth peer name veth-pod-b</span><br><span class="line">ip link set eth0 netns pod-b</span><br><span class="line">ip netns exec pod-b ip addr add 192.168.11.10/24 dev eth0</span><br><span class="line">ip netns exec pod-b ip link set eth0 up</span><br><span class="line">ip netns exec pod-b ip route add default via 169.254.10.24 dev eth0 onlink</span><br><span class="line">ip link set veth-pod-b up</span><br><span class="line">echo 1 &gt; /proc/sys/net/ipv4/conf/veth-pod-b/proxy_arp</span><br><span class="line">echo 1 &gt; /proc/sys/net/ipv4/ip_forward</span><br><span class="line">iptables -I FORWARD -s 192.168.0.0/16 -d 192.168.0.0/16 -j ACCEPT</span><br><span class="line">ip route add 192.168.11.10 dev veth-pod-b scope link</span><br></pre></td></tr></table></figure>
+<p>此时pod与各自主机是能够ping 通的, 但是pod与pod之间还是无法ping通的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip route add 192.168.11.0/24 via 192.168.100.101 dev ens33 onlink </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip route add 192.168.10.0/24 via 192.168.100.100 dev ens onlink </span><br></pre></td></tr></table></figure>
+<p>我们可以在主机一种的pod-a中开一个服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip netns exec pod-a nohup socat TCP4-LISTEN:80,fork exec:cat 2&gt;&amp;1 &amp;   </span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://djmnb.github.io">戴晶明</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://djmnb.github.io/2022/12/12/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93%E7%AF%87/">https://djmnb.github.io/2022/12/12/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/k8s%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93%E7%AF%87/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://djmnb.github.io" target="_blank">戴晶明的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux%E7%BD%91%E7%BB%9C/">linux网络</a></div><div class="post_share"><div class="social-share" data-image="/img/site/touxiang.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/12/17/English/%E5%8D%95%E8%AF%8D%E6%9C%AC/" title="单词本"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">单词本</div></div></a></div><div class="next-post pull-right"><a href="/2022/12/12/test/test/" title="hello"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">hello</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/site/touxiang.gif" onerror="this.onerror=null;this.src='/404.html'" alt="avatar"/></div><div class="author-info__name">戴晶明</div><div class="author-info__description">不积跬步,无以至千里</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="/img/site/weixin.jpg" target="_blank" title="WeChat"><i class="fab fa-weixin"></i></a><a class="social-icon" href="/img/site/qq.jpg" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎光临</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E4%B8%80"><span class="toc-number">1.</span> <span class="toc-text">文章一</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.1.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%91%E5%A4%96%E5%8F%91%E9%80%81%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%8C%85"><span class="toc-number">1.1.1.</span> <span class="toc-text">向外发送一个数据包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6%E5%88%B0%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%8C%85"><span class="toc-number">1.1.2.</span> <span class="toc-text">接收到一个数据包</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pod%E4%B8%8E%E4%B8%BB%E6%9C%BA%E4%BA%92%E9%80%9A"><span class="toc-number">1.2.</span> <span class="toc-text">pod与主机互通</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pod%E8%AE%BF%E9%97%AE%E5%A4%96%E7%BD%91"><span class="toc-number">1.3.</span> <span class="toc-text">pod访问外网</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E4%BA%8C"><span class="toc-number">2.</span> <span class="toc-text">文章二</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">2.1.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#netfilter"><span class="toc-number">2.1.1.</span> <span class="toc-text">netfilter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#iptables"><span class="toc-number">2.1.2.</span> <span class="toc-text">iptables</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E9%97%B4%E7%9A%84pod%E8%BF%9B%E8%A1%8C%E9%80%9A%E4%BF%A1"><span class="toc-number">2.2.</span> <span class="toc-text">主机间的pod进行通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8iptables-%E6%A8%A1%E6%8B%9Fk8s%E7%9A%84service"><span class="toc-number">2.3.</span> <span class="toc-text">用iptables 模拟k8s的service</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pod-a-ping-service"><span class="toc-number">2.3.1.</span> <span class="toc-text">pod-a ping  service</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BAping-service"><span class="toc-number">2.3.2.</span> <span class="toc-text">主机ping service</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pod-b-ping-service"><span class="toc-number">2.3.3.</span> <span class="toc-text">pod-b ping service</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E4%B8%89"><span class="toc-number">3.</span> <span class="toc-text">文章三</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%A8%E4%B8%BB%E6%9C%BApod%E9%80%9A%E4%BF%A1"><span class="toc-number">3.1.</span> <span class="toc-text">跨主机pod通信</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#node1%E5%88%9B%E5%BB%BApod-a-192-168-10-10"><span class="toc-number">3.1.1.</span> <span class="toc-text">node1创建pod-a(192.168.10.10)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#node2%E5%88%9B%E5%BB%BApod-b-192-168-11-10"><span class="toc-number">3.1.2.</span> <span class="toc-text">node2创建pod-b(192.168.11.10)</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E9%9B%B6%E9%9B%B6%E6%95%A3%E6%95%A3/plantuml/" title="plantuml">plantuml</a><time datetime="2024-09-19T08:25:10.368Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AF%BB%E6%96%87%E7%8C%AE%E6%8C%87%E4%BB%A4/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.366Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%82%A1%E7%A5%A8/temp/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.365Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 戴晶明</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'BkV10wtzbo9nuKwtsBG04Idw-gzGzoHsz',
+      appKey: 'CLv4OkdYGyropWktyqSDf2af',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

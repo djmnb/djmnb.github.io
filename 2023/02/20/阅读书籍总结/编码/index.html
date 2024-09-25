@@ -1,0 +1,358 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>编码 | 戴晶明的个人博客</title><meta name="author" content="戴晶明"><meta name="copyright" content="戴晶明"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第四章 手电筒的剖析 这章感觉像电路知识,哈哈哈哈 电池是通过化学反应将电子从正极移动到负极,如果有导线连接正负极的时候,化学反应才会发生的很快,如果电池没有连接导线,那么化学反应会发生的很慢很慢(不代表不发生,因为负极的电子也可能跑掉,正极补充到电子) 电子是很难直接通过空气流动的,物质的导电能力是由它的核外电子结构决定的,如果最外电子层只有一个电子,那么这个电子是很容易逃逸的 对于电流能够流通">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编码">
+<meta property="og:url" content="https://djmnb.github.io/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/index.html">
+<meta property="og:site_name" content="戴晶明的个人博客">
+<meta property="og:description" content="第四章 手电筒的剖析 这章感觉像电路知识,哈哈哈哈 电池是通过化学反应将电子从正极移动到负极,如果有导线连接正负极的时候,化学反应才会发生的很快,如果电池没有连接导线,那么化学反应会发生的很慢很慢(不代表不发生,因为负极的电子也可能跑掉,正极补充到电子) 电子是很难直接通过空气流动的,物质的导电能力是由它的核外电子结构决定的,如果最外电子层只有一个电子,那么这个电子是很容易逃逸的 对于电流能够流通">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://djmnb.github.io/img/site/touxiang.gif">
+<meta property="article:published_time" content="2023-02-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-19T08:25:10.367Z">
+<meta property="article:author" content="戴晶明">
+<meta property="article:tag" content="博客系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://djmnb.github.io/img/site/touxiang.gif"><link rel="shortcut icon" href="/img/site/icon.jfif"><link rel="canonical" href="https://djmnb.github.io/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '编码',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-19 16:25:10'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/site/touxiang.gif" onerror="onerror=null;src='/404.html'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: /img/site/beijing.jfif"><nav id="nav"><span id="blog-info"><a href="/" title="戴晶明的个人博客"><span class="site-name">戴晶明的个人博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">编码</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-19T16:00:00.000Z" title="发表于 2023-02-20 00:00:00">2023-02-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-19T08:25:10.367Z" title="更新于 2024-09-19 16:25:10">2024-09-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="编码"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="第四章-手电筒的剖析">第四章 手电筒的剖析</h2>
+<p>这章感觉像电路知识,哈哈哈哈</p>
+<p>电池是通过化学反应将电子从正极移动到负极,如果有导线连接正负极的时候,化学反应才会发生的很快,如果电池没有连接导线,那么化学反应会发生的很慢很慢(不代表不发生,因为负极的电子也可能跑掉,正极补充到电子)</p>
+<p>电子是很难直接通过空气流动的,物质的导电能力是由它的核外电子结构决定的,如果最外电子层只有一个电子,那么这个电子是很容易逃逸的</p>
+<p>对于电流能够流通的的物体我们叫做<strong>导体</strong>,对于那些几乎不能导电的物体,我们叫做<strong>绝缘体</strong>,<strong>但是不存在理想绝缘体,这些绝缘体就相当于一个阻值很大很大的电阻罢了,通过他的电流非常小,小到可以忽略不计,当我们有足够大的电压时,也能产生很大的电流</strong></p>
+<p>那些导电性很好的导体也具有阻性,只不过他们的电阻比较小罢了,导线越长,电阻越大,导线越粗,电阻越小,这是为什么呢,导线越粗,电子可以选择的通路就越多</p>
+<p>电子在高速移动的过程中,也会产生摩擦吧,这样是不是就会发热?,如果导线直接连接电视两端,而阻值比较小, 那这样的话,导线就会持续发热,然后就会烧掉</p>
+<p>电流只有有和无,灯泡的也只有发光和不发光,因此这是不是也是二进制的一种体现</p>
+<h2 id="第五章-绕过拐角的通信">第五章 绕过拐角的通信</h2>
+<p>crazying,居然可以用地球当导体,这个跟上一节讲的导线越粗电子越小,只要给足够的电压,任何东西可以导电,那么地球是不是也可以这么理解啊,我去,但是这个电压是需要非常大的</p>
+<h2 id="第十一章-门">第十一章 门</h2>
+<p>我们知道用导线一圈一圈围绕在铁棒上,通电后可以产生磁性跟磁铁一样,断电后又不具有磁性了,这个东西叫继电器,那么我是不是可以用继电器来充当开关,通电代表打开,没电代表关闭</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220153002264.png" alt="image-20230220153002264"></p>
+<p>这样我们就能造出很多逻辑门</p>
+<h3 id="与门-and">与门 (AND)</h3>
+<p>只有当所有的输入端都为1时才能输出1,否则就是0,这个就是与门</p>
+<p>用在这个图里解释就是,只有所有通电器通电了,灯泡才能亮</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220153843677.png" alt="image-20230220153843677"></p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220153130424.png" alt="image-20230220153130424"></p>
+<p>因此我们可以将上面那张继电器的图表示为</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220153208111.png" alt="image-20230220153208111"></p>
+<p>上面只有两个输入端,其实我们可以用多个与门制造多个输入端</p>
+<p>比如这样</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220153420235.png" alt="image-20230220153420235"></p>
+<h3 id="或门-or">或门(OR)</h3>
+<p>只要所有的输入端中只要有一个输入为1,输出就是1</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220153912809.png" alt="image-20230220153912809"></p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220153730717.png" alt="image-20230220153730717"></p>
+<h3 id="非门-not">非门(NOT)</h3>
+<p>输出和输入端相反</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220153953276.png" alt="image-20230220153953276"></p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220154113732.png" alt="image-20230220154113732"></p>
+<h3 id="或非门-nor">或非门(NOR)</h3>
+<p>这个可以理解为一个或门串联一个非门,但实际上还是只有两个继电器</p>
+<p>只要输入端中有1,就输出0,否则就输出1</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220154829712.png" alt="image-20230220154829712"></p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220154849496.png" alt="image-20230220154849496"></p>
+<h3 id="与非门-nand">与非门(NAND)</h3>
+<p>这个可以理解为一个与门与一个或门连接</p>
+<p>只要输入端有0,就输出1,否则就输出0</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220155005433.png" alt="image-20230220155005433"></p>
+<h3 id="异或门">异或门</h3>
+<p>这个就不用说了</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220203044696.png" alt="image-20230220203044696"></p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220203316541.png" alt="image-20230220203316541"></p>
+<h3 id="缓冲器">缓冲器</h3>
+<p>一个最原始的继电器就是一个缓冲器</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220155433114.png" alt="image-20230220155433114"></p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220155447464.png" alt="image-20230220155447464"></p>
+<p>它的输入跟输出是一样的,当输入信号很微弱的时候,可以使用缓冲器增强信号(因为继电器只需要很小的信号就可以运行,它运行后输入的信号可以强的多),另外,还可以延迟信号</p>
+<h2 id="第十二章-二进制加法器">第十二章 二进制加法器</h2>
+<h3 id="半加器">半加器</h3>
+<p>一位加法 可以产生一个和,一个进位</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220203219564.png" alt="image-20230220203219564"></p>
+<p>我们用下面这种方法表示一位加法器,也叫半加器</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220203401903.png" alt="image-20230220203401903"></p>
+<p>叫半加器是因为,对于有两个二进制位的数字相加,第一次相加只有两位数据,而第二次相加有三位数据(两个加法位,一个进位),因此我们还需要一个全加器(三位加法运算)</p>
+<h3 id="全加器">全加器</h3>
+<p>三位加法器被称为全加器</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220204200190.png" alt="image-20230220204200190"></p>
+<p>为了方便都用这种方法记做全加器</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220204239610.png" alt="image-20230220204239610"></p>
+<h3 id="多位加法器">多位加法器</h3>
+<p>利用全加器,我们可以制作多位加法器</p>
+<p>八位加法器</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220204321524.png" alt="image-20230220204321524"></p>
+<p>16位加法器</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220204449354.png" alt="image-20230220204449354"></p>
+<blockquote>
+<p>现在我们一般不用继电器了,体积大,噪声大,现在一般使用晶体管,虽然材料不一样,但是原理都是一样的</p>
+</blockquote>
+<h2 id="第十四章-反馈与触发器">第十四章 反馈与触发器</h2>
+<h3 id="振荡器">振荡器</h3>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220214838528.png" alt="image-20230220214838528"></p>
+<p>我去,这个图有点意思,当我们把开关关下去之后,铁棒会带有磁性,然后将金属弹片拉下来</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220214946459.png" alt="image-20230220214946459"></p>
+<p>然后电路断开,金属弹片又会回去</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220215020159.png" alt="image-20230220215020159"></p>
+<p>这样是不是就循环起来了,如果有击打声,那岂不是就是电铃了</p>
+<p>这个其实就是振荡器,它的电子元件图有点看着别扭,不太好理解</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230220215435173.png" alt="image-20230220215435173"></p>
+<p>振荡器输出按某种规律进行,我们可以测出它的周期,进而得到它的频率</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221150627410.png" alt="image-20230221150627410"></p>
+<p>我们使用HZ来当振荡器的频率单位,比如:</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221150820506.png" alt="image-20230221150820506"></p>
+<p>这个振荡器每0.05s就是一个循环,那么它的频率就是 1/0.05 = 20HZ   就是1秒钟循环20次震荡</p>
+<h3 id="锁存器">锁存器</h3>
+<h4 id="rs锁存器">RS锁存器</h4>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221151241427.png" alt="image-20230221151241427"></p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221160251469.png" alt="image-20230221160251469"></p>
+<p>卧槽这个东西又比较吊了,它居然可以存储状态</p>
+<p>当我们给上边这个开关关上(就是输入1),然后左边这个或非门输出0,下面这个开关没有合上,所以右边这个或非门输出1,所以灯泡亮了,然而,我们会发现这个时候,上面这个开关是否开合都不能影响这个电路的最后输出了,</p>
+<p>可以存储状态的两个或非门电路中，<strong>右边的或非门的继电器的电源开关通常是由左边的或非门的输出控制的</strong>。<strong>这种电路被称为 SR（Set-Reset）或闪存器</strong>。<strong>左边的或非门可以被视为“设置”输入</strong>，<strong>右边的或非门可以被视为“重置”输入</strong>。当左边的或非门的输出为1时，它会将右边的继电器开关置为1，从而存储一个状态。当左边的或非门的输出为0时，它会将右边的继电器开关置为0，从而重置存储的状态。</p>
+<blockquote>
+<p>其实这个R 和 S 是相对的,是要看输出的Q 与 Q’  如果要的输出值是Q,那么R就是reset端,S就是Set端,如果要的输出值是Q’,那么就反过来</p>
+</blockquote>
+<p>需要注意的是，这种电路有可能处于不稳定的状态，即所存储的状态不明确或者不符合预期。因此，在实际应用中，需要使用更加复杂的电路来保证稳定性，比如使用时钟信号来控制存储和读取操作。</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221160456196.png" alt="image-20230221160456196"></p>
+<p>这里就算我们输入1, 1 其实也不会对电路造成任何影响,只不过这样没有任何意义,我们可以简化这个RS触发器</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221160710488.png" alt="image-20230221160710488"></p>
+<p><strong>其实这个电路有个缺点,就是我们并不知道这个一开始的输出是什么,它是随机的,因此我们需要一个预设个清零</strong></p>
+<p>通常情况下,我们使用跟好的电路来代替这个触发器,这样可以避免一些误操作</p>
+<blockquote>
+<p>我们要保证R和S 必须相反,所以我们有了如下电路,时钟用来控制可以写入和重置</p>
+</blockquote>
+<h4 id="d锁存器">D锁存器</h4>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221163016241.png" alt="image-20230221163016241"></p>
+<p>这个是一位锁存器,我们平时当然是八位一起的</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221163040420.png" alt="image-20230221163040420"></p>
+<h4 id="d边缘触发器">D边缘触发器</h4>
+<p>这个电路只有当时钟从低电平变到高电平才有效</p>
+<p>因为,在两个D锁存器中**,一次只能设置一个锁存器,而当时钟是低电平的时候,我们只能设置第一个锁存器**,而如果时钟处于高电平的时候,第一个锁存器的数据会变到第二个锁存器中,而此时第一个锁存器的数据也已经无法改变,<strong>所以只有在低电平的时候事先将数据放到数据端,等到时钟从0跳变到1的时候数据会从第一个锁存器中变输入到第二个锁存器中</strong></p>
+<p>时钟低电平:  只能设置第一个锁存器</p>
+<p>时钟高电平: 第一个锁存器不能被设置数据,第二个锁存器被设置成第一个的数据</p>
+<p>如果我们想更改第二个锁存器数据,必须在低电平期间设置数据端</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230228213013864.png" alt="image-20230228213013864"></p>
+<h4 id="更完美的d边缘触发器">更完美的D边缘触发器</h4>
+<p>上面的触发器有个缺点就是,在一开始R-S的输出都是随机的,</p>
+<p>前面我们只有两个输入位,这个有四个输入位,预置和清零都会覆盖时钟和数据的输入</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230222132743446.png" alt="image-20230222132743446"></p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230222132752233.png" alt="image-20230222132752233"></p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230222132939580.png" alt="image-20230222132939580"></p>
+<h3 id="分频器-t触发器">分频器(T触发器)</h3>
+<p>这个是由<strong>D边缘触发器</strong>与振荡器相连,时钟从低电平变到高电平的时候才会改变一次状态</p>
+<blockquote>
+<p>这里如果采用锁存器和D触发器就会发生震荡,因为时钟信号会有一段时间处于高电平的状态,这个时间段D可以设置数据的话,那么会飞快的交替0和1</p>
+</blockquote>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221163611415.png" alt="image-20230221163611415"></p>
+<p>这个电路的Q输出端的频率变化是CLK 的一半,因此是不是也就分频了,如果多个分频器相连,就会有分的更小</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221164211210.png" alt="image-20230221164211210"></p>
+<p>我们来看周期图,并且标上0/1</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221164245351.png" alt="image-20230221164245351"></p>
+<p>倒过来看,是不是就是一个二进制的进位表</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221164308431.png" alt="image-20230221164308431"></p>
+<h3 id="计数器">计数器</h3>
+<blockquote>
+<p>我们通过连接多个T触发器的电路可以发现,第一个T触发器从低电平到高电平跳变两次,第二个触发器才跳变一次,这个是不是就是二进制了?,逢二进一</p>
+</blockquote>
+<p>我们将多个分频器相连是不是就变成了计数器</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221164607659.png" alt="image-20230221164607659"></p>
+<p>因此我们可以通过计数器来测试时钟频率,把这些输出全部连上灯泡,打开开关后开始计时,等到下一次灯泡全部熄灭了后 停止计时,然后用2的灯泡个数次幂除以时间就得到频率了</p>
+<h2 id="第十六章-存储器组织">第十六章 存储器组织</h2>
+<h3 id="三八译码器">三八译码器</h3>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221181208801.png" alt="image-20230221181208801"></p>
+<h3 id="八一选择器">八一选择器</h3>
+<p>这个就是在三八译码器的基础上加了一个8端口或门</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221181325769.png" alt="image-20230221181325769"></p>
+<h2 id="第十七章-自动操作">第十七章 自动操作</h2>
+<p>我们来看看自动进行累加操作吧</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230221205745990.png" alt="image-20230221205745990"></p>
+<p>由于这个系统没有硬盘,所以数据必须我们自动提供</p>
+<p>我们需要通过控制面板去手动将数据输入到指定位置</p>
+<p>来说一下这个过程吧</p>
+<p>首先必须合上清零开关,让震荡器一直处于0这个计数位置,那个8位锁存器也全部处于0数据,然后通过控制面板输入数据,最后打开清零开关,这个时候震荡器开始计数,将制定地址输入到RAM中,然后RAM输出指定位置数据到加法器中,然后将加法器中的数据和锁存器的数据相加,然后将输入写会锁存器,以此往复</p>
+<p>这个缺点有点大,它根本不会停止,我们也不知道什么时候要停止</p>
+<p>因此我们需要更加复杂的自动加法器,进而需要设置更复杂的电路来识别我们所给的指令</p>
+<p><strong>硬件</strong>就是实实在在看到东西,开关,显示屏,键盘,而<strong>软件</strong>就是代码和指令,叫做软件主要是因为他们很容易被修改</p>
+<h2 id="第十八章-从算盘到芯片">第十八章 从算盘到芯片</h2>
+<p>在冯洛伊曼提出存储程序之前,人们都是用纸带存储数据</p>
+<h3 id="晶体管">晶体管</h3>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230222140836548.png" alt="image-20230222140836548"></p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230222140903540.png" alt="image-20230222140903540"></p>
+<p>我们来看看晶体管的与门与或门吧</p>
+<p><img src="/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/../img/%E7%BC%96%E7%A0%81assets/image-20230222141400611.png" alt="image-20230222141400611"></p>
+<p>使用晶体管可以减少计算机的体积,电量,但是无法简化计算机的结构,相反,晶体管更小,要将这么多晶体管连线起来,也不是件容易事,</p>
+<p>因此我们可以将晶体管先组合成门,然后通过这些门去连接成振荡器,加法器等等,在有这些东西去组成更强大的东西,然后构成集成电路</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://djmnb.github.io">戴晶明</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://djmnb.github.io/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/">https://djmnb.github.io/2023/02/20/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E7%BC%96%E7%A0%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://djmnb.github.io" target="_blank">戴晶明的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/site/touxiang.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/22/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%80%BB%E7%BB%93/%E9%98%85%E8%AF%BB%E9%80%89%E6%8B%A9%E4%B9%A6%E7%B1%8D%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" title="阅读书籍和选择书籍方法总结"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">阅读书籍和选择书籍方法总结</div></div></a></div><div class="next-post pull-right"><a href="/2023/02/19/%E8%82%A1%E7%A5%A8/%E8%82%A1%E7%A5%A8%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/" title="股票基本知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">股票基本知识</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/site/touxiang.gif" onerror="this.onerror=null;this.src='/404.html'" alt="avatar"/></div><div class="author-info__name">戴晶明</div><div class="author-info__description">不积跬步,无以至千里</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="/img/site/weixin.jpg" target="_blank" title="WeChat"><i class="fab fa-weixin"></i></a><a class="social-icon" href="/img/site/qq.jpg" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎光临</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%89%8B%E7%94%B5%E7%AD%92%E7%9A%84%E5%89%96%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">第四章 手电筒的剖析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E7%BB%95%E8%BF%87%E6%8B%90%E8%A7%92%E7%9A%84%E9%80%9A%E4%BF%A1"><span class="toc-number">2.</span> <span class="toc-text">第五章 绕过拐角的通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0-%E9%97%A8"><span class="toc-number">3.</span> <span class="toc-text">第十一章 门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E9%97%A8-and"><span class="toc-number">3.1.</span> <span class="toc-text">与门 (AND)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%96%E9%97%A8-or"><span class="toc-number">3.2.</span> <span class="toc-text">或门(OR)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%97%A8-not"><span class="toc-number">3.3.</span> <span class="toc-text">非门(NOT)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%96%E9%9D%9E%E9%97%A8-nor"><span class="toc-number">3.4.</span> <span class="toc-text">或非门(NOR)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E9%9D%9E%E9%97%A8-nand"><span class="toc-number">3.5.</span> <span class="toc-text">与非门(NAND)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%88%96%E9%97%A8"><span class="toc-number">3.6.</span> <span class="toc-text">异或门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%86%B2%E5%99%A8"><span class="toc-number">3.7.</span> <span class="toc-text">缓冲器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E6%B3%95%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">第十二章 二进制加法器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8A%E5%8A%A0%E5%99%A8"><span class="toc-number">4.1.</span> <span class="toc-text">半加器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%8A%A0%E5%99%A8"><span class="toc-number">4.2.</span> <span class="toc-text">全加器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E4%BD%8D%E5%8A%A0%E6%B3%95%E5%99%A8"><span class="toc-number">4.3.</span> <span class="toc-text">多位加法器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E5%8F%8D%E9%A6%88%E4%B8%8E%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text">第十四章 反馈与触发器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%AF%E8%8D%A1%E5%99%A8"><span class="toc-number">5.1.</span> <span class="toc-text">振荡器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%81%E5%AD%98%E5%99%A8"><span class="toc-number">5.2.</span> <span class="toc-text">锁存器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rs%E9%94%81%E5%AD%98%E5%99%A8"><span class="toc-number">5.2.1.</span> <span class="toc-text">RS锁存器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d%E9%94%81%E5%AD%98%E5%99%A8"><span class="toc-number">5.2.2.</span> <span class="toc-text">D锁存器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d%E8%BE%B9%E7%BC%98%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-number">5.2.3.</span> <span class="toc-text">D边缘触发器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%AE%8C%E7%BE%8E%E7%9A%84d%E8%BE%B9%E7%BC%98%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-number">5.2.4.</span> <span class="toc-text">更完美的D边缘触发器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%A2%91%E5%99%A8-t%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-number">5.3.</span> <span class="toc-text">分频器(T触发器)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="toc-number">5.4.</span> <span class="toc-text">计数器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84%E7%BB%87"><span class="toc-number">6.</span> <span class="toc-text">第十六章 存储器组织</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E5%85%AB%E8%AF%91%E7%A0%81%E5%99%A8"><span class="toc-number">6.1.</span> <span class="toc-text">三八译码器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AB%E4%B8%80%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">6.2.</span> <span class="toc-text">八一选择器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%83%E7%AB%A0-%E8%87%AA%E5%8A%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">7.</span> <span class="toc-text">第十七章 自动操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E5%85%AB%E7%AB%A0-%E4%BB%8E%E7%AE%97%E7%9B%98%E5%88%B0%E8%8A%AF%E7%89%87"><span class="toc-number">8.</span> <span class="toc-text">第十八章 从算盘到芯片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%B6%E4%BD%93%E7%AE%A1"><span class="toc-number">8.1.</span> <span class="toc-text">晶体管</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E9%9B%B6%E9%9B%B6%E6%95%A3%E6%95%A3/plantuml/" title="plantuml">plantuml</a><time datetime="2024-09-19T08:25:10.368Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AF%BB%E6%96%87%E7%8C%AE%E6%8C%87%E4%BB%A4/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.366Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%82%A1%E7%A5%A8/temp/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.365Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 戴晶明</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'BkV10wtzbo9nuKwtsBG04Idw-gzGzoHsz',
+      appKey: 'CLv4OkdYGyropWktyqSDf2af',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

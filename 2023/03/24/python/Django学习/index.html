@@ -1,0 +1,1111 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Django 学习 | 戴晶明的个人博客</title><meta name="author" content="戴晶明"><meta name="copyright" content="戴晶明"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言 学习了python,觉得python简单好用,那它的web框架肯定也不错,就想着学了以后拿来自己用 环境搭建 安装Django 4.0.4 1pip install django&#x3D;&#x3D;4.0.4 查看版本 1python -m django --version 文件介绍 我们通过pycharm可以直接创建Django项目,它会默认给我们创建一些文件,然后通过命令行新建一个app 1python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django 学习">
+<meta property="og:url" content="https://djmnb.github.io/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="戴晶明的个人博客">
+<meta property="og:description" content="前言 学习了python,觉得python简单好用,那它的web框架肯定也不错,就想着学了以后拿来自己用 环境搭建 安装Django 4.0.4 1pip install django&#x3D;&#x3D;4.0.4 查看版本 1python -m django --version 文件介绍 我们通过pycharm可以直接创建Django项目,它会默认给我们创建一些文件,然后通过命令行新建一个app 1python">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://djmnb.github.io/img/site/touxiang.gif">
+<meta property="article:published_time" content="2023-03-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-19T08:25:10.343Z">
+<meta property="article:author" content="戴晶明">
+<meta property="article:tag" content="博客系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://djmnb.github.io/img/site/touxiang.gif"><link rel="shortcut icon" href="/img/site/icon.jfif"><link rel="canonical" href="https://djmnb.github.io/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Django 学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-19 16:25:10'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/site/touxiang.gif" onerror="onerror=null;src='/404.html'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: /img/site/beijing.jfif"><nav id="nav"><span id="blog-info"><a href="/" title="戴晶明的个人博客"><span class="site-name">戴晶明的个人博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Django 学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-23T16:00:00.000Z" title="发表于 2023-03-24 00:00:00">2023-03-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-19T08:25:10.343Z" title="更新于 2024-09-19 16:25:10">2024-09-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">18.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>64分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Django 学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>前言</h1>
+<p>学习了python,觉得python简单好用,那它的web框架肯定也不错,就想着学了以后拿来自己用</p>
+<h1>环境搭建</h1>
+<h2 id="安装django-4-0-4">安装Django 4.0.4</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install django==4.0.4</span><br></pre></td></tr></table></figure>
+<h2 id="查看版本">查看版本</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m django --version</span><br></pre></td></tr></table></figure>
+<h1>文件介绍</h1>
+<p>我们通过pycharm可以直接创建Django项目,它会默认给我们创建一些文件,然后通过命令行新建一个app</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manager.py startapp test1</span><br></pre></td></tr></table></figure>
+<p>我们也可以使用 djang-admin startproject mysite</p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230324151910678.png" alt="image-20230324151910678"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">djangoProject</span><br><span class="line">    - djangoProject   # 对整个程序进行配置</span><br><span class="line">    	- init.py         # 一个空文件，它告诉Python这个目录应该被看做一个Python包</span><br><span class="line">    	- settings.py     # 项目配置文件</span><br><span class="line">    	- url.py          # URL对应关系（路由）</span><br><span class="line">   		- wsgi.py         # 遵循WSIG规范，uwsgi + nginx</span><br><span class="line">	- manage.py           # 一个命令行工具，可以使你用多种方式对Django项目进行交互</span><br><span class="line">	- templates           # 放前端页面的地方</span><br><span class="line">	-test1			# app配置以及代码</span><br><span class="line">		- admin.py        #对应应用后台管理配置文件。</span><br><span class="line">  		- apps.py         #对应应用的配置文件。</span><br><span class="line">  		- models.py       #数据模块，数据库设计就在此文件中设计。后面重点讲解</span><br><span class="line">  		- tests.py        #自动化测试模块，可在里面编写测试脚本自动化测试</span><br><span class="line">  		- views.py        #视图文件，用来执行响应代码的。你在浏览器所见所得都是它处理的。  我们的业务代码就写在这里面</span><br><span class="line">  		- init.py		 # 包初始文件</span><br><span class="line">		- migrations      #数据迁移、移植文目录，记录数据库操作记录，内容自动生成。</span><br><span class="line">  		- __init__.py</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>最后我们还需要在 settings文件里面 加入我们这个APP</p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230324152831346.png" alt="image-20230324152831346"></p>
+<h2 id="官方介绍">官方介绍</h2>
+<p>让我们看看 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/django-admin/#django-admin-startproject"><code>startproject</code></a> 创建了些什么:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysite/</span><br><span class="line">    manage.py</span><br><span class="line">    mysite/</span><br><span class="line">        __init__.py</span><br><span class="line">        settings.py</span><br><span class="line">        urls.py</span><br><span class="line">        asgi.py</span><br><span class="line">        wsgi.py</span><br></pre></td></tr></table></figure>
+<p>这些目录和文件的用处是：</p>
+<ul>
+<li><strong>最外层的 <code>mysite/</code> 根目录只是你项目的容器</strong>， 根目录名称对 Django 没有影响，你可以将它重命名为任何你喜欢的名称。</li>
+<li><code>manage.py</code>: 一个让你用各种方式管理 Django 项目的命令行工具。你可以阅读 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/django-admin/">django-admin 和 manage.py</a> 获取所有 <code>manage.py</code> 的细节。</li>
+<li><strong>里面一层的 <code>mysite/</code> 目录包含你的项目</strong>，它是一个纯 Python 包。它的名字就是当你引用它内部任何东西时需要用到的 Python 包名。 (比如 <code>mysite.urls</code>).</li>
+<li><code>mysite/__init__.py</code>：一个空文件，告诉 Python 这个目录应该被认为是一个 Python 包。如果你是 Python 初学者，阅读官方文档中的 <a target="_blank" rel="noopener" href="https://docs.python.org/3/tutorial/modules.html#tut-packages">更多关于包的知识</a>。</li>
+<li><code>mysite/settings.py</code>：Django 项目的配置文件。如果你想知道这个文件是如何工作的，请查看 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/topics/settings/">Django 配置</a> 了解细节。</li>
+<li><code>mysite/urls.py</code>：Django 项目的 URL 声明，就像你网站的“目录”。阅读 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/topics/http/urls/">URL调度器</a> 文档来获取更多关于 URL 的内容。</li>
+<li><code>mysite/asgi.py</code>：作为你的项目的运行在 ASGI 兼容的 Web 服务器上的入口。阅读 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/howto/deployment/asgi/">如何使用 ASGI 来部署</a> 了解更多细节。</li>
+<li><code>mysite/wsgi.py</code>：作为你的项目的运行在 WSGI 兼容的Web服务器上的入口。阅读 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/howto/deployment/wsgi/">如何使用 WSGI 进行部署</a> 了解更多细节。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py startapp polls</span><br></pre></td></tr></table></figure>
+<p>这将会创建一个 <code>polls</code> 目录，它的目录结构大致如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">polls/</span><br><span class="line">    __init__.py</span><br><span class="line">    admin.py</span><br><span class="line">    apps.py</span><br><span class="line">    migrations/</span><br><span class="line">        __init__.py</span><br><span class="line">    models.py</span><br><span class="line">    tests.py</span><br><span class="line">    views.py</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Django会对每一次的访问请求重新载入一遍 Python 代码。所以你不需要为了让修改的代码生效而频繁的重新启动服务器。然而，一些动作，比如添加新文件，将不会触发自动重新加载，这时你得自己手动重启服务器。</p>
+</blockquote>
+<h1>常用命令</h1>
+<p>django-admin startproject djangoproject   通过django-admin创建一个Django项目</p>
+<ul>
+<li>python <a target="_blank" rel="noopener" href="http://manage.py">manage.py</a> runserver port or ip:port  启动项目, 这里启动项目的时候</li>
+<li>python <a target="_blank" rel="noopener" href="http://manage.py">manage.py</a> startapp appname  给项目新增一个新应用</li>
+<li>python <a target="_blank" rel="noopener" href="http://manage.py">manage.py</a> makemigrations  将模型的更改记录到app/migrations下面  相当于编写sql语句</li>
+<li>python <a target="_blank" rel="noopener" href="http://manage.py">manage.py</a> migrate 将app/migrations下的修改更改到数据库,相当于执行sql语句</li>
+<li>python <a target="_blank" rel="noopener" href="http://manage.py">manage.py</a> test appname 执行app的测试方法</li>
+<li>python <a target="_blank" rel="noopener" href="http://manage.py">manage.py</a> createsuperuser 创建超级用户</li>
+</ul>
+<h1>settings配置</h1>
+<p>基本设置:</p>
+<ul>
+<li>SECRET_KEY: 用于为密码重置、cookie等敏感数据进行加密和签名。这是一个必需的设置项，确保它在生产环境中保持私密。</li>
+<li>DEBUG: 控制是否启用调试模式。当启用调试模式时，Django会显示详细的错误信息。建议在开发环境中将其设置为True，生产环境中设置为False。</li>
+<li>ALLOWED_HOSTS: 用于指定允许访问站点的主机列表。在生产环境中，将此设置为允许的域名列表以增加安全性。</li>
+<li>INSTALLED_APPS: 包含所有应用程序的列表，可以是Django自带的或第三方的应用程序。这些应用程序将被包含在项目中，以便Django可以找到和使用它们。</li>
+<li>MIDDLEWARE: 中间件类的列表，用于处理请求/响应处理过程中的全局操作。例如，跨站请求伪造防护、用户认证等。</li>
+</ul>
+<p>数据库设置:</p>
+<ul>
+<li>DATABASES: 配置项目使用的数据库连接。默认情况下，Django使用SQLite数据库。您可以通过修改此选项来更改数据库类型（如PostgreSQL, MySQL等）。</li>
+</ul>
+<p>URL设置:</p>
+<ul>
+<li>ROOT_URLCONF: 项目的根URL配置。这通常指向项目中的urls.py文件，用于定义所有URL模式。</li>
+<li>STATIC_URL: 静态文件（如CSS, JavaScript等）的URL前缀。例如：<code>/static/</code>。</li>
+<li>MEDIA_URL: 用户上传的媒体文件（如图片，音频等）的URL前缀。例如：<code>/media/</code>。</li>
+</ul>
+<p>模板设置:</p>
+<ul>
+<li>TEMPLATES: 一个包含模板配置的字典列表。配置选项包括模板引擎、模板文件夹的位置等。</li>
+</ul>
+<p>国际化和本地化设置:</p>
+<ul>
+<li>LANGUAGE_CODE: 默认语言代码，如’zh-hans’（简体中文）或’en-us’（美国英语）。</li>
+<li>TIME_ZONE: 默认时区设置。例如，‘Asia/Shanghai’或’UTC’。</li>
+<li>USE_I18N: 启用或禁用国际化（多语言支持）。</li>
+<li>USE_L10N: 启用或禁用本地化（使用地区格式显示数据）。</li>
+<li>USE_TZ: 启用或禁用时区支持。</li>
+</ul>
+<p>静态文件设置:</p>
+<ul>
+<li>STATIC_URL: 静态文件的URL前缀。Django在查找静态文件时会使用这个前缀。</li>
+<li>STATICFILES_DIRS: 包含额外静态文件目录的列表，Django会在这些目录中查找静态文件。默认情况下会在每个app目录下查找static文件夹里面的东西</li>
+<li>STATIC_ROOT: 静态文件的集中存储路径。运行<code>collectstatic</code>命令时，Django会将所有静态文件收集到这个目录中。</li>
+</ul>
+<h1>路由配置</h1>
+<h2 id="简单示例">简单示例</h2>
+<p>在 Django中 一个URL对应一个函数,因此我们想新增一个URL就得在 urls.py中新增一个记录 和 views.py中新增一个函数</p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230324155121362.png" alt="image-20230324155121362"></p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230324155129383.png" alt="image-20230324155129383"></p>
+<p>我们可以访问看一下: <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/hello/">127.0.0.1:8000/hello/</a></p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230324155155322.png" alt="image-20230324155155322"></p>
+<h2 id="url配置规则">url配置规则</h2>
+<p>一般情况下我们都是这么写的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns = [</span><br><span class="line">    path(路径表达式, views视图函数，参数，别名),</span><br><span class="line">]</span><br><span class="line">参数说明：</span><br><span class="line">1、一个表达式字符串</span><br><span class="line">2、一个可调用对象，通常为一个视图函数或一个指定视图函数路径的字符串</span><br><span class="line">3、可选的要传递给视图函数的默认参数（字典形式）</span><br><span class="line">4、一个可选的name参数(别名)</span><br></pre></td></tr></table></figure>
+<p>如果我们需要捕获url中的参数的话,我们需要自己使用 &lt;类型:名字&gt; 这种方式来捕获</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path(user/&lt;int:id&gt;,视图,参数,别名)</span><br></pre></td></tr></table></figure>
+<p><strong>注意点:</strong></p>
+<ol>
+<li>要捕获一段url中的值，需要使用尖括号；</li>
+<li>可以转换捕获到的值为指定类型，比如例子中的<code>&lt;int:name&gt;</code>。默认情况下，捕获到的结果保存为字符串类型，不包含**<code>/</code>**这个特殊字符；</li>
+<li>规则的前面不需要添加**<code>/</code><strong>，因为默认情况下，每个url都带一个最前面的</strong><code>/</code>**。比如：articles, 不能写成 /articles。</li>
+</ol>
+<h3 id="匹配例子">匹配例子</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;admin/&#x27;, admin.site.urls),</span><br><span class="line">    path(&#x27;hello/&#x27;, views.hello),</span><br><span class="line">    path(&#x27;user/&lt;int:id&gt;&#x27;, views.user),</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>当我们访问 /user/10 这个url的时候  后台会调用   view.user(request,id=10)</strong>,这样是不是就很清晰明朗了</p>
+<blockquote>
+<p>我们需要注意请求参数是不会影响到我们的路径匹配的,也就是说 /hello 和 /hello?a=10 是一样的</p>
+<p>对于 最后面的/ 这个分隔符,我的建议是加上 比如 我们写的是 hello  那么 hello 能够匹配,那么hello/ 不能匹配,如果我们写的是hello/ 那么两个都能匹配上</p>
+</blockquote>
+<h3 id="path转换器">path转换器</h3>
+<p>我们刚说的路径参数中,默认是字符串格式, 我们可以自己指定转化器,将它变成其他类型</p>
+<p>1、str：匹配任何非空字符串，但不含斜杠/，如果你没有专门指定转换器，那么这个是默认使用的；<br>
+2、int：匹配0和正整数，返回一个int类型<br>
+3、slug：可理解为注释、后缀、附属等概念，是url拖在最后的一部分解释性字符。该转换器匹配任何ASCII字符以及连接符和下划线，比如’ building-your-1st-django-site‘；<br>
+4、uuid：匹配一个uuid格式的对象。为了防止冲突，规定必须使用破折号，所有字母必须小写，例如’075194d3-6885-417e-a8a8-6c931e272f00‘ 。返回一个UUID对象；</p>
+<p>在举几个列子吧</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;articles/2003/&#x27;, views.special_case_2003),</span><br><span class="line">    path(&#x27;articles/&lt;int:year&gt;/&#x27;, views.year_archive),</span><br><span class="line">    path(&#x27;articles/&lt;int:year&gt;/&lt;int:month&gt;/&#x27;, views.month_archive),</span><br><span class="line">    path(&#x27;articles/&lt;int:year&gt;/&lt;int:month&gt;/&lt;slug:slug&gt;/&#x27;, views.article_detail),</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+<p>1、/articles/2005/03/ 将匹配第三条，并调用views.month_archive(request, year=2005, month=3)；</p>
+<p>2、/articles/2003/匹配第一条，并调用views.special_case_2003(request)；</p>
+<p>3、/articles/2003将一条都匹配不上，因为它最后少了一个斜杠，而列表中的所有模式中都以斜杠结尾；</p>
+<p>4、/articles/2003/03/building-a-django-site/ 将匹配最后一个，并调用views.article_detail(request, year=2003, month=3, slug=“building-a-django-site”</p>
+<h3 id="自定义路径转换器">自定义路径转换器</h3>
+<p>对于更复杂的匹配需求，您可以定义自己的路径转换器。自定义，就是单独写一个类，它包含下面的内容：<br>
+1、类属性regex：一个字符串形式的正则表达式属性；<br>
+2、to_python(self, value) 方法：一个用来将匹配到的字符串转换为你想要的那个数据类型，并传递给视图函数。如果不能转换给定的值，则会引发ValueError。</p>
+<p>3、to_url(self, value)方法：将Python数据类型转换为一段url的方法，上面方法的反向操作。</p>
+<p>比如我们在urls.py里面写一个转换器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class convert:</span><br><span class="line">    regex=&#x27;[0-9]&#x27;</span><br><span class="line"></span><br><span class="line">    def to_python(self,value):</span><br><span class="line">        return int(value)</span><br><span class="line"></span><br><span class="line">    def to_url(self,value):</span><br><span class="line">        return f&#x27;&#123;value:4d&#125;&#x27;</span><br><span class="line">register_converter(convert,&#x27;d&#x27;)</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;admin/&#x27;, admin.site.urls),</span><br><span class="line">    path(&#x27;hello/&#x27;, views.hello),</span><br><span class="line">    path(&#x27;user/&lt;int:id&gt;&#x27;, views.user),</span><br><span class="line">    path(&#x27;user/&lt;int:id&gt;/&lt;d:t&gt;&#x27;, views.user), # 使用转换器</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h3 id="使用正则表达式">使用正则表达式</h3>
+<p>如果path和自定义转换器不能满足要求我们可以使用正则表达式,但是我们不能使用path了,得用re_path,如果需要捕获路径参数,我们可以使用命名分组(?P<name>pattern)</name></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;articles/2003/&#x27;, views.special_case_2003),</span><br><span class="line">    re_path(r&#x27;^articles/(?P&lt;year&gt;[0-9]&#123;4&#125;)/$&#x27;, views.year_archive),</span><br><span class="line">    re_path(r&#x27;^articles/(?P&lt;year&gt;[0-9]&#123;4&#125;)/(?P&lt;month&gt;[0-9]&#123;2&#125;)/$&#x27;, views.month_archive),</span><br><span class="line">    re_path(r&#x27;^articles/(?P&lt;year&gt;[0-9]&#123;4&#125;)/(?P&lt;month&gt;[0-9]&#123;2&#125;)/(?P&lt;slug&gt;[\w-]+)/$&#x27;, views.article_detail),</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+<h3 id="re-path-和-path-区别">re_path 和 path 区别</h3>
+<p>path 可以将 路径参数进行转化,re_path 不可以,匹配到的参数都是字符串</p>
+<p>re_path 可以使用正则表达式匹配,path不可以</p>
+<p>path 匹配参数是 &lt; 类型:名字&gt; 的方式  re_path匹配参数是 命名分组的方式</p>
+<h2 id="官方对path的用法解释">官方对path的用法解释</h2>
+<p>函数 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/urls/#django.urls.path"><code>path()</code></a> 具有四个参数，两个必须参数：<code>route</code> 和 <code>view</code>，两个可选参数：<code>kwargs</code> 和 <code>name</code>。现在，是时候来研究这些参数的含义了。</p>
+<h3 id="path-参数：-route"><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/urls/#django.urls.path"><code>path()</code></a> 参数： <code>route</code></h3>
+<p><code>route</code> 是一个匹配 URL 的准则（类似正则表达式）。当 Django 响应一个请求时，它会从 <code>urlpatterns</code> 的第一项开始，按顺序依次匹配列表中的项，直到找到匹配的项。</p>
+<p>这些准则不会匹配 GET 和 POST 参数或域名。例如，URLconf 在处理请求 <code>https://www.example.com/myapp/</code> 时，它会尝试匹配 <code>myapp/</code> 。处理请求 <code>https://www.example.com/myapp/?page=3</code> 时，也只会尝试匹配 <code>myapp/</code>。</p>
+<h3 id="path-参数：-view"><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/urls/#django.urls.path"><code>path()</code></a> 参数： <code>view</code></h3>
+<p>当 Django 找到了一个匹配的准则，就会调用这个特定的视图函数，并传入一个 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/request-response/#django.http.HttpRequest"><code>HttpRequest</code></a> 对象作为第一个参数，被“捕获”的参数以关键字参数的形式传入。稍后，我们会给出一个例子。</p>
+<h3 id="path-参数：-kwargs"><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/urls/#django.urls.path"><code>path()</code></a> 参数： <code>kwargs</code></h3>
+<p>任意个关键字参数可以作为一个字典传递给目标视图函数。本教程中不会使用这一特性。</p>
+<h3 id="path-参数：-name"><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/urls/#django.urls.path"><code>path()</code></a> 参数： <code>name</code></h3>
+<p>为你的 URL 取名能使你在 Django 的任意地方唯一地引用它，尤其是在模板中。这个有用的特性允许你只改一个文件就能全局地修改某个 URL 模式。</p>
+<h2 id="错误页面处理">错误页面处理</h2>
+<p>当Django找不到与请求匹配的URL时，或者当抛出一个异常时，将调用一个错误处理视图。错误视图包括400、403、404和500，分别表示请求错误、拒绝服务、页面不存在和服务器错误。它们分别位于：</p>
+<ul>
+<li>handler400 —— django.conf.urls.handler400。</li>
+<li>handler403 —— django.conf.urls.handler403。</li>
+<li>handler404 —— django.conf.urls.handler404。</li>
+<li>handler500 —— django.conf.urls.handler500。</li>
+</ul>
+<p>这些值可以在根urls.py中设置</p>
+<p>我们只需要将函数赋值给这些值就可以了,要注意这些函数必须得有两个参数,一个是request,一个是exception,这个exception的名字必须是这个名字</p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230324185219522.png" alt="image-20230324185219522"></p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230324185234530.png" alt="image-20230324185234530"></p>
+<blockquote>
+<p>这里还需要把settings.py里面的DEBUG改为False</p>
+</blockquote>
+<h2 id="url分层转发">url分层转发</h2>
+<p>如果所有路由全部写在根urls.py的urlpatterns中的话,那么可能会出现很多冗余的前缀路劲,我们不妨把具有相同的前缀路径写在一块</p>
+<h3 id="方法一-转发给不同urls-py">方法一 <a target="_blank" rel="noopener" href="http://xn--urls-fb5fk91a3lar14z9f5a.py">转发给不同urls.py</a></h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import include, path</span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;student/&#x27;, include(&#x27;student.urls&#x27;)),</span><br><span class="line">    path(&#x27;teacher/&#x27;, include(&#x27;teacher.urls&#x27;)),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>比如学生跟老师分别在不同的APP中,我们就可以这样</p>
+<h3 id="方法二-转发给一个列表">方法二 转发给一个列表</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import include, path</span><br><span class="line">student = [</span><br><span class="line">	path(&quot;socre/&quot;,student.getsocre)</span><br><span class="line">]</span><br><span class="line">teacher = [</span><br><span class="line">	path(&quot;student/&quot;,teacher.getstudent)</span><br><span class="line">]</span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;student/&#x27;, include(studnet)),</span><br><span class="line">    path(&#x27;teacher/&#x27;, include(teacher)),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>就算url分层转发,参数捕获还是跟前面一样</p>
+</blockquote>
+<h1>MVC与MVT</h1>
+<h2 id="mvc">MVC</h2>
+<p><strong>M</strong> ：数据存取部分，由django数据库层处理，本章要讲述的内容。<br>
+<strong>V</strong>：选择显示哪些数据要显示以及怎样显示的部分，由视图和模板处理。<br>
+<strong>C</strong>：根据用户输入委派视图的部分，由 Django 框架根据 URLconf 设置，对给定 URL 调用适当的 Python 函数。</p>
+<h2 id="mvt">MVT</h2>
+<p>在Django里，由于 C层由框架自行处理，而 Django 里更关注的是模型（Model）、模板(Template)和视图（Views），所以Django 也被称为 MTV框架 。在MTV开发模式中：<br>
+<strong>M</strong> ：代表模型（Model），即数据存取层。 该层处理与数据相关的所有事务： 如何存取、如何验证有效<br>
+<strong>T</strong> ：代表模板(Template)，即表现层。 该层处理与表现相关的决定： 如何在页面或其他类型文档中进行显示。<br>
+<strong>V</strong> ：代表视图（View），即业务逻辑层。 该层包含存取模型及调取恰当模板的相关逻辑。 你可以把它看作模型与模板之间的桥梁。</p>
+<h1>视图</h1>
+<p>在Django中, 一个url对应的函数就是一个视图, 我们可以通过视图函数响应各式各样的东西</p>
+<p>在一个http请求中会产生两个核心对象,一个是HTTPRequest 和 HTTPResponse, 一个包含用户请求信息,一个包含响应信息</p>
+<h2 id="httprequest">HttpRequest</h2>
+<p>里面包含了各式各样的方法和属性,供我们去得到请求信息</p>
+<blockquote>
+<p>任何可能用于更改系统状态的请求应该使用 <code>POST</code> —— 比如一个更改数据库的请求。<code>GET</code> 应该只被用于不会影响系统状态的请求。</p>
+</blockquote>
+<h3 id="属性">属性</h3>
+<ul>
+<li><code>method</code>：HTTP 请求方法，例如 <code>GET</code>、<code>POST</code> 等。</li>
+<li><code>path</code>：请求的 URL 路径部分，不包括查询参数。</li>
+<li><code>GET</code>：一个包含 GET 请求参数的字典。只会包含请求路径中的参数</li>
+<li><code>POST</code>：一个包含 POST 请求参数的字典。只会包含请求体里面的参数内容</li>
+<li><code>COOKIES</code>：一个包含客户端发送的所有 Cookie 的字典。</li>
+<li><code>FILES</code>：一个包含所有上传文件的字典。 字典里面的键是参数名字,值是文件</li>
+<li><code>META</code>：一个包含请求元数据的字典。注意 只有当请求方法是 <code>POST</code>，至少有一个文件字段被实际发布，并且发布请求的 <code>&lt;form&gt;</code> 有 <code>enctype=&quot;multipart/form-data&quot;</code> 属性时，才会包含数据。否则 <code>request.FILES</code> 将为空。</li>
+<li><code>content_type</code>：请求正文的 MIME 类型，例如 <code>text/plain</code>、<code>application/json</code> 等。</li>
+<li><code>content_params</code>：一个包含请求正文的 MIME 类型的参数的字典。</li>
+<li><code>body</code>：请求正文的字节表示。</li>
+<li><code>user</code>：表示当前请求的用户对象。如果用户未通过身份验证，则该属性将是匿名用户对象。</li>
+<li><code>auth</code>：包含通过 HTTP 身份验证传递的用户名和密码的元组。</li>
+<li><code>session</code>：表示当前请求的会话对象。</li>
+<li><code>scheme</code>：表示使用的网络协议，通常为 <code>http</code> 或 <code>https</code>。</li>
+<li><code>path_info</code>：URL 路径的附加部分。例如，如果请求的 URL 为</li>
+<li><code>encoding</code>：表示请求正文的编码格式。</li>
+<li><code>content_length</code>：表示请求正文的字节数。</li>
+<li><code>headers</code>: 请求头</li>
+</ul>
+<h3 id="方法">方法</h3>
+<ul>
+<li><code>get_full_path()</code>：返回请求的完整路径，包括查询参数。</li>
+<li><code>get_host()</code>：返回请求的主机名，包括端口号（如果有）。</li>
+<li><code>get_port()</code>：返回请求的端口号。</li>
+<li><code>get_raw_uri()</code>：返回原始请求的 URI，包括查询参数和片段标识符。</li>
+<li><code>get_signed_cookie(key, default=RAISE_ERROR, salt='', max_age=None)</code>：返回已签名的 Cookie 的值，如果 Cookie 不存在则返回默认值。如果无法验证 Cookie，则引发 <code>django.core.signing.BadSignature</code> 异常。</li>
+<li><code>get_full_url()</code>：返回完整的 URL，包括主机名、端口号和路径。</li>
+<li><code>is_ajax()</code>：如果请求是通过 AJAX 发送的，则返回 <code>True</code>。</li>
+<li><code>is_secure()</code>：如果请求是通过 HTTPS 发送的，则返回 <code>True</code>。</li>
+<li><code>is_valid()</code>：如果请求是有效的，则返回 <code>True</code>。该方法的实现由 Django 的安全中间件提供，可以用于检查请求是否受到 CSRF 攻击。</li>
+<li><code>read()</code>：读取请求正文的全部内容，并将其作为字符串返回。如果请求正文太大，则不建议使用该方法，因为它会将所有内容读取到内存中，可能会导致内存不足错误。</li>
+<li><code>readline()</code>：读取请求正文的下一行，并将其作为字符串返回。该方法在处理大型请求正文时比 <code>read()</code> 更有效。</li>
+</ul>
+<h3 id="meta属性字典里面包含的属性">META属性字典里面包含的属性</h3>
+<p><code>META</code> 字典中包含了许多键值对，其中一些常用的键值对如下：</p>
+<ul>
+<li><code>CONTENT_TYPE</code>：请求正文的 MIME 类型。</li>
+<li><code>CONTENT_LENGTH</code>：请求正文的长度（以字节为单位）。</li>
+<li><code>HTTP_USER_AGENT</code>：客户端浏览器的 User-Agent 字符串。</li>
+<li><code>HTTP_REFERER</code>：包含当前请求页面的 URL，通常用于追踪用户的浏览历史。</li>
+<li><code>HTTP_HOST</code>：请求的主机名和端口号。</li>
+<li><code>HTTP_ACCEPT_LANGUAGE</code>：客户端浏览器的首选语言。</li>
+<li><code>QUERY_STRING</code>：请求 URL 中的查询参数。</li>
+<li><code>REMOTE_ADDR</code>：客户端的 IP 地址。</li>
+<li><code>REMOTE_HOST</code>：客户端的主机名（如果可用）。</li>
+<li><code>REMOTE_USER</code>：如果客户端已经进行了身份验证，则包含用户名。</li>
+<li><code>SERVER_NAME</code>：服务器的主机名。</li>
+<li><code>SERVER_PORT</code>：服务器的端口号。</li>
+<li><code>SERVER_PROTOCOL</code>：使用的 HTTP 协议的名称和版本号。</li>
+</ul>
+<h3 id="获取客户端ip地址">获取客户端ip地址</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@csrf_exempt</span><br><span class="line">def getclientip(res:HttpRequest):</span><br><span class="line">    return HttpResponse(res.META[&quot;REMOTE_ADDR&quot;])</span><br></pre></td></tr></table></figure>
+<h3 id="上传文件">上传文件</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@csrf_exempt</span><br><span class="line">def uploadfile(res:HttpRequest):</span><br><span class="line">    file = res.FILES.get(&quot;file&quot;)</span><br><span class="line">    print(type(file))</span><br><span class="line">    # 获得文件大小</span><br><span class="line">    print(f&quot;&#123;file.size&#125;B&quot;)</span><br><span class="line">    with open(f&quot;&#123;file&#125;&quot;,&quot;wb&quot;) as file2:</span><br><span class="line"></span><br><span class="line">        for data in file:</span><br><span class="line">            file2.write(data)</span><br><span class="line">    return HttpResponse(&quot;上传成功&quot;)</span><br></pre></td></tr></table></figure>
+<h2 id="httpresponse">HttpResponse</h2>
+<p>这个是响应数据回去的对象, 我们可以响应很多类型的数据,比如json html xml 等等</p>
+<h3 id="属性">属性</h3>
+<ul>
+<li><code>content</code>：响应内容。它可以是字符串、字节序列或文件对象。</li>
+<li><code>charset</code>：响应的字符集。</li>
+<li><code>status_code</code>：HTTP响应状态码。</li>
+<li><code>reason_phrase</code>：HTTP响应状态码对应的原因短语。</li>
+<li><code>cookies</code>：一个包含所有Cookie的字典，其中键是Cookie的名称，值是Cookie的值。</li>
+<li><code>closed</code>：一个布尔值，指示响应是否已关闭。</li>
+</ul>
+<h3 id="方法">方法</h3>
+<ul>
+<li><code>__init__(content=None, status=None, reason=None, charset=None, content_type=None)</code>：初始化HttpResponse对象。</li>
+<li><code>write(content)</code>：向响应中写入内容。</li>
+<li><code>flush()</code>：刷新响应内容，使其可用于传输。</li>
+<li><code>set_cookie(key, value='', max_age=None, expires=None, path='/', domain=None, secure=False, httponly=False, samesite=None)</code>：设置响应的Cookie。</li>
+<li><code>delete_cookie(key, path='/', domain=None)</code>：从响应中删除Cookie。</li>
+<li><code>setdefault(key, value)</code>：返回响应头的值，如果键不存在，则设置键的值为给定的值。</li>
+<li><code>items()</code>：返回响应头的键值对，作为元组的列表。</li>
+<li><code>keys()</code>：返回响应头的键列表。</li>
+<li><code>values()</code>：返回响应头的值列表。</li>
+<li><code>has_header(header)</code>：检查响应头是否存在给定的标头。</li>
+<li><code>get(value, default=None)</code>：获取响应头中给定键的值。如果键不存在，则返回给定的默认值。</li>
+</ul>
+<h3 id="render">render</h3>
+<p>这个是渲染html返回</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def render(</span><br><span class="line">    request, template_name, context=None, content_type=None, status=None, using=None</span><br><span class="line">):</span><br><span class="line">     content = loader.render_to_string(template_name, context, request, using=using)</span><br><span class="line">     return HttpResponse(content, content_type, status)</span><br></pre></td></tr></table></figure>
+<p>我们可以看到他的返回值还是一个HTTPResponse对象,只不过这个内容是渲染出来的</p>
+<h3 id="redirect">redirect</h3>
+<p>这个是重定向</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@csrf_exempt</span><br><span class="line">def testdirect(res:HttpRequest):</span><br><span class="line"># 如果项目路径是 http://127.0.0.1:8000/,这个函数的请求路径为 http://127.0.0.1:8000/testdirect</span><br><span class="line">	# 这样是相对项目路径   http://127.0.0.1:8000/hello/</span><br><span class="line">	return redirect(&quot;/hello/&quot;) http://127.0.0.1:8000/testdirect/hello/</span><br><span class="line">	# 这样是相对当前路径下路径 </span><br><span class="line">    return redirect(&quot;hello/&quot;) </span><br><span class="line">    # 注意,后面这个/绝对不能省</span><br></pre></td></tr></table></figure>
+<p>对于render 和 redirect区别就是 如果是render的话 地址栏路径不会变化的,所以刷新页面的话就会重新渲染,redirect的就是地址栏会变化,刷新页面就是就是请求</p>
+<h1>中间件</h1>
+<p>在Django中，中间件是一个处理HTTP请求和响应的组件，它在<strong>请求进入视图函数之前和响应离开视图函数之后起作用</strong>。中间件可以用于实现多种功能，如<strong>身份验证、授权、会话管理、跨站请求伪造（CSRF）保护、缓存</strong>等。中间件的主要目的是在处理请求和响应的过程中添加额外的处理逻辑，从而使代码更加模块化和可重用。</p>
+<h2 id="定义中间件">定义中间件</h2>
+<p>要定义一个中间件，你需要创建一个类，并实现特定的方法，这些方法对应不同的处理阶段。一个中间件可以包含以下方法：</p>
+<ol>
+<li><code>__init__(self, get_response)</code>：初始化方法，用于接收一个<code>get_response</code>参数。这是一个可调用对象，用于获取下一个中间件或视图函数的响应。</li>
+<li><code>__call__(self, request)</code>：当中间件类被实例化后，它将变为一个可调用对象。<code>__call__</code>方法在每次请求时都会被调用，用于处理请求并返回响应。在这个方法里，您可以处理请求前和请求后的逻辑，但无法捕获视图函数抛出的异常。</li>
+<li><code>process_view(self, request, view_func, view_args, view_kwargs)</code>：这个方法在视图函数被调用之前执行。它允许您修改请求对象、视图参数或拦截视图调用。</li>
+<li><code>process_exception(self, request, exception)</code>：当视图函数抛出异常时，这个方法会按照相反的顺序（从后向前）被执行。您可以在这里捕获异常并进行处理，例如返回自定义的错误响应。如果返回<code>None</code>，Django会继续执行其他中间件的<code>process_exception</code>方法或内置的异常处理器。</li>
+<li><code>process_template_response(self, request, response)</code>：如果视图函数返回一个<code>TemplateResponse</code>对象，这个方法会被调用。它允许您在模板被渲染之前修改响应对象。</li>
+<li><code>process_response(self, request, response)</code>：这个方法在响应被发送回客户端之前执行。您可以在这里修改响应对象，例如设置响应头或修改响应内容。请注意，如果<code>process_exception</code>已经处理了异常并返回了响应，<code>process_response</code>方法也会被调用。</li>
+</ol>
+<p>它的执行步骤如下:</p>
+<ul>
+<li>首先初始化中间就是调用init,给对象传递一个可以响应的方法</li>
+<li>有请求到来的时候,调用中间件的call方法,响应请求</li>
+<li>进入到get_response函数里面</li>
+<li><strong>依次调用每个中间的 process_request方法</strong></li>
+<li>再一次调用每个中间件的process_view方法,这里其实它会组织一下,当<strong>前process_view函数的view_func一定是下一个中间件的process_view方法</strong>,而最后一个中间件的view_func是视图函数</li>
+<li>对于异常,我们可以通过process_execption去处理</li>
+</ul>
+<blockquote>
+<p>编写好中间件后一定要在settings.py中去注册</p>
+</blockquote>
+<h2 id="注意点">注意点</h2>
+<h3 id="放置中间件的顺序">放置中间件的顺序</h3>
+<p>在Django中，中间件的顺序非常重要，因为它影响了中间件在请求和响应处理过程中的执行顺序。以下是有关如何放置中间件的一些建议：</p>
+<ol>
+<li>
+<p>了解每个中间件的功能：确保您了解每个中间件的作用，以便在安排它们时做出明智的决策。一些中间件可能依赖于其他中间件的输出，或者需要在其他中间件之前或之后执行。</p>
+</li>
+<li>
+<p>遵循第三方中间件的文档：当使用第三方中间件时，请仔细阅读其文档以获取有关放置顺序的建议。通常，文档会提供关于中间件之间的依赖关系以及它们在请求/响应过程中的执行顺序的详细信息。</p>
+</li>
+<li>
+<p>顺序从上到下：<code>MIDDLEWARE</code>列表中的顺序从上到下决定了中间件在请求处理过程中的执行顺序。在响应处理阶段，顺序是相反的。通常，您应该首先放置处理请求的核心中间件，然后是处理视图、模板和响应的中间件。</p>
+</li>
+<li>
+<p><strong>处理异常的中间件应靠后放置</strong>：由于异常处理过程是按照相反的顺序执行的，因此处理异常的中间件（实现了<code>process_exception</code>方法的中间件）应靠后放置。这样可以确保在异常发生时，它们可以先于其他中间件捕获异常并采取相应的操作。</p>
+</li>
+<li>
+<p><strong>考虑性能和安全性：在安排中间件时，确保考虑到性能和安全性。对于那些需要在请求开始时执行的中间件（例如，身份验证、授权和缓存中间件），应该将它们放在<code>MIDDLEWARE</code>列表的前面</strong>。这有助于减少不必要的计算和网络开销，以及在请求被拒绝之前尽早识别潜在的安全问题。</p>
+</li>
+</ol>
+<p>总之，中间件的放置顺序应该根据中间件的功能、依赖关系和执行顺序来安排。务必阅读中间件的文档以获取关于顺序的建议，并确保在处理请求和响应时考虑性能和安全性。</p>
+<h3 id="按照指南使用中间件">按照指南使用中间件</h3>
+<p>为了避免混乱，可以遵循以下指南来确定在中间件中使用哪些方法：</p>
+<ol>
+<li>
+<p><code>__init__(self, get_response)</code>：始终在中间件中定义这个方法，用于接收<code>get_response</code>参数并存储为实例变量。</p>
+</li>
+<li>
+<p><code>__call__(self, request)</code>：在以下情况下使用此方法：</p>
+<ul>
+<li>需要在请求前后执行一些操作</li>
+<li>需要在视图函数执行前修改请求对象</li>
+<li>需要在视图函数执行后修改响应对象<br>
+请注意，<code>__call__</code>方法无法捕获视图函数抛出的异常。</li>
+</ul>
+</li>
+<li>
+<p><code>process_view(self, request, view_func, view_args, view_kwargs)</code>：在以下情况下使用此方法：</p>
+<ul>
+<li>需要在视图函数执行之前修改请求对象、视图参数或拦截视图调用</li>
+<li>需要根据视图函数的特定属性（如视图函数本身、参数或其他条件）执行特定操作<br>
+请注意，<code>process_view</code>方法可以捕获视图函数中抛出的异常，但需要显式调用视图函数并处理异常。</li>
+</ul>
+</li>
+<li>
+<p><code>process_exception(self, request, exception)</code>：在以下情况下使用此方法：</p>
+<ul>
+<li>需要捕获视图函数抛出的异常并执行特定操作，例如返回自定义错误响应<br>
+请注意，如果返回<code>None</code>，Django会继续执行其他中间件的<code>process_exception</code>方法或内置的异常处理器。</li>
+</ul>
+</li>
+<li>
+<p><code>process_template_response(self, request, response)</code>：在以下情况下使用此方法：</p>
+<ul>
+<li>需要在模板被渲染之前修改<code>TemplateResponse</code>对象<br>
+请注意，此方法仅在视图函数返回<code>TemplateResponse</code>对象时执行。</li>
+</ul>
+</li>
+<li>
+<p><code>process_response(self, request, response)</code>：在以下情况下使用此方法：</p>
+<ul>
+<li>需要在响应被发送回客户端之前执行操作，例如设置响应头或修改响应内容<br>
+请注意，如果<code>process_exception</code>已经处理了异常并返回了响应，<code>process_response</code>方法也会被调用。</li>
+</ul>
+</li>
+</ol>
+<p>根据这些指南，可以根据需要在中间件中实现相应的方法。遵循这些指南，您可以保持中间件逻辑的清晰和简洁，并确保每个方法都专注于其特定的职责。当然，在实际项目中，您可能需要根据实际需求灵活运用这些方法。但是，确保每个方法的职责清晰且互不干扰，可以有效减少混乱。</p>
+<h2 id="装饰器">装饰器</h2>
+<p>上面的那种方式定义的中间件是全局有效的,有时候,我们希望对某些视图函数做定制的需求(比如权限校验),我们可以使用装饰器,下面是一个简单的装饰器用来检查用户是否登录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def check_is_login(func):</span><br><span class="line">    @wraps(func)</span><br><span class="line">    def wrapper(request, *args, **kwargs):</span><br><span class="line">        if request.session.get(&quot;email&quot;) is None:</span><br><span class="line">            return JsonResponse(&#123;&quot;code&quot;: Code.USER_NOT_LOGIN, &quot;info&quot;: &quot;用户未登录&quot;&#125;)</span><br><span class="line">        return func(request, *args, **kwargs)</span><br><span class="line">    return wrapper</span><br></pre></td></tr></table></figure>
+<p>我们只需要在需要检查的视图函数上加上这个装饰器就行</p>
+<p>使用装饰器的优点是：</p>
+<ol>
+<li>更精确地控制哪些视图函数受到额外逻辑的影响。</li>
+<li>使代码更易于理解，因为额外的逻辑与视图函数紧密相关。</li>
+</ol>
+<p>然而，装饰器也有一些缺点：</p>
+<ol>
+<li>如果需要将相同的逻辑应用于许多视图函数，您需要在每个视图函数上重复应用装饰器。这可能导致代码冗余和难以维护。</li>
+<li>与中间件相比，装饰器在全局范围内的控制力较弱。例如，中间件可以在每个请求的开始和结束时执行某些操作，而装饰器只能在特定视图函数上执行。</li>
+</ol>
+<p>因此，在选择使用装饰器还是中间件时，需要根据您的需求和代码结构进行权衡。如果您需要为特定视图函数添加功能，装饰器可能是更好的选择。然而，如果您需要在全局范围内控制请求处理，中间件可能更适合。</p>
+<h1>管理后台</h1>
+<p>Django为我们提供了一个很方便的管理后台,我们只需要少量的操作就能管理数据库里面的模型数据</p>
+<p>首先得保证数据库中已经有了管理后台需要的各种表</p>
+<h2 id="创建各种表">创建各种表</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span><br><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure>
+<h2 id="创建管理员账号密码">创建管理员账号密码</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py createsuperuser  # 按照提示创建好账号</span><br></pre></td></tr></table></figure>
+<h2 id="将自己的app注册">将自己的app注册</h2>
+<p>我们必须注册好自己的app才能对其模型进行管理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 在settings.py中</span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    &#x27;django.contrib.admin&#x27;,</span><br><span class="line">    &#x27;django.contrib.auth&#x27;,</span><br><span class="line">    &#x27;django.contrib.contenttypes&#x27;,</span><br><span class="line">    &#x27;django.contrib.sessions&#x27;,</span><br><span class="line">    &#x27;django.contrib.messages&#x27;,</span><br><span class="line">    &#x27;django.contrib.staticfiles&#x27;,</span><br><span class="line">    &#x27;app01.apps.Test1Config&#x27;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h2 id="创建自己的模型">创建自己的模型</h2>
+<p>在自己的app下的models.py中创建模型</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class User(models.Model):</span><br><span class="line">    name = models.CharField(max_length=10,verbose_name=&quot;名字&quot;)</span><br><span class="line">    password = models.CharField(max_length=50,verbose_name=&quot;密码&quot;)</span><br><span class="line">    def __str__(self):</span><br><span class="line">        return f&quot;&#123;self.name&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>创建这个模型对应的表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations app01</span><br><span class="line">python manage.py migrate app01</span><br></pre></td></tr></table></figure>
+<h2 id="将自己模型托管给admin管理">将自己模型托管给admin管理</h2>
+<p>在app下的admin.py中注册模型(多个app也是这样)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from .models import User</span><br><span class="line">admin.site.register(User)</span><br></pre></td></tr></table></figure>
+<p>这样我们登录后就能看到了</p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230327211430483.png" alt="image-20230327211430483"></p>
+<p>我们可以对其进行增删改查,有没有发现这个Users并不是那么好看,我们后续可以通过一些操作进行更改</p>
+<h1>ORM</h1>
+<p>在python中 我们不需要自己去写sql语句, 一个类对应一张表,一个对象对应一条数据,它包含了对这个数据的增删改查操作,因此我们只需要去定义类就可以了</p>
+<blockquote>
+<p>使用ORM之前一定要把APP注册到settings文件中去</p>
+</blockquote>
+<p>我们定义一个类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class User(models.Model):</span><br><span class="line">    name = models.CharField(max_length=10,verbose_name=&quot;名字&quot;)</span><br><span class="line">    nametest = models.CharField(max_length=10,default=None)</span><br><span class="line">    age = models.IntegerField()</span><br><span class="line">    def __str__(self):</span><br><span class="line">        return f&quot;&#123;self.name&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>然后在pycharm运行manage.py输入下面命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">makemigrations test1  # 对数据模型进行修改,这里会输出我们对表进行了哪些操作,但是不会同步到数据库</span><br><span class="line">migrate test1 # 将操作同步到数据库</span><br></pre></td></tr></table></figure>
+<p>执行完后我们会发现数据库中会多一张表test1_user</p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230327103955446.png" alt="image-20230327103955446"></p>
+<p>名字为app名字_小写类名,如果我们不指定主键,Django会默认创建一个自增主键为id</p>
+<h2 id="数据模型字段及其属性">数据模型字段及其属性</h2>
+<p>字段是模型中最重要的内容之一，也是唯一必须的部分。字段在Python中表现为一个类属性，体现了数据表中的一个列。Django不允许下面两种字段名：1、与Python关键字冲突。2、字段名中不能有两个以上下划线在一起，因为两个下划线是Django的查询语法。也不要使用clean、save、delete等Django内置的模型API名字，防止命名冲突。</p>
+<h3 id="常用字段">常用字段</h3>
+<p><strong>1、AutoField</strong>  —自增列 = int(11)  如果没有的话，默认会生成一个名称为 id 的列，如果要显示的自定义一个自增列，必须将给列设置为主键 primary_key=True。<br>
+<strong>2、CharField</strong>  —字符串字段 单行输入，用于较短的字符串，如要保存大量文本, 使用 TextField。必须 max_length 参数，django会根据这个参数在数据库层和校验层限制该字段所允许的最大字符数。<br>
+<strong>3、BooleanField</strong>  —布尔类型=tinyint(1)  不能为空，Blank=True<br>
+<strong>4、ComaSeparatedIntegerField</strong>  —用逗号分割的数字=varchar  继承CharField，所以必须 max_lenght 参数，<br>
+<strong>5、DateField</strong>  —日期类型 date  对于参数，auto_now = True 则每次更新都会更新这个时间；auto_now_add 则只是第一次创建添加，之后的更新不再改变。<br>
+<strong>6、DateTimeField</strong>  —日期类型 datetime  同DateField的参数<br>
+<strong>7、Decimal</strong>  —十进制小数类型 = decimal  必须指定整数位max_digits和小数位decimal_places<br>
+<strong>8、EmailField</strong>  —字符串类型（正则表达式邮箱） =varchar  对字符串进行正则表达式  一个带有检查 Email 合法性的 CharField，不接受 maxlength 参数。<br>
+<strong>9、FloatField</strong>  —浮点类型 = double  浮点型字段。 必须提供两个 参数， 参数描述：<br>
+max_digits：总位数(不包括小数点和符号）<br>
+decimal_places：小数位数。如：要保存最大值为 999 (小数点后保存2位)，你要这样定义字段：FloatField(…，max_digits=5， decimal_places=2)，要保存最大值一百万(小数点后保存10位)的话，你要这样定义：FloatField(…，max_digits=19， decimal_places=10)<br>
+<strong>10、IntegerField</strong>  —整形  用于保存一个整数<br>
+<strong>11、BigIntegerField</strong>  —长整形</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">integer_field_ranges = &#123;</span><br><span class="line">    &#x27;SmallIntegerField&#x27;: (-32768, 32767),</span><br><span class="line">    &#x27;IntegerField&#x27;: (-2147483648, 2147483647),</span><br><span class="line">    &#x27;BigIntegerField&#x27;: (-9223372036854775808, 9223372036854775807),</span><br><span class="line">    &#x27;PositiveSmallIntegerField&#x27;: (0, 32767),</span><br><span class="line">    &#x27;PositiveIntegerField&#x27;: (0, 2147483647),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>12、IPAddressField</strong>  —字符串类型（ip4正则表达式）  一个字符串形式的 IP 地址， (如 “202.1241.30″)。<br>
+<strong>13、GenericIPAddressField</strong>  —字符串类型（ip4和ip6是可选的）  参数protocol可以是：both、ipv4、ipv6  验证时，会根据设置报错<br>
+<strong>14、NullBooleanField</strong>  —允许为空的布尔类型  类似 BooleanField， 不过允许 NULL 作为其中一个选项。 推荐使用这个字段而不要用 BooleanField 加 null=True 选项。 admin 用一个选择框 　　　　<select> (三个可选择的值： “Unknown”， “Yes” 和 “No” ) 来表示这种字段数据。<br>
+<strong>15、PositiveIntegerField</strong>  —正Integer  类似 IntegerField， 但取值范围为非负整数（这个字段应该是允许0值的…可以理解为无符号整数）<br>
+<strong>16、PositiveSmallIntegerField</strong>  —正smallInteger 正小整型字段，类似 PositiveIntegerField， 取值范围较小(数据库相关)SlugField“Slug” 是一个报纸术语。 slug 是某个东西的小小标记(短签)， 只包　　含字母，数字，下划线和连字符。它们通常用于URLs。 若你使用 Django 开发版本，你可以指定 maxlength。 若 maxlength 未指定， Django 会使用默认长度： 50，它接受一个额外的参数：<br>
+prepopulate_from: 来源于slug的自动预置列表<br>
+<strong>17、SlugField</strong>  —减号、下划线、字母、数字  它们通常用于URLs。<br>
+<strong>18、SmallIntegerField</strong>  —数字  数据库中的字段有：tinyint、smallint、int、bigint.  类似 IntegerField， 不过只允许某个取值范围内的整数。(依赖数据库)<br>
+<strong>19、TextField</strong>  —字符串=longtext ，一个容量很大的文本字段， admin 管理界面用 </select><textarea>多行编辑框表示该字段数据。<br>
+<strong>20、TimeField</strong>  —时间 HH:MM[:ss[.uuuuuu]]  时间字段，类似于 DateField 和 DateTimeField。<br>
+<strong>21、URLField</strong>  —字符串，地址正则表达式  用于保存URL。若 verify_exists 参数为 True (默认)， 给定的 URL 会预先检查是否存在(即URL是否被有效装入且没有返回404响应).<br>
+<strong>22、BinaryField</strong>  —二进制<br>
+<strong>23、ImageField</strong>  —图片  类似 FileField， 不过要校验上传对象是否是一个合法图片。用于保存图像文件的字段。其基本用法和特性与FileField一样，只不过多了两个属性height和width。默认情况下，该字段在HTML中表现为一个ClearableFileInput标签。在数据库内，我们实际保存的是一个字符串类型，默认最大长度100，可以通过max_length参数自定义。真实的图片是保存在服务器的文件系统内的。<br>
+**height_field参数：**保存有图片高度信息的模型字段名。width_field参数：保存有图片宽度信息的模型字段名。<br>
+使用Django的ImageField需要提前安装pillow模块，pip install pillow即可。<br>
+<strong>使用FileField或者ImageField字段的步骤：</strong><br>
+在settings文件中，配置MEDIA_ROOT，作为你上传文件在服务器中的基本路径（为了性能考虑，这些文件不会被储存在数据库中）。再配置个MEDIA_URL，作为公用URL，指向上传文件的基本路径。请确保Web服务器的用户账号对该目录具有写的权限。<br>
+添加FileField或者ImageField字段到你的模型中，定义好upload_to参数，文件最终会放在MEDIA_ROOT目录的“upload_to”子目录中。<br>
+所有真正被保存在数据库中的，只是指向你上传文件路径的字符串而已。可以通过url属性，在Django的模板中方便的访问这些文件。例如，假设你有一个ImageField字段，名叫mug_shot，那么在Django模板的HTML文件中，可以使用来获取该文件。其中的object用你具体的对象名称代替。<br>
+可以通过name和size属性，获取文件的名称和大小信息。</textarea></p>
+<p><strong>24、FilePathField</strong>  —选择指定目录按限制规则选择文件，有三个参数可选， 其中”path”必需的，这三个参数可以同时使用， 参数描述：<br>
+path：必需参数，一个目录的绝对文件系统路径。 FilePathField 据此得到可选项目。 Example： “/home/images”；<br>
+match：可选参数， 一个正则表达式， 作为一个字符串， FilePathField 将使用它过滤文件名。 注意这个正则表达式只会应用到 base filename 而不是路径全名。 Example： “foo。<em>\。txt^”， 将匹配文件 foo23.txt 却不匹配 bar.txt 或 foo23.gif；<br>
+recursive：可选参数， 是否包括 path 下全部子目录，True 或 False，默认值为 False。<br>
+match 仅应用于 base filename， 而不是路径全名。 如：FilePathField(path=”/home/images”， match=”foo.</em>”， recursive=True)…会匹配 /home/images/foo.gif 而不匹配 /home/images/foo/bar.gif<br>
+<strong>25、FileField</strong>  —文件上传字段。 要求一个必须有的参数： upload_to， 一个用于保存上载文件的本地文件系统路径。 这个路径必须包含 strftime formatting， 该格式将被上载文件的 date/time 替换(so that uploaded files don’t fill up the given directory)。在一个 model 中使用 FileField 或 ImageField 需要以下步骤：在你的 settings 文件中， 定义一个完整路径给 MEDIA_ROOT 以便让 Django在此处保存上传文件。 (出于性能考虑，这些文件并不保存到数据库。) 定义 MEDIA_URL 作为该目录的公共 URL。 要确保该目录对 WEB 服务器用户帐号是可写的。在你的 model 中添加 FileField 或 ImageField， 并确保定义了 upload_to 选项，以告诉 Django 使用 MEDIA_ROOT 的哪个子目录保存上传文件。你的数据库中要保存的只是文件的路径(相对于 MEDIA_ROOT)。 出于习惯你一定很想使用 Django 提供的 get_<fieldname>_url 函数。举例来说，如果你的 ImageField 叫作 mug_shot， 你就可以在模板中以  这样的方式得到图像的绝对路径。<br>
+<strong>26、PhoneNumberField</strong>  —一个带有合法美国风格电话号码校验的 CharField(格式：XXX-XXX-XXXX)<br>
+<strong>27、USStateField</strong>  —美国州名缩写，由两个字母组成（天朝人民无视）。<br>
+<strong>28、XMLField</strong>  —XML字符字段，校验值是否为合法XML的 TextField，必须提供参数：<br>
+schema_path：校验文本的 RelaxNG schema 的文件系统路径。</fieldname></p>
+<h3 id="常用选项参数">常用选项参数</h3>
+<ol>
+<li>
+<p><strong>max_length</strong>：字符串类型字段的最大长度。例如，定义一个 CharField 时可以指定 max_length=100 来限制字段长度不超过 100 个字符。</p>
+</li>
+<li>
+<p><strong>name</strong>: 设置字段在数据库列中的名字</p>
+</li>
+<li>
+<p><strong>default</strong>：字段的默认值。例如，定义一个 BooleanField 时可以指定 default=False，表示默认值为 False。</p>
+</li>
+<li>
+<p><strong>null</strong>：字段是否可以为空值。例如，定义一个 CharField 时可以指定 null=True，表示该字段可以为空值。</p>
+</li>
+<li>
+<p><strong>blank</strong>：字段是否可以为空字符串。例如，定义一个 CharField 时可以指定 blank=True，表示该字段可以为空字符串。注意该选项与 <code>null</code> 不同， <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/models/fields/#django.db.models.Field.null"><code>null</code></a> 选项仅仅是数据库层面的设置，而 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/models/fields/#django.db.models.Field.blank"><code>blank</code></a> 是涉及表单验证方面。如果一个字段设置为 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/models/fields/#django.db.models.Field.blank"><code>blank=True</code></a> ，在进行表单验证时，接收的数据该字段值允许为空，而设置为 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/models/fields/#django.db.models.Field.blank"><code>blank=False</code></a> 时，不允许为空</p>
+</li>
+<li>
+<p><strong>choices</strong>：一个可选值列表。例如，定义一个 CharField 时可以指定 choices=[(‘M’, ‘Male’), (‘F’, ‘Female’)]，表示该字段只能取值为 ‘M’ 或 ‘F’。sex=models.IntegerField(choices=[(0,‘男’),(1,‘女’),],default=1)</p>
+</li>
+<li>
+<p><strong>help_text</strong>：字段的帮助文本。例如，定义一个 CharField 时可以指定 help_text=‘Enter your full name.’，表示在表单中该字段下方显示该帮助文本。</p>
+</li>
+<li>
+<p><strong>verbose_name</strong>：字段的人类可读名称。例如，定义一个 CharField 时可以指定 verbose_name=‘Full Name’，表示该字段在 Admin 界面上显示的名称为 ‘Full Name’。</p>
+</li>
+<li>
+<p><strong>unique</strong>：字段的值是否必须是唯一的。例如，定义一个 CharField 时可以指定 unique=True，表示该字段的值必须唯一。</p>
+</li>
+<li>
+<p><strong>primary_key</strong>：字段是否为主键。例如，定义一个 IntegerField 时可以指定 primary_key=True，表示该字段为模型的主键。</p>
+</li>
+<li>
+<p><strong>auto_created</strong>：字段是否是自动生成的。例如，定义一个 ForeignKey 时可以指定 auto_created=True，表示该字段是自动生成的。</p>
+</li>
+<li>
+<p><strong>upload_to</strong>：上传文件的路径。例如，定义一个 ImageField 时可以指定 upload_to=‘photos’，表示上传的图片将保存在项目根目录下的 photos 文件夹中。</p>
+</li>
+<li>
+<p><strong>validators</strong>：一个验证器列表。例如，定义一个 CharField 时可以指定 validators=[validate_slug]，表示该字段需要通过 validate_slug 函数的验证。</p>
+</li>
+<li>
+<p><strong>editable</strong>：指定字段是否可以在 Admin 界面中编辑。例如，定义一个 CharField 时可以指定 editable=False，表示该字段不能在 Admin 界面中编辑。</p>
+</li>
+<li>
+<p><strong>error_messages</strong>：指定验证错误时的错误消息。例如，定义一个 CharField 时可以指定 error_messages={‘required’: ‘Please enter your name.’}，表示在验证时如果该字段为空，会显示 ‘Please enter your name.’ 的错误消息。</p>
+</li>
+<li>
+<p><strong>db_column</strong>：指定字段在数据库中的列名。例如，定义一个 CharField 时可以指定 db_column=‘full_name’，表示该字段在数据库中的列名为 ‘full_name’。</p>
+</li>
+<li>
+<p><strong>db_index</strong>：指定字段是否需要创建索引。例如，定义一个 CharField 时可以指定 db_index=True，表示该字段需要创建索引。</p>
+</li>
+<li>
+<p><strong>db_tablespace</strong>：指定该字段所在的数据库表空间。例如，定义一个 CharField 时可以指定 db_tablespace=‘my_tablespace’，表示该字段所在的数据库表空间为 ‘my_tablespace’。</p>
+</li>
+<li>
+<p><strong>db_collation</strong>：指定该字段在数据库中使用的排序规则。例如，定义一个 CharField 时可以指定 db_collation=‘utf8mb4_bin’，表示该字段在数据库中使用 utf8mb4_bin 排序规则。</p>
+</li>
+<li>
+<p><strong>serialize</strong>：指定字段在序列化时是否被包含。例如，定义一个 CharField 时可以指定 serialize=False，表示该字段在序列化时不被包含。</p>
+</li>
+<li>
+<p><strong>unique_for_date</strong>：指定该字段在某个日期范围内必须是唯一的。例如，定义一个 DateTimeField 时可以指定unique_for_date=‘pub_date’，表示该字段在 pub_date 字段的日期范围内必须是唯一的。</p>
+</li>
+<li>
+<p><strong>unique_for_month</strong>：指定该字段在某个月份范围内必须是唯一的。例如，定义一个 DateTimeField 时可以指定 unique_for_month=‘pub_date’，表示该字段在 pub_date 字段的月份范围内必须是唯一的。</p>
+</li>
+<li>
+<p><strong>unique_for_year</strong>：指定该字段在某个年份范围内必须是唯一的。例如，定义一个 DateTimeField 时可以指定 unique_for_year=‘pub_date’，表示该字段在 pub_date 字段的年份范围内必须是唯一的。</p>
+</li>
+</ol>
+<h2 id="多个模型之间的关系">多个模型之间的关系</h2>
+<p>假设有两张表 A,B  我们要通过A的一条数据查找出B中的一条数据</p>
+<ul>
+<li>一对一   A中的一条数据只对应B中的一条数据,B中的一条数据也只对应A中的一条数据 <strong>OneToOneField</strong>比如通过账号查找个人信息</li>
+<li>一对多   A 中的一条数据对应B中的多条数据 比如 一个班级对应多个学生 <strong>ForeignKey</strong></li>
+<li>多对多   A 中的一条数据对应B中的多条数据,但是B中的一条数据也对应A中的多条数据 比如一个学生有多个老师的课,一个老师也有多个学生  <strong>ManyToManyField</strong>,这个往往需要一个第三张表来记录多对多的关系</li>
+</ul>
+<h3 id="onetoonefiled">OneToOneFiled</h3>
+<p><strong>用来限制一对一的关系,就算创建了一个新的对象(一行数据),当我们写入数据库的时候,也是更新,而不是新创建</strong></p>
+<p><code>OneToOneField</code> 字段可以设置以下属性：</p>
+<ul>
+<li><code>to</code>: 必须指定，表示与之关联的模型。</li>
+<li><code>on_delete</code>: 必须指定，表示当关联的模型实例被删除时如何处理该实例。可以选择从模型中删除该实例，或将该字段设置为 <code>null</code> 或 <code>default</code> 值，或引发异常。</li>
+<li><code>related_name</code>: 指定反向关系的名称，用于从关联的模型中引用该模型。默认引用名字为 模型名字小写</li>
+</ul>
+<p>这个related_name 有必要讲一下, 相当于建立了一个双向关系,我能得到你,你也能得到我,我们现在有一个个人信息表和个人简历表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 个人信息</span><br><span class="line">class Person(models.Model):</span><br><span class="line">    name = models.CharField(max_length=100)</span><br><span class="line">    age = models.IntegerField()</span><br><span class="line">    def __str__(self):</span><br><span class="line">        return f&quot;name:&#123;self.name&#125;,age:&#123;self.age&#125;&quot;</span><br><span class="line"></span><br><span class="line"># 个人简历</span><br><span class="line">class Profile(models.Model):</span><br><span class="line">    person = models.OneToOneField(Person, on_delete=models.CASCADE, related_name=&#x27;profile&#x27;)</span><br><span class="line">    bio = models.TextField()</span><br><span class="line">    website = models.URLField()</span><br><span class="line">    def __str__(self):</span><br><span class="line">        return f&quot;bio:&#123;self.bio&#125;,website:&#123;self.website&#125;\n&#123;self.person&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>我们下面来看一下通过Person得到Profile</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">person = Person.objects.create(**&#123;&quot;name&quot;:&quot;djm&quot;,&quot;age&quot;:20&#125;)  </span><br><span class="line">profile = Profile.objects.create(person=person,bio=&quot;hh&quot;,website=&quot;http://www.baidu.com&quot;) </span><br><span class="line"># 上面创建了两个对象,分别写入了数据库</span><br><span class="line"># 我们现在来通过person得到profile信息</span><br><span class="line"></span><br><span class="line"># 这样是不是就实现了互相查找</span><br><span class="line">person = Person.objects.get(id=1)</span><br><span class="line">print(person.profile)  </span><br><span class="line"></span><br><span class="line">profile = Profile.objects.get(id=1)</span><br><span class="line">print(profile.person)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个related_name这是设置名字而已,就算我们没有设置,它会默认使用类名小写</p>
+</blockquote>
+<p>我们可以通过ForeignKey(unique=True)代替OneToOneField</p>
+<h3 id="foreignkey">ForeignKey</h3>
+<p>这个可以做多一对多,一张表的外键是另一张表的加了唯一性约束或者主键的字段</p>
+<p>我们经常使用它的下面属性:</p>
+<p><code>to_field</code>：指定关联的模型中用于关联的字段，默认为模型的主键字段。</p>
+<p><code>on_delete</code>：当关联的对象被删除时，指定ForeignKey的处理方式，可以取以下值：</p>
+<ul>
+<li>CASCADE：级联删除,把关联了这个对象的数据全部删除</li>
+<li>PROTECT：保护模式，当存在外键关联时，阻止删除</li>
+<li>SET_NULL：设置外键为NULL</li>
+<li>SET_DEFAULT：设置外键为默认值</li>
+<li>SET()：将外键设置为给定值或调用给定函数</li>
+</ul>
+<p><code>related_name</code>: 指定反向关系的名称，用于从关联的模型中引用该模型,默认引用属性名字为  模型名字小写_set</p>
+<h3 id="manytomanyfield">ManyToManyField</h3>
+<p>在Django中，ManyToManyField是一种用于表示多对多关系的字段类型，它允许两个模型之间建立多对多的关联关系。<strong>ManyToManyField需要通过中间表来实现关联</strong>，<strong>该中间表</strong>记录了两个关联模型之间的多对多关系。</p>
+<ul>
+<li><code>on_delete</code>：指定ManyToManyField所关联的模型被删除时的处理方式。</li>
+<li><code>related_name</code>：用于设置反向引用的名称，用于通过关联对象进行反向查询。默认情况下，反向引用名称为<code>&lt;model&gt;_set</code>。注意和一对一的那个区别,这里多了_set,因为它是多个</li>
+<li><code>related_query_name</code>：用于设置反向查询的名称。</li>
+<li><code>through</code>：指定用于关联两个模型的中间表模型。如果没有指定，Django将自动创建一个中间表。</li>
+<li><code>through_fields</code>：指定用于关联两个模型的中间表模型中的字段。如果没有指定，Django将自动查找中间表模型中的外键。</li>
+<li><code>symmetrical</code>：指定关系是否是对称的，如果设置为True，则表示两个模型之间的关系是对称的。默认为True。</li>
+<li><code>db_table</code>：指定用于中间表的数据库表名。</li>
+<li><code>db_constraint</code>：指定是否需要在中间表中创建外键约束。默认为True。</li>
+<li><code>blank</code>和<code>null</code>：与其他字段一样，也可以设置<code>blank</code>和<code>null</code>属性，表示ManyToManyField是否可以为空。</li>
+</ul>
+<p>举个例子吧</p>
+<p>我们有作者和图书两个类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Author(models.Model):</span><br><span class="line">    name = models.CharField(max_length=100)</span><br><span class="line"></span><br><span class="line">class Book(models.Model):</span><br><span class="line">    title = models.CharField(max_length=100)</span><br><span class="line">    authors = models.ManyToManyField(Author)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>一本书可以由多个作者写,一个作者也可以写多本书,我们只需要在Author或者Book中加一个多对多字段就行,另外一个可以通过 模型名字_set得到另外一个数据</p>
+<p>book表(app01_book)</p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230327180602809.png" alt="image-20230327180602809"></p>
+<p>author表(app01_author)</p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230327180310734.png" alt="image-20230327180310734"></p>
+<p>他们之间的关系表(名字默认为 app名字_具有多对多字段模型名字_另一个模型名字)(app01_book_author)</p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230327180733256.png" alt="image-20230327180733256"></p>
+<p>我们现在添加他们之间的关系</p>
+<p>c++由两个人创作, python只由djm创作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">titles = [&quot;c++&quot;,&quot;python&quot;]</span><br><span class="line">cbook,pbook = [Book.objects.get(title=title) for title in titles]</span><br><span class="line"></span><br><span class="line">authors = [&quot;djm&quot;,&quot;djm2&quot;]</span><br><span class="line">djm,djm2 = [Author.objects.get(name=name) for name in authors]</span><br><span class="line"></span><br><span class="line"># 通过书添加作者</span><br><span class="line">cbook.authors.add(djm,djm2)</span><br><span class="line"># 通过作者添加书</span><br><span class="line">djm2.book_set.add(pbook)  # 这个访问方式可以通过related_name修改</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>现在查看关系表</p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230327203323462.png" alt="image-20230327203323462"></p>
+<h2 id="模型元数据meta">模型元数据Meta</h2>
+<p>Meta类的作用是为模型类提供一些额外的元数据信息，以控制模型类的行为和与其他模型类的交互。通过设置Meta类中的属性和方法，可以使模型类更容易理解和使用，也可以提高模型类与数据库的交互效率.</p>
+<blockquote>
+<p>这个元数据就像表的元数据,我们可以对表进行一些约束</p>
+</blockquote>
+<p>比如我们就可以通过给定元数据修改模型在admin页面中的展现方式等等…</p>
+<p>我们来看看它的常用属性吧</p>
+<ol>
+<li><code>db_table</code>：指定模型类在数据库中的表名。</li>
+<li><code>ordering</code>：指定查询结果的排序方式。</li>
+<li><code>verbose_name</code>和<code>verbose_name_plural</code>：分别指定模型类在后台管理站点中的显示名称和复数形式的显示名称。</li>
+<li><code>unique_together</code>：指定哪些字段组合在一起必须是唯一的。</li>
+<li><code>index_together</code>：指定哪些字段组合需要创建索引。</li>
+<li><code>permissions</code>：指定模型类的权限，可以用于控制用户对模型类的访问和操作。</li>
+<li><code>abstract</code>：指定模型类是否是抽象类。</li>
+<li><code>app_label</code>：指定模型类所属的应用程序的名称。</li>
+<li><code>verbose_name</code>和<code>verbose_name_plural</code>：分别指定模型类在后台管理站点中的显示名称和复数形式的显示名称</li>
+</ol>
+<p>我们可以修改verbose_name和verbose_name_plural来修改模型在admin平台显示的名字(管理后台那个例子)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class User(models.Model):</span><br><span class="line">    name = models.CharField(max_length=10,verbose_name=&quot;名字&quot;)</span><br><span class="line">    password = models.CharField(max_length=50,verbose_name=&quot;密码&quot;)</span><br><span class="line">    def __str__(self):</span><br><span class="line">        return f&quot;&#123;self.name&#125;&quot;</span><br><span class="line">    class Meta:</span><br><span class="line">        verbose_name = &quot;用户&quot;</span><br><span class="line">        verbose_name_plural = verbose_name</span><br></pre></td></tr></table></figure>
+<p>我们来对比一下前后</p>
+<p>没有加元数据前</p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230328105428020.png" alt="image-20230328105428020"></p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230328105437630.png" alt="image-20230328105437630"></p>
+<p>加了元数据后</p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230328105322677.png" alt="image-20230328105322677"></p>
+<p><img src="/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/../img/Django%E5%AD%A6%E4%B9%A0assets/image-20230328105334861.png" alt="image-20230328105334861"></p>
+<h2 id="操作表的api">操作表的API</h2>
+<p>一旦创建 数据模型 后，Django 自动给予你一套数据库抽象 API，允许你创建，检索，更新和删除对象</p>
+<p>要从数据库检索对象，要通过模型类的 Manager 构建一个 QuerySet。一个 QuerySet 代表来自数据库中对象的一个集合。</p>
+<p>你能通过模型的 Manager 获取 QuerySet。每个模型至少有一个 Manager，默认名称是 objects,只能通过模型类来访问，不能通过模型实例来访问</p>
+<h3 id="对象常用方法">对象常用方法</h3>
+<p>save  保存到数据库</p>
+<p>delete 从数据库中删除 (如果数据库中没有的话报错)</p>
+<h3 id="objects常用方法">objects常用方法</h3>
+<p>objects常用方法就是QuerySet 里面的常用方法,我们可以直接看QuerySet 中的方法</p>
+<h3 id="queryset-常用方法">QuerySet 常用方法</h3>
+<ol>
+<li>
+<p>filter(**kwargs): 用于筛选出满足给定查找参数的对象。参数可以是模型字段和值的映射。</p>
+<p>示例：<code>Post.objects.filter(title__icontains='django', published=True)</code></p>
+</li>
+<li>
+<p>exclude(**kwargs): 与filter相反，返回不满足给定参数的对象。</p>
+<p>示例：<code>Post.objects.exclude(published=True)</code></p>
+</li>
+<li>
+<p>get(**kwargs): 返回满足给定查找参数的单个对象。如果没有找到或找到多个对象，会抛出异常。</p>
+<p>示例：<code>Post.objects.get(id=1)</code></p>
+</li>
+<li>
+<p>all(): 返回QuerySet中包含的所有对象。</p>
+<p>示例：<code>Post.objects.all()</code></p>
+</li>
+<li>
+<p>none(): 返回一个空的QuerySet。</p>
+<p>示例：<code>Post.objects.none()</code></p>
+</li>
+<li>
+<p>count(): 返回QuerySet中的对象数量。</p>
+<p>示例：<code>Post.objects.count()</code></p>
+</li>
+<li>
+<p>exists(): 检查QuerySet是否包含任何对象。这比使用count()更高效。</p>
+<p>示例：<code>Post.objects.exists()</code></p>
+</li>
+<li>
+<p>order_by(*fields): 对查询结果进行排序。默认是升序，使用负号(-)表示降序。</p>
+<p>示例：<code>Post.objects.order_by('-publish_date', 'title')</code></p>
+</li>
+<li>
+<p>distinct(*fields): 返回QuerySet中不重复的对象。</p>
+<p>示例：<code>Author.objects.distinct('country')</code></p>
+</li>
+<li>
+<p>values(*fields): 返回一个包含字典的QuerySet，其中包含指定字段的值。<strong>这个就相当于分组</strong>,当我们使用后面的aggregate,或者annotate时就相当于对这个字段分组进行的</p>
+<p>示例：<code>Post.objects.values('id', 'title')</code></p>
+</li>
+<li>
+<p>values_list(*fields, flat=False): 返回一个包含元组（或单值，如果设置了flat=True）的QuerySet，其中包含指定字段的值。</p>
+<p>示例：<code>Post.objects.values_list('id', 'title')</code></p>
+</li>
+<li>
+<p>first(): 返回QuerySet中的第一个对象，如果没有对象，则返回None。</p>
+<p>示例：<code>Post.objects.first()</code></p>
+</li>
+<li>
+<p>last(): 返回QuerySet中的最后一个对象，如果没有对象，则返回None。</p>
+<p>示例：<code>Post.objects.last()</code></p>
+</li>
+<li>
+<p>aggregate(*args, **kwargs): 对查询结果进行聚合操作，如计数、求和、平均值等。</p>
+<p>示例：<code>from django.db.models import Count, Avg</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Post.objects.aggregate(Count(&#x27;author&#x27;), Avg(&#x27;views&#x27;))</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>annotate(*args, **kwargs): 为查询结果的每个对象添加注解，如计数、求和、平均值等。</p>
+<p>示例：<code>from django.db.models import Count</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Author.objects.annotate(post_count=Count(&#x27;post&#x27;))</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>select_related(*fields): 对于ForeignKey和OneToOneField字段，执行一个SQL join并包括查询中指定的相关对象。</p>
+<p>示例：<code>Post.objects.select_related('author')</code></p>
+</li>
+<li>
+<p>prefetch_related(*related_lookups): 用于对多对多关系和反向ForeignKey关系的查询优化。</p>
+<p>示例：<code>Author.objects.prefetch_related('post_set')</code></p>
+</li>
+<li>
+<p>using() 操作哪个数据库的数据</p>
+</li>
+<li>
+<p>raw(sql, params=None, translations=None): 执行原始SQL查询，并返回一个包含指定模型实例的RawQuerySet。</p>
+<p>示例：<code>Post.objects.raw('SELECT * FROM blog_post WHERE published = 1')</code></p>
+</li>
+</ol>
+<h3 id="aggregate-与-annotate-的区别"><strong>aggregate 与 annotate 的区别</strong></h3>
+<p><strong>aggregate会对当前QuerySet的所有数据当成一个分组,执行聚合函数,而且返回值是一个字典,里面只包含了我们分组的字段的数据</strong></p>
+<p><strong>annotate 会根据values中的分组执行聚合函数,返回值是QuerySet  里面包含很多字典,字典和aggregate产生的字典很像(如果不使用values的话,每个数据自己是一个分组,而且返回值是一个queryset,里面包含的是对象)</strong></p>
+<p>在实际应用中，您可以根据需要选择使用<code>aggregate()</code>或<code>annotate()</code>。如果您需要对整个数据集执行聚合操作，可以使用<code>aggregate()</code>。如果您需要在分组的基础上执行聚合操作，可以使用<code>annotate()</code></p>
+<h3 id="q对象">Q对象</h3>
+<p>我们发现objects中的参数连接起来后都是  and连接 ,如果我们想使用or连接的话,我们就得使用Q对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from django.db.models import Q</span><br><span class="line"></span><br><span class="line">Q(question__startswith=&#x27;Who&#x27;) | ~Q(pub_date__year=2005)</span><br></pre></td></tr></table></figure>
+<p>我们可以对其进行普通的逻辑操作</p>
+<h3 id="f对象">F对象</h3>
+<p>F对象在Django中用于在查询或更新操作中引用字段的值。它允许在查询中<strong>使用模型字段的当前值，而不是传递一个固定值</strong>。F对象位于<code>django.db.models</code>模块中</p>
+<ol>
+<li>比较字段值：假设我们有一个博客模型，其中有两个字段：浏览次数（views）和点赞次数（likes）。我们想找出浏览次数大于点赞次数的文章：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from django.db.models import F</span><br><span class="line"></span><br><span class="line">Post.objects.filter(views__gt=F(&#x27;likes&#x27;))</span><br></pre></td></tr></table></figure>
+<p>这里，<code>views__gt=F('likes')</code>表示筛选出views字段的值大于likes字段的值的对象。</p>
+<ol start="2">
+<li>更新字段值：假设我们想要在文章的浏览次数上加1，我们可以使用F对象实现这个功能：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from django.db.models import F</span><br><span class="line"></span><br><span class="line">Post.objects.update(views=F(&#x27;views&#x27;) + 1)</span><br></pre></td></tr></table></figure>
+<p>这里，<code>views=F('views') + 1</code>表示将每篇文章的views字段的值加1。</p>
+<ol start="3">
+<li>对字段值进行计算：F对象可以与标准Python运算符一起使用，例如加法、减法、乘法和除法。例如，如果我们想要计算文章的点赞率（点赞次数除以浏览次数），我们可以这样做：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from django.db.models import F, ExpressionWrapper, FloatField</span><br><span class="line"></span><br><span class="line">Post.objects.annotate(like_ratio=ExpressionWrapper(F(&#x27;likes&#x27;) / F(&#x27;views&#x27;), output_field=FloatField()))</span><br></pre></td></tr></table></figure>
+<p>这里，我们使用<code>annotate</code>方法和<code>ExpressionWrapper</code>创建了一个名为<code>like_ratio</code>的新字段，该字段表示每篇文章的点赞率。</p>
+<p>注意：当使用F对象执行运算时，可能会遇到数据库间的不一致性。为了避免这个问题，可以使用<code>django.db.models.functions</code>模块中的数据库函数。例如，对于上面的点赞率计算，我们可以使用<code>Div</code>函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from django.db.models import F</span><br><span class="line">from django.db.models.functions import Div</span><br><span class="line"></span><br><span class="line">Post.objects.annotate(like_ratio=Div(F(&#x27;likes&#x27;), F(&#x27;views&#x27;)))</span><br></pre></td></tr></table></figure>
+<p>总之，F对象在Django查询中非常有用，它可以让你直接引用模型字段的值，而不是传递固定值。这样可以让你编写更灵活、更高效的查询。</p>
+<h3 id="每个-queryset-都是唯一的">每个 QuerySet 都是唯一的</h3>
+<p>每次精炼一个 QuerySet，你就会获得一个全新的 QuerySet，后者与前者毫无关联。每次精炼都会创建一个单独的、不同的 QuerySet，能被存储，使用和复用。</p>
+<h3 id="queryset-是惰性的">QuerySet 是惰性的</h3>
+<p>QuerySet 是惰性的 —— 创建 QuerySet 并不会引发任何数据库活动。你可以将一整天的过滤器都堆积在一起，Django 只会在 QuerySet 被 计算 时执行查询操作。来瞄一眼这个例子:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; q = Entry.objects.filter(headline__startswith=&quot;What&quot;)</span><br><span class="line">&gt;&gt;&gt; q = q.filter(pub_date__lte=datetime.date.today())</span><br><span class="line">&gt;&gt;&gt; q = q.exclude(body_text__icontains=&quot;food&quot;)</span><br><span class="line">&gt;&gt;&gt; print(q)</span><br></pre></td></tr></table></figure>
+<p>虽然这看起来像是三次数据库操作，实际上只在最后一行 (print(q)) 做了一次。一般来说， QuerySet 的结果直到你 “要使用” 时才会从数据库中拿出。当你要用时，才通过数据库 计算 出 QuerySet</p>
+<h2 id="分页">分页</h2>
+<p>Django提供了一个方便的分页工具，可以帮助您轻松地对查询结果进行分页。以下是如何在Django项目中使用分页功能的基本步骤：</p>
+<ol>
+<li>
+<p>导入Paginator和PageNotAnInteger、EmptyPage类：</p>
+<p>首先，您需要从<code>django.core.paginator</code>模块中导入<code>Paginator</code>类，以及用于处理分页异常的<code>PageNotAnInteger</code>和<code>EmptyPage</code>类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.core.paginator <span class="keyword">import</span> Paginator, PageNotAnInteger, EmptyPage</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>创建Paginator对象：</p>
+<p>然后，您需要创建一个<code>Paginator</code>对象，传递查询结果和每页的对象数量。例如，如果您有一个<code>Post</code>模型并且希望每页显示5篇文章，可以这样做：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Post</span><br><span class="line"></span><br><span class="line">post_list = Post.objects.<span class="built_in">all</span>() <span class="comment"># 这里其实并不会去拿到所有的文章,因为它是惰性的</span></span><br><span class="line">paginator = Paginator(post_list, <span class="number">5</span>)  <span class="comment"># 每页显示5篇文章</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>获取当前页的对象列表：</p>
+<p>使用<code>Paginator</code>对象，您可以获取特定页码上的对象列表。为此，您需要从请求参数中获取当前页码（例如，从<code>page</code>参数中获取），然后使用<code>Paginator</code>对象的<code>get_page()</code>方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">page = request.GET.get(<span class="string">&#x27;page&#x27;</span>)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    posts = paginator.get_page(page)</span><br><span class="line"><span class="keyword">except</span> PageNotAnInteger:</span><br><span class="line">    <span class="comment"># 如果页码不是整数，则显示第一页</span></span><br><span class="line">    posts = paginator.get_page(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> EmptyPage:</span><br><span class="line">    <span class="comment"># 如果页码超出范围，则显示最后一页</span></span><br><span class="line">    posts = paginator.get_page(paginator.num_pages)</span><br></pre></td></tr></table></figure>
+<p>在这个例子中，我们首先尝试获取请求中指定的页码。如果页码不是整数或超出范围，我们将返回第一页或最后一页的对象列表。</p>
+</li>
+</ol>
+<h2 id="数据库事务">数据库事务</h2>
+<p>在Django中，事务是用于确保一组数据库操作要么全部成功执行，要么全部失败，从而维护数据库的一致性。Django提供了几种使用事务的方法：</p>
+<ol>
+<li>
+<p><strong>使用装饰器</strong>：<code>django.db.transaction.atomic</code>是一个装饰器，可以用来确保被装饰的函数中的数据库操作在一个原子事务中执行。如果函数中的任何操作失败，整个事务将被回滚。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from django.db import transaction</span><br><span class="line"></span><br><span class="line">@transaction.atomic</span><br><span class="line">def create_user_and_profile(username, email):</span><br><span class="line">    user = User.objects.create(username=username, email=email)</span><br><span class="line">    profile = UserProfile.objects.create(user=user)</span><br></pre></td></tr></table></figure>
+<p>在上面的示例中，<code>create_user_and_profile</code>函数被<code>@transaction.atomic</code>装饰器包裹，确保<code>User</code>和<code>UserProfile</code>的创建操作在一个原子事务中执行。</p>
+</li>
+<li>
+<p><strong>使用上下文管理器</strong>：<code>django.db.transaction.atomic</code>还可以作为上下文管理器使用，将一段代码块包含在一个原子事务中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from django.db import transaction</span><br><span class="line"></span><br><span class="line">def create_user_and_profile(username, email):</span><br><span class="line">    with transaction.atomic():</span><br><span class="line">        user = User.objects.create(username=username, email=email)</span><br><span class="line">        profile = UserProfile.objects.create(user=user)</span><br></pre></td></tr></table></figure>
+<p>在上面的示例中，我们使用<code>with transaction.atomic()</code>语句确保代码块中的<code>User</code>和<code>UserProfile</code>的创建操作在一个原子事务中执行。</p>
+</li>
+<li>
+<p><strong>手动管理事务</strong>：在某些情况下，您可能需要更精细地控制事务的行为。Django提供了<code>transaction.commit()</code>、<code>transaction.rollback()</code>和<code>transaction.set_autocommit()</code>等方法，以便手动管理事务。</p>
+<p>请注意，手动管理事务可能导致更复杂的代码和更高的错误风险。因此，除非有特殊需求，否则建议使用<code>transaction.atomic</code>装饰器或上下文管理器。</p>
+</li>
+</ol>
+<p>总之，在Django中，您可以使用<code>django.db.transaction.atomic</code>装饰器或上下文管理器来确保一组数据库操作在一个原子事务中执行。这有助于确保数据库的一致性和数据完整性。在需要更精细的事务控制时，您还可以使用手动管理事务的方法，但这可能导致代码更加复杂。</p>
+<h1>模板</h1>
+<p>Django 模板语言是一种简单的、可扩展的标记语言，用于在 Django 视图中呈现数据。它包括变量、标签和过滤器。以下是 Django 模板语法的基本概述。</p>
+<h2 id="基本语法">基本语法</h2>
+<h3 id="变量">变量</h3>
+<p>变量是从视图传递给模板的数据。在模板中，变量用双大括号<code>&#123;&#123; &#125;&#125;</code>括起来。</p>
+<h3 id="特定标签">特定标签</h3>
+<p>标签是用于执行特定操作的模板指令。它们用大括号和百分号<code>&#123;% %&#125;</code>括起来。Django 提供了许多内置标签，也允许您创建自定义标签。</p>
+<ul>
+<li>for：遍历列表或字典</li>
+<li>if/elif/else：条件判断</li>
+<li>include：包含另一个模板的内容</li>
+<li>block/extends：模板继承</li>
+<li>load：加载自定义标签和过滤器</li>
+<li>with：创建模板中的局部变量</li>
+</ul>
+<h3 id="过滤器">过滤器</h3>
+<p>过滤器用于在模板中对变量执行某些操作。它们在变量后使用管道符<code>|</code>表示。以下是一些内建过滤器：</p>
+<ul>
+<li>lower：将文本转换为小写</li>
+<li>date：格式化日期</li>
+<li>length：获取列表或字符串的长度</li>
+<li>default：设置默认值</li>
+<li>escape：转义HTML字符</li>
+<li>safe：标记变量内容为安全的HTML  可以将我们的变量字符串变成html</li>
+</ul>
+<h2 id="上下文">上下文</h2>
+<p>我们在模板中能够使用的变量都是在上下文中能找到的</p>
+<h3 id="django帮我们添加好的变量">Django帮我们添加好的变量</h3>
+<ol>
+<li><code>django.template.context_processors.debug</code>:
+<ul>
+<li><code>debug</code>: 布尔值，表示当前是否处于调试模式（由<code>settings.DEBUG</code>决定）。</li>
+</ul>
+</li>
+<li><code>django.template.context_processors.request</code>:
+<ul>
+<li><code>request</code>: 当前的HttpRequest对象，包含请求的详细信息，如URL、HTTP方法、GET/POST参数等。</li>
+</ul>
+</li>
+<li><code>django.template.context_processors.media</code>:
+<ul>
+<li><code>MEDIA_URL</code>: 用于访问媒体文件的基本URL（由<code>settings.MEDIA_URL</code>定义）。</li>
+</ul>
+</li>
+<li><code>django.template.context_processors.static</code>:
+<ul>
+<li><code>STATIC_URL</code>: 用于访问静态文件的基本URL（由<code>settings.STATIC_URL</code>定义）。</li>
+</ul>
+</li>
+<li><code>django.contrib.auth.context_processors.auth</code>:
+<ul>
+<li><code>user</code>: 表示当前已登录的用户，或者是一个匿名用户。</li>
+<li><code>perms</code>: 一个对象，包含当前用户的所有权限。</li>
+</ul>
+</li>
+<li><code>django.contrib.messages.context_processors.messages</code>:
+<ul>
+<li><code>messages</code>: 当前请求中的一次性消息（flash messages），通常用于显示成功、错误或信息提示</li>
+</ul>
+</li>
+</ol>
+<h3 id="如何自己往上下文中添加变量">如何自己往上下文中添加变量</h3>
+<p>以下是一些常见的方法来将变量放入上下文：</p>
+<ol>
+<li>使用render()函数：<br>
+render()函数是在视图中渲染模板并将结果作为HttpResponse返回的最常用方法。它接受三个参数：请求对象（request）、模板名称和上下文字典（可选）。</li>
+<li>使用TemplateView类：<br>
+如果你使用基于类的视图（class-based views），可以通过在TemplateView子类中定义get_context_data()方法来添加上下文变量</li>
+<li>使用上下文处理器（context processors）：<br>
+上下文处理器是一种将全局变量添加到所有模板上下文的方法。要创建一个上下文处理器，你需要编写一个函数，该函数接受一个request参数并返回一个字典。然后将此函数添加到settings.py中的TEMPLATES选项的’context_processors’列表中</li>
+</ol>
+<h1>需要注意的点</h1>
+<h2 id="创建数据模型对象的方式">创建数据模型对象的方式</h2>
+<p>如果我们使用的是普通方式的创建对象的话,必须使用save方法,不然不会保存到数据库,  如果我们使用的是 objects.create的方法的话就不需要使用save方法</p>
+<h2 id="修改数据后要调用save方法">修改数据后要调用save方法</h2>
+<p>我们对对象的属性进行修改后必须使用save方法才能修改到数据库</p>
+<h1>额外补充</h1>
+<h2 id="加密密码">加密密码</h2>
+<p><strong>为什么要对密码进行加密？</strong></p>
+<p>加密密码的原因是为了保护用户的隐私和安全。当用户在应用程序中注册并提供密码时，<strong>如果以明文形式存储密码，那么任何可以访问数据库的人都可以查看和使用这些密码。这可能导致用户数据泄露，黑客攻击，以及其他安全问题</strong>。为了防止这种情况，我们应该将密码加密存储，以便即使数据库被泄露，攻击者也无法轻易地获取原始密码。</p>
+<p>Django提供了<code>make_password</code>和<code>check_password</code>这两个方便的函数，用于处理密码哈希和验证。它们位于<code>django.contrib.auth.hashers</code>模块中。</p>
+<ol>
+<li><code>make_password</code>：这个函数将明文密码转换为哈希值，可以在数据库中存储。默认情况下，它使用Django的默认哈希器（在Django的设置中通过<code>PASSWORD_HASHERS</code>设置）。</li>
+</ol>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.auth.hashers <span class="keyword">import</span> make_password</span><br><span class="line"></span><br><span class="line">plaintext_password = <span class="string">&quot;my_password&quot;</span></span><br><span class="line">hashed_password = make_password(plaintext_password)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将哈希密码存储到数据库中</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><code>check_password</code>：这个函数接受明文密码和哈希密码作为参数。它会尝试使用同样的哈希算法将明文密码转换为哈希值，并将结果与已存储的哈希密码进行比较。如果哈希值匹配，则验证成功，函数返回<code>True</code>；否则，返回<code>False</code>。</li>
+</ol>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.auth.hashers <span class="keyword">import</span> check_password</span><br><span class="line"></span><br><span class="line">plaintext_password = <span class="string">&quot;my_password&quot;</span></span><br><span class="line">stored_hashed_password = <span class="string">&quot;some_hashed_password_from_database&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> check_password(plaintext_password, stored_hashed_password):</span><br><span class="line">    <span class="comment"># 密码验证成功</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="comment"># 密码验证失败</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p>通过使用Django的<code>make_password</code>和<code>check_password</code>函数，您可以在自定义数据库字段中方便地处理密码哈希和验证。这些函数已经为您处理了加密和哈希算法，确保了密码的安全性。</p>
+<h2 id="时区问题">时区问题</h2>
+<p>在使用Django的时候,如果数据库里面字段是Date字段,我发现它总是和中国时区差8个小时,只有将USE_TZ 设置成False的时候才能正确</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE_TZ=<span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h2 id="如何发送qq邮件">如何发送QQ邮件</h2>
+<ol>
+<li>首先，确保已经安装了 <code>django-smtp-ssl</code> 包。 pip install django-smtp-ssl</li>
+<li>登录你的 QQ 邮箱，然后进入 <a target="_blank" rel="noopener" href="https://mail.qq.com/cgi-bin/frame_html">设置 -&gt; 账户 -&gt; POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务</a> 页面，开启 SMTP 服务。注意，开启后会获得一个授权码，记下这个授权码，稍后在 Django 项目中使用。</li>
+<li>在 <code>searchproject</code> 项目的 <code>settings.py</code> 文件中，配置邮件发送设置，使用 QQ 邮箱的 SMTP 服务器和刚刚获得的授权码：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">EMAIL_BACKEND = &#x27;django_smtp_ssl.SSLEmailBackend&#x27;</span><br><span class="line">EMAIL_HOST = &#x27;smtp.qq.com&#x27;</span><br><span class="line">EMAIL_PORT = 465</span><br><span class="line">EMAIL_USE_SSL = True</span><br><span class="line">EMAIL_HOST_USER = &#x27;your-qq-email@example.com&#x27;  # 你的 QQ 邮箱地址</span><br><span class="line">EMAIL_HOST_PASSWORD = &#x27;your-qq-email-authorization-code&#x27;  # 你的 QQ 邮箱授权码</span><br></pre></td></tr></table></figure>
+<p>写一个简单的例子吧</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from django.core.mail import EmailMultiAlternatives</span><br><span class="line">from email.utils import formataddr</span><br><span class="line">def send_verification_code(to_email, verification_code):</span><br><span class="line">    subject = f&#x27;搜题系统验证码&#x27;</span><br><span class="line">    plain_text_message = f&#x27;您的验证码为: &#123;verification_code&#125;,五分钟内有效&#x27;</span><br><span class="line">    html_message = f&#x27;&lt;p&gt;您的验证码为: &lt;span style=&quot;color: blue; text-decoration: underline;&quot;&gt;&#123;verification_code&#125;&lt;/span&gt;,五分钟内有效&lt;/p&gt;&#x27;</span><br><span class="line">    from_email = formataddr((&#x27;搜题系统&#x27;,settings.EMAIL_HOST_USER))  # 设置发件人名字和邮箱</span><br><span class="line"></span><br><span class="line">    email = EmailMultiAlternatives(subject, plain_text_message, from_email, [to_email])</span><br><span class="line">    email.attach_alternative(html_message, &quot;text/html&quot;)</span><br><span class="line">    email.send()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="使用内置缓存框架">使用内置缓存框架</h2>
+<p>Django提供了一个灵活的内置缓存框架，可以轻松地为您的项目添加缓存功能。以下是如何使用Django内置缓存框架的基本步骤：</p>
+<ol>
+<li>
+<p>配置缓存后端</p>
+<p>在<code>settings.py</code>文件中，需要配置一个<code>CACHES</code>字典来设置缓存后端。Django支持多种缓存后端，例如内存、文件、Memcached和Redis。以下是一个使用内存缓存的示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CACHES = &#123;</span><br><span class="line">    <span class="string">&#x27;default&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;BACKEND&#x27;</span>: <span class="string">&#x27;django.core.cache.backends.locmem.LocMemCache&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;LOCATION&#x27;</span>: <span class="string">&#x27;unique-snowflake&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有关更多缓存配置选项，请参阅Django文档：<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/3.2/topics/cache/#setting-up-the-cache">https://docs.djangoproject.com/en/3.2/topics/cache/#setting-up-the-cache</a></p>
+</li>
+<li>
+<p>使用缓存API</p>
+<p>Django提供了一个简单的API来存储、获取和删除缓存项。以下是一些基本示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.core.cache <span class="keyword">import</span> cache</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置缓存值，超时时间为300秒</span></span><br><span class="line">cache.<span class="built_in">set</span>(<span class="string">&#x27;my_key&#x27;</span>, <span class="string">&#x27;my_value&#x27;</span>, <span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取缓存值</span></span><br><span class="line">value = cache.get(<span class="string">&#x27;my_key&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除缓存值</span></span><br><span class="line">cache.delete(<span class="string">&#x27;my_key&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>Django缓存API还提供了许多其他功能，例如增量操作、批量获取和设置等。有关详细信息，请参阅文档：<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/3.2/topics/cache/#the-low-level-cache-api">https://docs.djangoproject.com/en/3.2/topics/cache/#the-low-level-cache-api</a></p>
+<blockquote>
+<p>这个缓存过期后就会被删除,因此再调用get方法时就是None</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="检查路由是否存在">检查路由是否存在</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> resolve</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">match</span> = resolve(request.path)  <span class="comment"># 如果不存在就会抛出异常</span></span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="keyword">return</span> JsonResponse(&#123;<span class="string">&quot;code&quot;</span>: Code.NOT_FOUND, <span class="string">&quot;info&quot;</span>: <span class="string">&quot;请求不存在&quot;</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="状态码">状态码</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">HttpStatusCodes</span>:</span><br><span class="line">    <span class="comment"># 2xx 成功状态码</span></span><br><span class="line">    HTTP_200_OK = <span class="number">200</span>  <span class="comment"># 请求成功，服务器成功处理了请求</span></span><br><span class="line">    HTTP_201_CREATED = <span class="number">201</span>  <span class="comment"># 请求已成功处理，创建了新资源</span></span><br><span class="line">    HTTP_202_ACCEPTED = <span class="number">202</span>  <span class="comment"># 请求已接受，但服务器尚未处理</span></span><br><span class="line">    HTTP_203_NON_AUTHORITATIVE_INFORMATION = <span class="number">203</span>  <span class="comment"># 返回非权威性信息</span></span><br><span class="line">    HTTP_204_NO_CONTENT = <span class="number">204</span>  <span class="comment"># 请求成功，但无需返回任何内容（如删除资源）</span></span><br><span class="line">    HTTP_205_RESET_CONTENT = <span class="number">205</span>  <span class="comment"># 请求成功，需要客户端重置文档视图</span></span><br><span class="line">    HTTP_206_PARTIAL_CONTENT = <span class="number">206</span>  <span class="comment"># 部分GET请求已成功处理</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3xx 重定向状态码</span></span><br><span class="line">    HTTP_300_MULTIPLE_CHOICES = <span class="number">300</span>  <span class="comment"># 提供多种可选资源</span></span><br><span class="line">    HTTP_301_MOVED_PERMANENTLY = <span class="number">301</span>  <span class="comment"># 永久重定向，资源已被分配了新的URL</span></span><br><span class="line">    HTTP_302_FOUND = <span class="number">302</span>  <span class="comment"># 临时重定向，资源现在临时位于不同的URL</span></span><br><span class="line">    HTTP_303_SEE_OTHER = <span class="number">303</span>  <span class="comment"># 参照其他信息，请查看其他URI</span></span><br><span class="line">    HTTP_304_NOT_MODIFIED = <span class="number">304</span>  <span class="comment"># 资源未更改，缓存有效</span></span><br><span class="line">    HTTP_305_USE_PROXY = <span class="number">305</span>  <span class="comment"># 必须使用代理访问</span></span><br><span class="line">    HTTP_306_UNUSED = <span class="number">306</span>  <span class="comment"># 未使用的状态码</span></span><br><span class="line">    HTTP_307_TEMPORARY_REDIRECT = <span class="number">307</span>  <span class="comment"># 临时重定向，请求应保持原HTTP方法</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 4xx 客户端错误状态码</span></span><br><span class="line">    HTTP_400_BAD_REQUEST = <span class="number">400</span>  <span class="comment"># 错误请求，服务器无法理解或处理</span></span><br><span class="line">    HTTP_401_UNAUTHORIZED = <span class="number">401</span>  <span class="comment"># 需要身份验证</span></span><br><span class="line">    HTTP_402_PAYMENT_REQUIRED = <span class="number">402</span>  <span class="comment"># 需要付款，预留状态码</span></span><br><span class="line">    HTTP_403_FORBIDDEN = <span class="number">403</span>  <span class="comment"># 禁止访问，服务器拒绝请求</span></span><br><span class="line">    HTTP_404_NOT_FOUND = <span class="number">404</span>  <span class="comment"># 未找到，服务器找不到请求的资源</span></span><br><span class="line">    HTTP_405_METHOD_NOT_ALLOWED = <span class="number">405</span>  <span class="comment"># 方法禁用，服务器禁止使用该方法</span></span><br><span class="line">    HTTP_406_NOT_ACCEPTABLE = <span class="number">406</span>  <span class="comment"># 无法满足请求头中的条件</span></span><br><span class="line">    HTTP_407_PROXY_AUTHENTICATION_REQUIRED = <span class="number">407</span>  <span class="comment"># 需要代理身份验证</span></span><br><span class="line">    HTTP_408_REQUEST_TIMEOUT = <span class="number">408</span>  <span class="comment"># 请求超时，服务器等待请求超时</span></span><br><span class="line">    HTTP_409_CONFLICT = <span class="number">409</span>  <span class="comment"># 请求冲突，请求与服务器当前状态冲突</span></span><br><span class="line">    HTTP_410_GONE = <span class="number">410</span>  <span class="comment"># 资源已永久删除，服务器找不到请求的资源</span></span><br><span class="line">    HTTP_411_LENGTH_REQUIRED = <span class="number">411</span>  <span class="comment"># 需要Content-Length请求头</span></span><br><span class="line">    HTTP_412_PRECONDITION_FAILED = <span class="number">412</span>  <span class="comment"># 服务器未满足请求头中的条件</span></span><br><span class="line">    HTTP_413_REQUEST_ENTITY_TOO_LARGE = <span class="number">413</span>  <span class="comment"># 请求实体过大</span></span><br><span class="line">    HTTP_414_REQUEST_URI_TOO_LONG = <span class="number">414</span>  <span class="comment"># 请求URI过长</span></span><br><span class="line">    HTTP_415_UNSUPPORTED_MEDIA_TYPE = <span class="number">415</span> <span class="comment"># 请求的媒体类型不受支持</span></span><br><span class="line">    HTTP_416_REQUESTED_RANGE_NOT_SATISFIABLE = <span class="number">416</span>  <span class="comment"># 请求的范围无效</span></span><br><span class="line">    HTTP_417_EXPECTATION_FAILED = <span class="number">417</span>  <span class="comment"># 未满足期望请求头的要求</span></span><br><span class="line">    HTTP_418_IM_A_TEAPOT = <span class="number">418</span>  <span class="comment"># 当服务器是一个茶壶时返回，主要用于愚人节玩笑</span></span><br><span class="line">    HTTP_422_UNPROCESSABLE_ENTITY = <span class="number">422</span>  <span class="comment"># 请求格式正确，但服务器无法处理实体内容</span></span><br><span class="line">    HTTP_423_LOCKED = <span class="number">423</span>  <span class="comment"># 资源被锁定</span></span><br><span class="line">    HTTP_424_FAILED_DEPENDENCY = <span class="number">424</span>  <span class="comment"># 依赖请求失败</span></span><br><span class="line">    HTTP_426_UPGRADE_REQUIRED = <span class="number">426</span>  <span class="comment"># 需要客户端升级协议</span></span><br><span class="line">    HTTP_428_PRECONDITION_REQUIRED = <span class="number">428</span>  <span class="comment"># 要求先决条件</span></span><br><span class="line">    HTTP_429_TOO_MANY_REQUESTS = <span class="number">429</span>  <span class="comment"># 请求过多，超过服务器限制</span></span><br><span class="line">    HTTP_431_REQUEST_HEADER_FIELDS_TOO_LARGE = <span class="number">431</span>  <span class="comment"># 请求头字段过大</span></span><br><span class="line">    HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS = <span class="number">451</span>  <span class="comment"># 因法律原因不可用</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 5xx 服务器错误状态码</span></span><br><span class="line">    HTTP_500_INTERNAL_SERVER_ERROR = <span class="number">500</span>  <span class="comment"># 服务器内部错误</span></span><br><span class="line">    HTTP_501_NOT_IMPLEMENTED = <span class="number">501</span>  <span class="comment"># 服务器不具备完成请求的功能</span></span><br><span class="line">    HTTP_502_BAD_GATEWAY = <span class="number">502</span>  <span class="comment"># 作为网关或代理，服务器从上游服务器接收到无效响应</span></span><br><span class="line">    HTTP_503_SERVICE_UNAVAILABLE = <span class="number">503</span>  <span class="comment"># 服务器不可用，暂时过载或维护</span></span><br><span class="line">    HTTP_504_GATEWAY_TIMEOUT = <span class="number">504</span>  <span class="comment"># 作为网关或代理，服务器未及时从上游服务器接收请求</span></span><br><span class="line">    HTTP_505_HTTP_VERSION_NOT_SUPPORTED = <span class="number">505</span>  <span class="comment"># 服务器不支持请求所使用的HTTP协议版本</span></span><br><span class="line">    HTTP_506_VARIANT_ALSO_NEGOTIATES = <span class="number">506</span>  <span class="comment"># 服务器存在内部配置错误</span></span><br><span class="line">    HTTP_507_INSUFFICIENT_STORAGE = <span class="number">507</span>  <span class="comment"># 服务器无法存储完成请求所必须的内容</span></span><br><span class="line">    HTTP_508_LOOP_DETECTED = <span class="number">508</span>  <span class="comment"># 服务器在处理请求时检测到无限循环</span></span><br><span class="line">    HTTP_510_NOT_EXTENDED = <span class="number">510</span>  <span class="comment"># 获取资源所需的策略并没有被满足</span></span><br><span class="line">    HTTP_511_NETWORK_AUTHENTICATION_REQUIRED = <span class="number">511</span>  <span class="comment"># 需要进行网络认证</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1>遇到的问题</h1>
+<h2 id="无法访问">无法访问</h2>
+<p>两个地方要注意</p>
+<p>第一个地方是 <a target="_blank" rel="noopener" href="http://setttings.py">setttings.py</a> 文件的ALLOWED_HOSTS</p>
+<p>另外一个是  启动命令  使用 python runserve  0.0.0.0:8000</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://djmnb.github.io">戴晶明</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://djmnb.github.io/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/">https://djmnb.github.io/2023/03/24/python/Django%E5%AD%A6%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://djmnb.github.io" target="_blank">戴晶明的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/site/touxiang.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/03/30/%E5%89%8D%E7%AB%AF/html+css+js%E5%AD%A6%E4%B9%A0/" title="html+css+js学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">html+css+js学习</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/14/python/python%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" title="python实用技巧"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">python实用技巧</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/site/touxiang.gif" onerror="this.onerror=null;this.src='/404.html'" alt="avatar"/></div><div class="author-info__name">戴晶明</div><div class="author-info__description">不积跬步,无以至千里</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="/img/site/weixin.jpg" target="_blank" title="WeChat"><i class="fab fa-weixin"></i></a><a class="social-icon" href="/img/site/qq.jpg" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎光临</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85django-4-0-4"><span class="toc-number">2.1.</span> <span class="toc-text">安装Django 4.0.4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%89%88%E6%9C%AC"><span class="toc-number">2.2.</span> <span class="toc-text">查看版本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">文件介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.1.</span> <span class="toc-text">官方介绍</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">settings配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">路由配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="toc-number">6.1.</span> <span class="toc-text">简单示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#url%E9%85%8D%E7%BD%AE%E8%A7%84%E5%88%99"><span class="toc-number">6.2.</span> <span class="toc-text">url配置规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E4%BE%8B%E5%AD%90"><span class="toc-number">6.2.1.</span> <span class="toc-text">匹配例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#path%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="toc-number">6.2.2.</span> <span class="toc-text">path转换器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%B7%AF%E5%BE%84%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="toc-number">6.2.3.</span> <span class="toc-text">自定义路径转换器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">6.2.4.</span> <span class="toc-text">使用正则表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#re-path-%E5%92%8C-path-%E5%8C%BA%E5%88%AB"><span class="toc-number">6.2.5.</span> <span class="toc-text">re_path 和 path 区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E5%AF%B9path%E7%9A%84%E7%94%A8%E6%B3%95%E8%A7%A3%E9%87%8A"><span class="toc-number">6.3.</span> <span class="toc-text">官方对path的用法解释</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#path-%E5%8F%82%E6%95%B0%EF%BC%9A-route"><span class="toc-number">6.3.1.</span> <span class="toc-text">path() 参数： route</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#path-%E5%8F%82%E6%95%B0%EF%BC%9A-view"><span class="toc-number">6.3.2.</span> <span class="toc-text">path() 参数： view</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#path-%E5%8F%82%E6%95%B0%EF%BC%9A-kwargs"><span class="toc-number">6.3.3.</span> <span class="toc-text">path() 参数： kwargs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#path-%E5%8F%82%E6%95%B0%EF%BC%9A-name"><span class="toc-number">6.3.4.</span> <span class="toc-text">path() 参数： name</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E9%A1%B5%E9%9D%A2%E5%A4%84%E7%90%86"><span class="toc-number">6.4.</span> <span class="toc-text">错误页面处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#url%E5%88%86%E5%B1%82%E8%BD%AC%E5%8F%91"><span class="toc-number">6.5.</span> <span class="toc-text">url分层转发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80-%E8%BD%AC%E5%8F%91%E7%BB%99%E4%B8%8D%E5%90%8Curls-py"><span class="toc-number">6.5.1.</span> <span class="toc-text">方法一 转发给不同urls.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C-%E8%BD%AC%E5%8F%91%E7%BB%99%E4%B8%80%E4%B8%AA%E5%88%97%E8%A1%A8"><span class="toc-number">6.5.2.</span> <span class="toc-text">方法二 转发给一个列表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">MVC与MVT</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#mvc"><span class="toc-number">7.1.</span> <span class="toc-text">MVC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mvt"><span class="toc-number">7.2.</span> <span class="toc-text">MVT</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">视图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#httprequest"><span class="toc-number">8.1.</span> <span class="toc-text">HttpRequest</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7"><span class="toc-number">8.1.1.</span> <span class="toc-text">属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">8.1.2.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#meta%E5%B1%9E%E6%80%A7%E5%AD%97%E5%85%B8%E9%87%8C%E9%9D%A2%E5%8C%85%E5%90%AB%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">8.1.3.</span> <span class="toc-text">META属性字典里面包含的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AFip%E5%9C%B0%E5%9D%80"><span class="toc-number">8.1.4.</span> <span class="toc-text">获取客户端ip地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="toc-number">8.1.5.</span> <span class="toc-text">上传文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#httpresponse"><span class="toc-number">8.2.</span> <span class="toc-text">HttpResponse</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7"><span class="toc-number">8.2.1.</span> <span class="toc-text">属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">8.2.2.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#render"><span class="toc-number">8.2.3.</span> <span class="toc-text">render</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redirect"><span class="toc-number">8.2.4.</span> <span class="toc-text">redirect</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text">中间件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">9.1.</span> <span class="toc-text">定义中间件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">9.2.</span> <span class="toc-text">注意点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%BE%E7%BD%AE%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="toc-number">9.2.1.</span> <span class="toc-text">放置中间件的顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E7%85%A7%E6%8C%87%E5%8D%97%E4%BD%BF%E7%94%A8%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">9.2.2.</span> <span class="toc-text">按照指南使用中间件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="toc-number">9.3.</span> <span class="toc-text">装饰器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">10.</span> <span class="toc-text">管理后台</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%90%84%E7%A7%8D%E8%A1%A8"><span class="toc-number">10.1.</span> <span class="toc-text">创建各种表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81"><span class="toc-number">10.2.</span> <span class="toc-text">创建管理员账号密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86%E8%87%AA%E5%B7%B1%E7%9A%84app%E6%B3%A8%E5%86%8C"><span class="toc-number">10.3.</span> <span class="toc-text">将自己的app注册</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="toc-number">10.4.</span> <span class="toc-text">创建自己的模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86%E8%87%AA%E5%B7%B1%E6%A8%A1%E5%9E%8B%E6%89%98%E7%AE%A1%E7%BB%99admin%E7%AE%A1%E7%90%86"><span class="toc-number">10.5.</span> <span class="toc-text">将自己模型托管给admin管理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">11.</span> <span class="toc-text">ORM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E5%AD%97%E6%AE%B5%E5%8F%8A%E5%85%B6%E5%B1%9E%E6%80%A7"><span class="toc-number">11.1.</span> <span class="toc-text">数据模型字段及其属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%AD%97%E6%AE%B5"><span class="toc-number">11.1.1.</span> <span class="toc-text">常用字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0"><span class="toc-number">11.1.2.</span> <span class="toc-text">常用选项参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E6%A8%A1%E5%9E%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">11.2.</span> <span class="toc-text">多个模型之间的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#onetoonefiled"><span class="toc-number">11.2.1.</span> <span class="toc-text">OneToOneFiled</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#foreignkey"><span class="toc-number">11.2.2.</span> <span class="toc-text">ForeignKey</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#manytomanyfield"><span class="toc-number">11.2.3.</span> <span class="toc-text">ManyToManyField</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%85%83%E6%95%B0%E6%8D%AEmeta"><span class="toc-number">11.3.</span> <span class="toc-text">模型元数据Meta</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E8%A1%A8%E7%9A%84api"><span class="toc-number">11.4.</span> <span class="toc-text">操作表的API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">11.4.1.</span> <span class="toc-text">对象常用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objects%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">11.4.2.</span> <span class="toc-text">objects常用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#queryset-%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">11.4.3.</span> <span class="toc-text">QuerySet 常用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#aggregate-%E4%B8%8E-annotate-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">11.4.4.</span> <span class="toc-text">aggregate 与 annotate 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#q%E5%AF%B9%E8%B1%A1"><span class="toc-number">11.4.5.</span> <span class="toc-text">Q对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#f%E5%AF%B9%E8%B1%A1"><span class="toc-number">11.4.6.</span> <span class="toc-text">F对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AA-queryset-%E9%83%BD%E6%98%AF%E5%94%AF%E4%B8%80%E7%9A%84"><span class="toc-number">11.4.7.</span> <span class="toc-text">每个 QuerySet 都是唯一的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#queryset-%E6%98%AF%E6%83%B0%E6%80%A7%E7%9A%84"><span class="toc-number">11.4.8.</span> <span class="toc-text">QuerySet 是惰性的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5"><span class="toc-number">11.5.</span> <span class="toc-text">分页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1"><span class="toc-number">11.6.</span> <span class="toc-text">数据库事务</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">12.</span> <span class="toc-text">模板</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">12.1.</span> <span class="toc-text">基本语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-number">12.1.1.</span> <span class="toc-text">变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%AE%9A%E6%A0%87%E7%AD%BE"><span class="toc-number">12.1.2.</span> <span class="toc-text">特定标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">12.1.3.</span> <span class="toc-text">过滤器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">12.2.</span> <span class="toc-text">上下文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#django%E5%B8%AE%E6%88%91%E4%BB%AC%E6%B7%BB%E5%8A%A0%E5%A5%BD%E7%9A%84%E5%8F%98%E9%87%8F"><span class="toc-number">12.2.1.</span> <span class="toc-text">Django帮我们添加好的变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%87%AA%E5%B7%B1%E5%BE%80%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%8F%98%E9%87%8F"><span class="toc-number">12.2.2.</span> <span class="toc-text">如何自己往上下文中添加变量</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">13.</span> <span class="toc-text">需要注意的点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">13.1.</span> <span class="toc-text">创建数据模型对象的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%90%8E%E8%A6%81%E8%B0%83%E7%94%A8save%E6%96%B9%E6%B3%95"><span class="toc-number">13.2.</span> <span class="toc-text">修改数据后要调用save方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">14.</span> <span class="toc-text">额外补充</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E5%AF%86%E7%A0%81"><span class="toc-number">14.1.</span> <span class="toc-text">加密密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E5%8C%BA%E9%97%AE%E9%A2%98"><span class="toc-number">14.2.</span> <span class="toc-text">时区问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%8F%91%E9%80%81qq%E9%82%AE%E4%BB%B6"><span class="toc-number">14.3.</span> <span class="toc-text">如何发送QQ邮件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%AE%E7%BC%93%E5%AD%98%E6%A1%86%E6%9E%B6"><span class="toc-number">14.4.</span> <span class="toc-text">使用内置缓存框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E8%B7%AF%E7%94%B1%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8"><span class="toc-number">14.5.</span> <span class="toc-text">检查路由是否存在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-number">14.6.</span> <span class="toc-text">状态码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">15.</span> <span class="toc-text">遇到的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE"><span class="toc-number">15.1.</span> <span class="toc-text">无法访问</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E9%9B%B6%E9%9B%B6%E6%95%A3%E6%95%A3/plantuml/" title="plantuml">plantuml</a><time datetime="2024-09-19T08:25:10.368Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AF%BB%E6%96%87%E7%8C%AE%E6%8C%87%E4%BB%A4/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.366Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%82%A1%E7%A5%A8/temp/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.365Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 戴晶明</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'BkV10wtzbo9nuKwtsBG04Idw-gzGzoHsz',
+      appKey: 'CLv4OkdYGyropWktyqSDf2af',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

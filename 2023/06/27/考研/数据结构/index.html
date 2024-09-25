@@ -1,0 +1,1590 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数据结构 | 戴晶明的个人博客</title><meta name="author" content="戴晶明"><meta name="copyright" content="戴晶明"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言 趁着考研的机会,好好学一下,  所用语言是c&#x2F;c++ 我们在做题的时候不要钻牛角尖,  要根据书上的来,  比如对于单链表, 书上一般是默认只带有头指针,  比如说获取链表尾巴元素的时间复杂度就是O(n),不要钻牛角尖的以为可以自己设置一个尾指针, 然后时间复杂度就是O(1)  ,对你当然可以自己设计, 可是现在是在书上,理论 基本概念 程序 &#x3D; 数据结构 + 算法  数据:  数据是信息的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构">
+<meta property="og:url" content="https://djmnb.github.io/2023/06/27/%E8%80%83%E7%A0%94/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="戴晶明的个人博客">
+<meta property="og:description" content="前言 趁着考研的机会,好好学一下,  所用语言是c&#x2F;c++ 我们在做题的时候不要钻牛角尖,  要根据书上的来,  比如对于单链表, 书上一般是默认只带有头指针,  比如说获取链表尾巴元素的时间复杂度就是O(n),不要钻牛角尖的以为可以自己设置一个尾指针, 然后时间复杂度就是O(1)  ,对你当然可以自己设计, 可是现在是在书上,理论 基本概念 程序 &#x3D; 数据结构 + 算法  数据:  数据是信息的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://djmnb.github.io/img/site/touxiang.gif">
+<meta property="article:published_time" content="2023-06-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-19T08:25:10.362Z">
+<meta property="article:author" content="戴晶明">
+<meta property="article:tag" content="需要复习">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://djmnb.github.io/img/site/touxiang.gif"><link rel="shortcut icon" href="/img/site/icon.jfif"><link rel="canonical" href="https://djmnb.github.io/2023/06/27/%E8%80%83%E7%A0%94/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数据结构',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-19 16:25:10'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/site/touxiang.gif" onerror="onerror=null;src='/404.html'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: /img/site/beijing.jfif"><nav id="nav"><span id="blog-info"><a href="/" title="戴晶明的个人博客"><span class="site-name">戴晶明的个人博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数据结构</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-26T16:00:00.000Z" title="发表于 2023-06-27 00:00:00">2023-06-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-19T08:25:10.362Z" title="更新于 2024-09-19 16:25:10">2024-09-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">34.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>106分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="数据结构"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>前言</h1>
+<p>趁着考研的机会,好好学一下,  所用语言是c/c++</p>
+<p>我们在做题的时候不要钻牛角尖,  要根据书上的来,  比如对于单链表, 书上一般是默认只带有头指针,  比如说获取链表尾巴元素的时间复杂度就是O(n),不要钻牛角尖的以为可以自己设置一个尾指针, 然后时间复杂度就是O(1)  ,对你当然可以自己设计, 可是现在是在书上,理论</p>
+<h1>基本概念</h1>
+<p><strong>程序 = 数据结构 + 算法</strong></p>
+<ul>
+<li>数据:  <strong>数据是信息的载体</strong>, 是描述客观事物属性的数,字符及能被输入到计算机中处理的符号.  <strong>数据是计算机加工的原料</strong></li>
+<li>数据元素: <strong>数据元素是数据的基本单位, 通常作为一个整体进行考虑和处理, 一个数据元素是由多个数据项组成的</strong>, 比如 一个学生就是一个数据元素  它由学号,姓名, 性别等数据项组成</li>
+<li>数据项: <strong>数据项是构成数据元素的不可分割的最小单位</strong></li>
+<li>数据对象: <strong>具有相同性质的数据元素的集合</strong></li>
+<li>数据结构: <strong>数据元素相互之间存在一种或多种关系的集合</strong></li>
+<li>数据类型: 原子类型(值不可再分), 结构类型(值可以再分,类似结构体), 抽象数据类型(定义数据的逻辑结构与其相关操作), <strong>抽象数据类型相当于定义了整个数据结构</strong></li>
+</ul>
+<p>数据对象和数据结构的区别:   数据对象是<strong>所有相同性质</strong>的数据元素的集合   而且 数据结构是 <strong>具有相同性质 且 相互之间有关系</strong>的数据元素集合,   比如说  所有学生都在同一个数据对象里面,  但是排名前一百的学生在一个数据结构里面也就是线性表里面,</p>
+<h2 id="数据结构的三要性">数据结构的三要性</h2>
+<p>在计算机科学中，数据结构的三要素通常指：数据的逻辑结构、数据的存储结构（也称物理结构）以及数据的操作。</p>
+<ol>
+<li>
+<p><strong>数据的逻辑结构</strong>：逻辑结构是指数据对象中数据元素之间的相互关系。<strong>这个关系是对具体问题的抽象，与数据的存储无关</strong>。根据元素之间的关系，逻辑结构可以分为线性结构、树结构、图结构以及集合。</p>
+<ul>
+<li><strong>线性结构</strong>：<strong>数据元素之间存在一对一的关系</strong>。例如：数组、链表、栈、队列等。</li>
+<li><strong>树结构</strong>：数据元素之间存在一对多的关系。例如：二叉树、B树、红黑树等。</li>
+<li><strong>图结构</strong>：数据元素之间存在多对多的关系。例如：图、网络等。</li>
+<li><strong>集合</strong>：<strong>数据元素之间没有明显的关系</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>数据的存储结构</strong>：存储结构是指数据对象在计算机内存中的组织方式，<strong>也称为物理结构</strong>。主要有顺序存储和链式存储。</p>
+<ul>
+<li><strong>顺序存储结构</strong>：数据元素存储在连续的存储单元里，物理上的相邻也代表逻辑上的相邻。这种方式典型的如数组。</li>
+<li><strong>链式存储结构</strong>：数据元素可以存储在内存的任意位置，通过链接（如指针）来建立数据元素之间的逻辑关系。这种方式典型的如链表。</li>
+<li><strong>索引存储结构</strong>：索引存储结构是在存储元素信息的同时，还创建一种索引表，索引表中包含对主文件中数据元素的引用。通过索引，可以实现对数据的快速访问。(<strong>索引表是一般是线性结构</strong>, 一般有个键和值  键可以代表唯一的数据元素 值是数据元素的地址)</li>
+<li><strong>散列存储结构</strong>：散列存储，也叫哈希存储，它是根据元素的关键字直接进行访问的。通常会有一个哈希函数将关键字映射到一个地址上。</li>
+</ul>
+</li>
+<li>
+<p><strong>数据的运算</strong>：<strong>这是定义在特定数据结构上的一系列处理数据的方法或者函数</strong>，这些操作可以是查找、插入、删除、排序等。这些操作要满足可行性（即算法的正确性）和有效性（即算法的高效性）。  <strong>运算的定义是针对逻辑结构, 运算的实现是针对存储结构</strong></p>
+</li>
+</ol>
+<p>这三者相互关联，逻辑结构决定了数据的运算，而存储结构则是逻辑结构和数据运算在计算机中的实现基础。理解并掌握这三个要素，是理解和应用数据结构的关键。</p>
+<p><strong>一般,  只要逻辑结构 和 运算有一个不相同,  我们就认为两者是不同的数据结构</strong></p>
+<h2 id="算法">算法</h2>
+<p>算法是<strong>解决特定问题的一系列明确的执行步骤</strong>。它是从输入开始，按照一定规则和步骤，经过有限次运算后，得到预期结果的过程。</p>
+<p>算法具有以下五个基本特性：</p>
+<ol>
+<li>
+<p><strong>有穷性</strong>：算法必须能在执行有限步骤之后结束，不能无限制地执行下去。</p>
+</li>
+<li>
+<p><strong>确定性</strong>：算法的每一步必须清晰明确，没有歧义, <strong>对于相同的输入只能得到相同的输出</strong>。</p>
+</li>
+<li>
+<p><strong>可行性</strong>：算法中描述的操作都是可以通过已经实现的<strong>基本操作执行有限次</strong>来实现。</p>
+</li>
+<li>
+<p><strong>输入</strong>：一个算法有零个或多个输入。</p>
+</li>
+<li>
+<p><strong>输出</strong>：一个算法至少有一个或多个输出，即算法的执行结果。</p>
+</li>
+</ol>
+<p>在计算机科学中，算法是非常重要的概念。一个好的算法不仅能正确解决问题，还应该尽可能地优化时间复杂度和空间复杂度，使得在处理大规模数据时仍能保持良好的性能。算法的设计和分析是计算机科学的核心内容之一，也是计算机程序设计的关键。</p>
+<p>一个好的算法通常需要满足以下五个特性：</p>
+<ol>
+<li>
+<p><strong>正确性</strong>：算法应能正确地解决所指定的问题，对于合法的输入数据，应能得到满足要求的输出结果。此外，对于非法的、异常的输入数据，算法应做出相应的处理。</p>
+</li>
+<li>
+<p><strong>可读性</strong>：算法应清晰、简洁，易于人理解，这样便于其他人员阅读、修改和维护。</p>
+</li>
+<li>
+<p><strong>健壮性</strong>：算法需要对各种异常输入或者错误情况进行有效处理，使其在面对这些情况时不会崩溃或产生未预期的结果。</p>
+</li>
+<li>
+<p><strong>效率和存储量需求</strong>：优秀的算法应具有尽可能低的时间复杂度和空间复杂度。在处理大量数据时，算法的效率尤为重要。同时，算法应尽量节省存储空间，减小对计算资源的消耗。</p>
+</li>
+<li>
+<p><strong>可扩展性和可复用性</strong>：一个好的算法应具有良好的扩展性，能处理比现有需求更大或更复杂的问题。同时，如果算法具有一定的通用性，那么在其他场景或问题中也可能复用，从而提高编程效率。</p>
+</li>
+</ol>
+<p>以上这些特性并不是孤立的，而是相互关联的。例如，为了提高效率，我们可能需要牺牲一些可读性；为了增加健壮性，我们可能需要增加一些错误处理的代码，这可能会影响效率。因此，在设计算法时，我们需要根据具体情况进行权衡和选择。</p>
+<h2 id="时间复杂度">时间复杂度</h2>
+<p>算法的时间复杂度是一种<strong>衡量算法运行时间长短的量化指标</strong>。它反映了随着输入数据规模的增大，算法执行时间的增长趋势。通常，<strong>我们关注的是最坏时间复杂度</strong>，因为它代表了算法在最糟糕情况下的执行时间。</p>
+<p>时间复杂度的计算通常关注的是算法中基本操作的执行次数，而忽略了具体的硬件条件和运行环境等因素。我们通常用大O符号（O）来表示时间复杂度，<strong>大O符号表示的是问题规模n与算法执行时间增长率的上界关系</strong>, <strong>只保留了最高阶的部分,系数也不考虑</strong>。</p>
+<p>下面是一些常见的算法时间复杂度，从低到高排列：</p>
+<ol>
+<li>常数阶O(1)</li>
+<li>对数阶O(logn)</li>
+<li>线性阶O(n)</li>
+<li>线性对数阶O(nlogn)</li>
+<li>平方阶O(n^2)</li>
+<li>立方阶O(n^3)</li>
+<li>K次方阶O(n^k) (k&gt;3)</li>
+<li>指数阶O(2^n)</li>
+<li>阶乘阶O(n!)</li>
+<li>双阶乘阶O(n!!)</li>
+<li>指数阶O(n^n)</li>
+</ol>
+<p>理解时间复杂度对于编程和算法分析都非常重要，它可以帮助我们预测算法的运行效率，并在多种算法之间做出合理的选择。</p>
+<p><strong>这里需要注意的是  无论时间复杂度是多少,  问题规模是 n 而不是 O(n)</strong>, 问题规模是指n的数量</p>
+<h2 id="空间复杂度">空间复杂度</h2>
+<p>空间复杂度是对一个算法在运行过程中<strong>临时占用存储空间大小的量度</strong>，它也是算法效率评价的重要指标之一。空间复杂度过高的算法可能会导致使用的内存超出硬件限制，导致程序无法正确运行。</p>
+<p>空间复杂度的计算同样也是基于大O符号表示的，表示随着数据规模的增长，算法的存储空间需求如何变化。</p>
+<h1>线性表(有序表)</h1>
+<p>线性表是一种基本的数据结构，<strong>它是由n个具有相同特性的数据元素组成的<span style="color:red">有限序列</span></strong>。</p>
+<p>线性表的特点是数据元素之间存在一对一的线性关系，也就是除首尾元素外，其他元素都有<em style="color:red">唯一的前驱和后继</em>。</p>
+<p>线性表是一种基本的数据结构，具有以下几个主要特点：</p>
+<ol>
+<li>
+<p><strong>有限性</strong>：线性表是由有限个数据元素组成的。</p>
+</li>
+<li>
+<p><strong>有序性</strong>：线性表中的元素之间有明确的前后顺序关系。每个元素（除第一个元素外）都有唯一的直接前驱，每个元素（除最后一个元素外）都有唯一的直接后继。</p>
+</li>
+<li>
+<p><strong>同质性</strong>：线性表中的所有元素都具有相同的数据类型或结构。</p>
+</li>
+<li>
+<p><strong>相互独立</strong>：线性表中的元素之间是相互独立的，元素的变化只与其本身有关，不受其他元素的影响。</p>
+</li>
+<li>
+<p><strong>可变性</strong>：线性表可以进行插入、删除、查找等操作，元素的个数和内容可以改变。</p>
+</li>
+</ol>
+<p>线性表有两种常见的实现方式：数组和链表。</p>
+<ol>
+<li>
+<p><strong>数组</strong>：数组是一种连续的存储结构，它的特点是支持随机访问，也就是说，可以在常数时间内访问任何位置的元素。但是数组的大小在创建时就已经固定，所以不能动态改变。此外，数组中的元素在内存中是连续存储的，所以在插入和删除元素时需要移动大量的元素，效率较低。</p>
+</li>
+<li>
+<p><strong>链表</strong>：链表是一种非连续的存储结构，它的特点是插入和删除操作的效率很高，只需要改变一些指针的指向就可以了。但是链表不支持随机访问，访问某个元素需要从头开始遍历链表，所以访问效率较低。链表可以动态改变大小，更加灵活。</p>
+</li>
+</ol>
+<p>线性表是数据结构中的基础，许多复杂的数据结构，如栈和队列，都是基于线性表实现的。理解线性表的性质和操作对于深入理解和应用数据结构非常重要。</p>
+<h2 id="顺序表">顺序表</h2>
+<p>顺序表是一种常见的线性表实现方式，它将元素存储在一段连续的存储单元里，每个元素所占用的存储单元相同，元素的逻辑顺序与其在存储单元中的物理顺序一致。也就是说，如果我们知道了某一个元素的存储地址，那么我们就可以直接计算出其它元素的地址，这就是顺序表支持随机访问的原因。</p>
+<p><strong>顺序表的基本操作包括：</strong></p>
+<ol>
+<li>
+<p><strong>插入</strong>：在顺序表的特定位置插入元素。若插入位置后有元素，则需要将这些元素后移，为新元素腾出空间。</p>
+</li>
+<li>
+<p><strong>删除</strong>：删除顺序表中的某个元素。若删除位置后有元素，则需要将这些元素前移，填补空白。</p>
+</li>
+<li>
+<p><strong>查找</strong>：按照元素值或者位置进行查找。</p>
+</li>
+<li>
+<p><strong>修改</strong>：修改顺序表中某个位置的元素。</p>
+</li>
+</ol>
+<p><strong>顺序表的优点：</strong></p>
+<ol>
+<li>
+<p>访问速度快，支持随机访问，时间复杂度为O(1)。</p>
+</li>
+<li>
+<p>结构简单，容易实现。</p>
+</li>
+</ol>
+<p><strong>顺序表的缺点：</strong></p>
+<ol>
+<li>
+<p>插入和删除操作需要移动大量元素，时间复杂度为O(n)。</p>
+</li>
+<li>
+<p>需要一块连续的存储空间，可能会造成空间的浪费。如果存储空间不够，需要重新分配空间，操作复杂。</p>
+</li>
+</ol>
+<p>在实际使用中，顺序表适用于元素数量固定，且主要进行查找操作的场景。如果需要频繁地进行插入和删除操作，可能链表是更好的选择。</p>
+<h2 id="链表">链表</h2>
+<h3 id="头结点">头结点</h3>
+<p>根据是否包含头节点，链表可以分为带头节点的链表和不带头节点的链表。</p>
+<p>带头节点的链表是指链表中的第一个节点（头节点）不存储实际的数据，只是起到一个标记的作用，方便链表的操作。</p>
+<p>与之相反，不带头节点的链表中的第一个节点直接存储数据，并指向下一个节点。</p>
+<p>带头节点的链表有以下优点：</p>
+<ol>
+<li><strong>统一了插入和删除操作</strong>：在带头节点的链表中，插入和删除操作可以统一进行，不需要特殊处理空链表或者头部和尾部的情况。</li>
+<li><strong>方便处理空链表</strong>：头节点可以作为一个特殊的标记，用来表示链表为空，这样在处理空链表时不需要额外的判断。</li>
+<li><strong>便于链表的遍历和返回</strong>：有了头节点，可以更容易地进行链表的遍历和返回链表的起始位置。</li>
+</ol>
+<p>总的来说，带头节点的链表在操作上更加方便和统一，使得代码的编写和理解更加简单。但是，头节点也会占用一定的额外空间。是否使用头节点，取决于具体的应用场景和设计考虑。</p>
+<h3 id="头插法-和-尾插法">头插法 和 尾插法</h3>
+<p>在链表的创建过程中，&quot;头插法&quot;和&quot;尾插法&quot;是两种常见的插入方法，用于向链表中添加新的元素。这两种方法的主要区别在于新元素添加到链表的位置。</p>
+<p><strong>头插法</strong></p>
+<p>头插法是将新的元素添加到链表的开头。具体操作如下：</p>
+<ol>
+<li>创建新的节点，并将待插入的数据放入节点中。</li>
+<li>将新节点的指针指向当前的头节点。</li>
+<li>更新头节点，使其指向新的节点。</li>
+</ol>
+<p>这样，每次插入的新节点都会成为链表的头节点。因此，使用头插法创建的链表中元素的顺序与输入的顺序是相反的。</p>
+<p><strong>尾插法</strong></p>
+<p>尾插法是将新的元素添加到链表的末尾。具体操作如下：</p>
+<ol>
+<li>创建新的节点，并将待插入的数据放入节点中。</li>
+<li>找到链表的尾节点，将尾节点的指针指向新节点。</li>
+<li>更新尾节点，使其指向新的节点。</li>
+</ol>
+<p>这样，每次插入的新节点都会成为链表的尾节点。因此，使用尾插法创建的链表中元素的顺序与输入的顺序是相同的。</p>
+<p>这两种插入方法各有优缺点，具体应用哪种方法取决于具体需求。<strong>头插法的操作更简单，但会改变元素的原始顺序</strong>；<strong>尾插法可以保持元素的原始顺序，但需要额外的操作来维护尾节点。</strong></p>
+<h2 id="循环链表">循环链表</h2>
+<h1>栈 队列  数组</h1>
+<h2 id="前言">前言</h2>
+<p>本章 通常以选择题的形式考查,  <strong>栈和队列的实现是基于有序表的, 而且他们是受限的线性表,比如栈只能操作一端</strong>,因此有顺序表和链表两种实现</p>
+<h2 id="栈">栈</h2>
+<h3 id="定义">定义</h3>
+<p>栈（Stack）是一种特殊的线性数据结构，它遵循 **LIFO（Last In First Out，即后进先出）**的原则。也就是说，最后一个添加进来的元素会被首先移除。</p>
+<p>栈的主要操作包括：</p>
+<ol>
+<li><strong>Push</strong>：添加元素到栈顶。</li>
+<li><strong>Pop</strong>：移除栈顶元素。</li>
+<li><strong>Top/Peek</strong>：查看（但不移除）栈顶元素。</li>
+<li><strong>isEmpty</strong>：检查栈是否为空。</li>
+</ol>
+<p>栈在许多领域都有应用，例如在算法（如深度优先搜索，括号匹配），操作系统（如内存管理，函数调用堆栈），编程语言的实现（如递归函数的实现）等方面都有重要应用。</p>
+<h3 id="实现">实现</h3>
+<h4 id="顺序表实现">顺序表实现:</h4>
+<ul>
+<li>元素为空的判断: 栈顶指针top == -1</li>
+<li>入栈  st[++top] = v</li>
+<li>出栈  v = st[top–]</li>
+<li>查看栈顶元素  v = st[top]</li>
+</ul>
+<h4 id="单向链表实现-不带头结点">单向链表实现(不带头结点):</h4>
+<ul>
+<li>元素为空的判断: 栈顶指针head == NULL</li>
+<li>入栈  node-&gt;next = head ;  head = node</li>
+<li>出栈  v = head.v; node = head; head=head-&gt;next; free(node)</li>
+<li>查看栈顶元素  v = head.v</li>
+</ul>
+<h3 id="共享栈">共享栈</h3>
+<p>共享栈是一种特殊的栈结构，它允许在同一个数组中实现两个栈。这种结构是通过将一个数组的两端分别作为两个栈的栈底，然后让这两个栈向中间生长来实现的。这种设计有效地利用了数组空间，避免了单栈可能导致的空间浪费。</p>
+<p>在共享栈的实现中，通常有如下几个主要的操作：</p>
+<ol>
+<li><strong>初始化</strong>：分别设置两个栈的栈底，一个在数组的起始位置，一个在数组的末尾位置。</li>
+<li><strong>push</strong>：向指定的栈中添加元素。如果添加元素的栈是从数组起始位置开始的，那么新元素应被添加到当前栈顶的下一个位置；如果添加元素的栈是从数组末尾位置开始的，那么新元素应被添加到当前栈顶的前一个位置。</li>
+<li><strong>pop</strong>：从指定的栈中删除元素，就是将对应栈的栈顶指针向栈底方向移动一位。</li>
+<li><strong>isEmpty</strong>：检查指定的栈是否为空，只需要查看该栈的栈顶指针是否指向其栈底即可。</li>
+</ol>
+<p>需要注意的是，当两个栈的栈顶指针相遇时，说明数组已经满了，不能再向任何一个栈中添加元素。判满条件是 topb - topa == 1</p>
+<p><strong>共享栈的一个主要优点是它能有效地利用空间，避免了一端空闲，另一端溢出的情况</strong></p>
+<h3 id="做题方法">做题方法</h3>
+<p>技巧</p>
+<ol>
+<li>
+<p><strong>n个元素依次进栈 得到出栈顺序个数函数</strong> $ f(n) = \frac{C{n \choose 2n}}NaN $</p>
+</li>
+<li>
+<p><strong>出栈顺序 应该满足这样一个要求,  一个元素前面的元素如果 没有在序列前出现,  那么他们在后面出现的时候 顺序不能改变</strong>, 这个其实就满足了, 后入栈的元素 一定要早出于 <strong>先入栈而且还存在与栈中的元素</strong>, 比如入栈顺序是 abcdef  这个时候 先出栈了一个 f 这个时候, 你会发现,  后面的元素顺序已经确定了 就是  fedcba 如果出栈了  af 那么 顺序就是  afedcb</p>
+</li>
+<li>
+<p><em style="color:red">根据第二条,  我们可以通过出栈序列计算出栈需要最小存储空间  比如入栈序列为  abcdefg,  出栈序列为 bdcfeag  我们只需要看序列当前元素后面有多少个比自己早入栈的元素: 1 2 1 2 1 0 0   因此最小存储空间为 2+1 = 3  这是因为当前比自己早入栈的元素肯定在栈中</em></p>
+</li>
+</ol>
+<p>注意点:</p>
+<ul>
+<li>顺序表中,  数组尾巴才是栈顶,切记,  所以打印数组元素的时候,  最后一个元素才是栈顶元素</li>
+</ul>
+<h2 id="队列">队列</h2>
+<p>队列（Queue）是一种特殊的线性数据结构，它遵循 FIFO（First In First Out，即先进先出）的原则。也就是说，最先添加进来的元素会被首先移除。</p>
+<p>队列的主要操作包括：</p>
+<ol>
+<li><strong>Enqueue</strong>：在队列尾部添加一个元素。</li>
+<li><strong>Dequeue</strong>：从队列头部移除一个元素。</li>
+<li><strong>Front/Peek</strong>：查看（但不移除）队列头部的元素。</li>
+<li><strong>IsEmpty</strong>：检查队列是否为空。</li>
+<li><strong>IsFull</strong>：检查队列是否已满。</li>
+</ol>
+<p>队列在许多领域都有应用，例如在算法（如宽度优先搜索，缓存实现），操作系统（如任务调度，打印任务队列），编程语言的实现（如事件队列）等方面都有重要应用。</p>
+<p>队列也有多种不同的类型，包括但不限于：</p>
+<ul>
+<li><strong>线性队列</strong>：最基本的队列，按照FIFO原则进行操作。</li>
+<li><strong>循环队列</strong>：在物理存储上是线性的，但逻辑上头尾相连形成一个环状结构，能更有效地利用存储空间。</li>
+<li><strong>优先队列</strong>：每个元素都有一个优先级，元素出队的顺序由它们的优先级决定。</li>
+<li><strong>双端队列</strong>（deque）：既可以在队头插入和删除元素，也可以在队尾插入和删除元素。</li>
+</ul>
+<h3 id="实现">实现</h3>
+<h4 id="顺序表">顺序表:</h4>
+<ul>
+<li>判空: front == back</li>
+<li>入队: q[back++] = v</li>
+<li>出队: v = q[front++]</li>
+</ul>
+<h4 id="改进顺序表为循环队列">改进顺序表为循环队列</h4>
+<p>首先，对于队列的长度n，我们需要分配一个长度为n+1的数组来存储队列的元素，<strong>留出一个空间作为“保护位”</strong>。这样是为了区分队列为空和队列为满的情况。</p>
+<p>假设我们有一个大小为n+1的数组q，初始时，队头和队尾指针front和back都指向0。那么循环队列的操作可以如下定义：</p>
+<ol>
+<li><strong>判空</strong>：当 front == back 时，队列为空。</li>
+<li><strong>判满</strong>：当 (back + 1) % (n + 1) == front 时，队列为满。这里用到了模运算来实现环状的逻辑结构。</li>
+<li><strong>入队</strong>：先判断队列是否满，如果不满，先在队尾位置存放新的元素：q[back] = v，然后更新队尾指针：back = (back + 1) % (n + 1)。</li>
+<li><strong>出队</strong>：先判断队列是否为空，如果不空，取出队头元素：v = q[front]，然后更新队头指针：front = (front + 1) % (n + 1)。</li>
+</ol>
+<p><strong>这就是将顺序表改进为循环队列的一种常见方法，它通过牺牲一个数组单元的存储空间，使得队列的判满和判空操作变得简单，并且避免了数组元素的移动。</strong></p>
+<h4 id="链表">链表</h4>
+<ul>
+<li>判空: front == back</li>
+<li>入队: back-&gt;next = node; back = node</li>
+<li>出队: v = front-&gt;v; node = front;  front = front-&gt;next; free(node);</li>
+</ul>
+<h3 id="双端队列">双端队列</h3>
+<p>双端队列（Double Ended Queue，简称 Deque）是一种具有队列和栈的性质的数据结构。双端队列中的元素可以从两端弹出，其限定插入和删除操作在表的两端进行。双端队列可以在队列两端入队和出队。</p>
+<p>输入受限双端队列:  在双端队列上删除了新增的输入端</p>
+<p>输出受限双端队列:   在双端队列上删除了新增的输出端</p>
+<h3 id="做题方法">做题方法</h3>
+<ul>
+<li>**在循环顺序队列中, 要特别注意题目所指如何解决判满和判空操作  一般我们默认判空值rear == front  判满是  (rear+1) % Maxsize == front   , 但是题目有时不是如此,比如队头指针是元素头指针的前一个元素  这样 判空就是 (front +1) % Maxsize == rear  判满操作就是 rear == front **  还要注意队头指针和队头元素的区别,  它两位置是可能不一样的</li>
+<li>对于<strong>输出受限的队列来说</strong>,  看有哪些出队顺序不可能是他产生的方法是:  将这个出队顺序放入到输出受限队列中, 看他是否能够输入元素产生这样一个队列,  比如  a b c d e  依次 入队 ,   对于 d b a c e 这个队列  它是能够产生的   先放入 a, 左b 右c 左d 右e,  而对于 d b c a e 它是不能够产生的, 因为左边出现了 b 在 c 之前,  总结:  <strong>对于输出受限队列来说,  从第一个输入的元素往两边依次遍历过去,  元素的入队顺序是不能变的</strong>,  对于这个总结, 我们就可以自己产生输出受限队列不可能产生的队列:   bdfaec  baced  decab(a的左边,e 出现在了d的左边)</li>
+</ul>
+<h2 id="栈和队列的应用">栈和队列的应用</h2>
+<h3 id="括号匹配">括号匹配</h3>
+<h3 id="表达式求值">表达式求值</h3>
+<p>在数学和计算机科学中，表达式（expression）是符号和运算符的有序组合，表示一种计算。根据运算符的位置，我们通常可以将表达式分为中缀表达式，前缀表达式（或叫波兰式）和后缀表达式（或叫逆波兰式）。</p>
+<p><strong>中缀表达式（Infix Expression）</strong>：<br>
+在中缀表达式中，运算符位于操作数之间。这是我们日常生活中最常用的表达式形式。例如：<code>2 + 3 * 4</code>。</p>
+<p><strong>后缀表达式（Postfix Expression 或 Reverse Polish Notation）</strong>：<br>
+在后缀表达式中，运算符位于所有操作数的后面。例如，中缀表达式 <code>2 + 3 * 4</code> 对应的后缀表达式为 <code>2 3 4 * +</code>。</p>
+<p>转换中缀表达式为后缀表达式的一个常见方法是使用一个栈来保存运算符，这个方法通常被称为“调度场算法”。</p>
+<p>这两种表达式方式的一个重要区别是，在中缀表达式中运算符有优先级，需要用括号来改变运算顺序，而后缀表达式则不需要。这使得后缀表达式在计算机中处理起来更为方便，因为计算后缀表达式只需从左到右扫描一遍，不需要记住运算符的优先级，也不需要处理括号。</p>
+<p><strong>中缀表达式 转后缀表达式</strong></p>
+<p>例如:  A+B*(C-D) -E/F</p>
+<p>一个用于存放操作符栈 st_op</p>
+<p>一个用于存放后缀表达式的队列 q</p>
+<p>依次遍历中缀表达式   A 入队列,  + 入栈;  B入队列;  *入栈;  (入栈; C入队列;  - 入栈; D 入队列; )将栈中(之前的元素全部出栈入队列 -入队列, 弹出(; - 将前面全部操作符出栈 有 * +,  E入队列; /入栈; F入队列; 弹出全部操作符到队列</p>
+<p>A B C D - * + E F / -</p>
+<p>上面就涉及到了优先级的问题, 当前栈顶优先级比自己高, 就弹出它放入到队列</p>
+<h3 id="递归">递归</h3>
+<p>递归是一种编程技术，其中一个函数通过直接或间接地调用自身来解决问题。<strong>递归函数通常被用来解决可以通过更小子问题的解来找到原问题解的那种问题。</strong></p>
+<p>一个递归的实现通常包括以下两个主要部分：</p>
+<ol>
+<li><strong>基本情况也叫边界条件（Base Case）</strong>：这是递归调用链条中的最小问题，可以直接解决而不需要进一步的递归调用。基本情况的处理是递归函数正确工作的关键。</li>
+<li><strong>递归调用（Recursive Case）</strong>：在递归调用部分，函数会将问题分解为更小的子问题，并通过递归调用自身来解决这些子问题。</li>
+</ol>
+<p>在编写递归函数时，需要特别注意避免无限递归，也就是说，我们需要保证在有限步骤内，每个递归调用都能到达一个基本情况。</p>
+<p>递归在算法设计中是一个非常强大的工具，可以用来解决很多问题，比如搜索问题，排序问题（例如快速排序和归并排序），动态规划问题等。同时，很多数据结构，比如树和图，也有很多递归的操作。</p>
+<h3 id="队列在计算机系统中的应用">队列在计算机系统中的应用</h3>
+<p>队列是计算机科学中一个非常重要的数据结构，它在各种不同的计算机系统中都有着广泛的应用。下面是一些常见的应用场景：</p>
+<ol>
+<li>
+<p><strong>操作系统</strong>：在操作系统中，多个进程可能会共享一个单一的处理器。操作系统使用一个进程队列来管理这些进程，按照一定的调度策略（比如先进先出、优先级调度等）来决定下一个要运行的进程。</p>
+</li>
+<li>
+<p><strong>打印任务管理</strong>：在一个网络打印机中，打印任务会被放入一个队列中，打印机会按照队列中的顺序（通常是先进先出）依次打印。</p>
+</li>
+<li>
+<p><strong>网络请求处理</strong>：在Web服务器中，服务器会用一个队列来管理来自客户端的请求，按照队列的顺序依次处理这些请求。当服务器的处理能力有限时，队列可以用来平衡请求的处理速度和请求的到达速度，防止服务器被过多的请求压垮。</p>
+</li>
+<li>
+<p><strong>消息队列</strong>：在分布式系统中，消息队列是一种常见的数据交换方式。它允许不同的系统或者服务之间异步地交换信息。每个发送的消息都会被放入队列中，接收者可以从队列中取出并处理消息。</p>
+</li>
+<li>
+<p><strong>图形化用户界面</strong>：在图形用户界面中，事件（比如点击、按键、鼠标移动等）会被放入一个事件队列中，然后按照队列的顺序被处理。这样可以确保事件的处理顺序与事件的发生顺序一致。</p>
+</li>
+<li>
+<p><strong>数据缓冲</strong>：队列也常用于数据的缓冲，例如，在I/O操作，网络传输，生产者/消费者问题中，都可能使用队列作为数据的缓冲结构。</p>
+</li>
+</ol>
+<p>这些仅仅是队列在计算机系统中应用的一部分例子，队列的应用场景非常广泛。</p>
+<h2 id="数组和特殊矩阵">数组和特殊矩阵</h2>
+<p>矩阵在计算机图形学和工程计算中有举足轻重的地位, 在数据结构中如何用最小的存储空间来存储矩阵变的格外重要.</p>
+<h3 id="数组">数组</h3>
+<p>数组是相同元素类型构成的有限序列, 数组是线性表的推广</p>
+<p>数组是一种基本的数据结构，用于存储同一类型的连续元素。以下是关于数组的一些基本知识：</p>
+<p><strong>定义与特性</strong>：</p>
+<ol>
+<li>
+<p><strong>连续存储</strong>：数组中的元素在内存中是连续存储的，这意味着数组的每个元素都紧接着前一个元素存储。这使得可以通过基地址和偏移量快速定位和访问数组中的任意元素。</p>
+</li>
+<li>
+<p><strong>固定大小</strong>：在大多数编程语言中，数组在创建时需要指定大小，且之后无法改变。</p>
+</li>
+<li>
+<p><strong>索引访问</strong>：数组中的每个元素都可以通过索引（通常是整数）来访问，这通常是从0开始的。</p>
+</li>
+</ol>
+<p><strong>常见操作</strong>：</p>
+<ol>
+<li>
+<p><strong>读取</strong>：通过索引来读取元素，这是一个常数时间的操作。</p>
+</li>
+<li>
+<p><strong>更新</strong>：通过索引来更新元素，这也是一个常数时间的操作。</p>
+</li>
+<li>
+<p><strong>搜索</strong>：查找一个特定的元素在数组中的位置。在无序数组中，这通常需要遍历整个数组，所以时间复杂度是O(n)。在有序数组中，可以使用二分搜索，时间复杂度是O(log n)。</p>
+</li>
+<li>
+<p><strong>插入和删除</strong>：在数组的末尾插入或删除元素是一个常数时间的操作。但在数组的开头或中间插入或删除元素需要移动元素，所以时间复杂度是O(n)。</p>
+</li>
+</ol>
+<p><strong>应用场景</strong>：</p>
+<ol>
+<li>
+<p><strong>存储数据</strong>：数组是存储和处理大量数据的基础，例如图像处理、数值计算等。</p>
+</li>
+<li>
+<p><strong>查找表/映射</strong>：如果关键字是小整数，数组可以作为查找表或映射，通过关键字直接访问元素。</p>
+</li>
+<li>
+<p><strong>实现其他数据结构</strong>：数组是许多其他数据结构的基础，例如栈、队列、堆、哈希表等。</p>
+</li>
+</ol>
+<p><strong>注意事项</strong>：</p>
+<ol>
+<li>
+<p><strong>越界问题</strong>：由于数组的大小是固定的，所以访问数组时需要确保索引不越界。</p>
+</li>
+<li>
+<p><strong>内存利用</strong>：如果数据的数量或大小有大的变化，可能需要动态的数据结构，例如链表或动态数组，以更有效地使用内存。</p>
+</li>
+<li>
+<p><strong>多维数组映射方法</strong>:  按行优先和按列优先, 需要注意区别</p>
+</li>
+</ol>
+<h3 id="特殊矩阵的压缩">特殊矩阵的压缩</h3>
+<p>对于矩阵压缩公式来说,  将矩阵坐标转化为数组坐标,  我们首先计算当前坐标对应的元素个数为n,  然后矩阵坐标是否可以从0开始, 如果是从0开始那么对应数组坐标就是  n  , 否则就是 n - 1(默认数组下标从0开始),   <strong>还要注意数组下标是否从0开始</strong></p>
+<h4 id="对称矩阵">对称矩阵</h4>
+<p><strong>对称矩阵</strong>:  上三角和下三角元素相同, 因此我们可以只存放下三角和主对角线的元素</p>
+<p>用一个数组b来存放(下标从0开始)</p>
+<p>获取 a(i,j)元素的公式为:</p>
+<p>a(i,j) = b[k]  其中  当i&gt;=j 时 k = i*(i-1)/2 + j-1  当 i&lt;j 时  k = j*(j-1) /2+ i-1</p>
+<h4 id="三角矩阵">三角矩阵</h4>
+<p><strong>上三角元素全部相同,下三角不同矩阵压缩</strong>:   只需要先存储下三角, 然后再存放上上三角一个元素就行, 总共 存放n(n+1)/2 +1 个元素</p>
+<p>a(i,j) = b[k] 其中当i&gt;=j 时 k = i*(i-1)/2 + j-1  当 i&lt;j 时  k = n(n+1)/2</p>
+<p><strong>下三角元素全部相同,上三角不同矩阵压缩</strong>:</p>
+<p>a(i,j) = b[k] 其中当i&gt;j 时 k = n(n+1)/2, 当 i&lt;=j 时   k = (2*n-i+2)*(i-1)/2 + j-i</p>
+<h4 id="三对角矩阵">三对角矩阵</h4>
+<p>三对角矩阵是一种特殊的矩阵，它只有主对角线上的元素以及主对角线两侧的元素（也就是对角线上的元素和对角线上下一行和上一列的元素）是非零的，其他位置的元素都是零。</p>
+<p>假设我们有一个三对角矩阵，我们可以使用一个一维数组来存储非零元素，以节省存储空间。对于三对角矩阵，我们可以定义如下寻址公式（下标从0开始）：</p>
+<p>设矩阵元素 a[i][j] 存在数组 b 中的位置 k，那么我们有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b[k] = a[i][j] 其中 k = 2*i + j - 3 </span><br></pre></td></tr></table></figure>
+<p>已知k能够推出i和j   i = (k+1)/3+1 j = k-2*i+3  这里的除法是c语言里面的取整除法</p>
+<h4 id="稀疏矩阵">稀疏矩阵</h4>
+<p><strong>矩阵中非零元素的个数 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span>, 相对矩阵元素的个数 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span> 来说非常少, 即 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>≫</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">s \gg t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≫</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> 的矩阵称为稀䟽矩阵</strong>。 例如, 一个矩阵的阶为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mo>×</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">100 \times 100</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span></span></span></span>, 该矩阵中只有少于 100 个非零元素。<br>
+若采用常规的方法存储稀疏矩阵, 则相当浪费存储空间, 因此仅存储非零元素。但通常非零 元素的分布没有规律, 所以仅存储非零元素的值是不够的, 还要存储它所在的行和列。因此, 将非零元素及其相应的行和列构成一个三元组 (行标, 列标, 值),。然后按照某种 规律存储这些三元组。稀疏矩阵压缩存储后便失去了随机存取特性。</p>
+<p><strong>十字链表法存储</strong></p>
+<p>十字链表是一种存储稀疏矩阵的方法，特别适合于非零元素分布比较均匀的稀疏矩阵。这种方法既可以快速访问任一元素，又可以快速对任一元素进行插入或删除操作。</p>
+<p>在十字链表中，每个非零元素都对应一个结点，每个结点有5个字段：行、列、值、行的下一个元素、列的下一个元素。整个矩阵还有两个额外的头结点数组，分别表示每行和每列的第一个元素。</p>
+<p>具体来说，设稀疏矩阵的行数为m，列数为n，那么十字链表包含如下内容：</p>
+<ol>
+<li>一维数组row[m]，表示m行的头结点，其中row[i]指向第i行的第一个非零元素。</li>
+<li>一维数组col[n]，表示n列的头结点，其中col[j]指向第j列的第一个非零元素。</li>
+<li>非零元素的结点，包含5个字段：行、列、值、行的下一个元素、列的下一个元素。</li>
+</ol>
+<p>十字链表法优点是在查找元素、插入元素和删除元素时，既可以沿着行方向操作，也可以沿着列方向操作。缺点是存储空间较大，因为每个非零元素都需要存储额外的信息（行、列、下一个行元素、下一个列元素）。</p>
+<h3 id="总结">总结</h3>
+<p>一定要记得这几个公式,  这样我们就能以不变应万变,   我们的公式 都是基于:  矩阵下标从1开始,  存放数组下标从0开始,  无论它题目从什么开始,  按行或者按列  或者上三角下三角,  我们都能转换到这几个公式上来</p>
+<p>对称矩阵按照下三角按行存储   ==  <strong>对称矩阵按照上三角按列存储 交换i j位置</strong></p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mrow><mo fence="true">{</mo><mtable rowspacing="0.3599999999999999em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mfrac><mrow><mi>i</mi><mo stretchy="false">(</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></mfrac><mo>+</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>i</mi><mo>⩾</mo><mi>j</mi><mtext> (下三角区和主对角线元素) </mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mfrac><mrow><mi>j</mi><mo stretchy="false">(</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></mfrac><mo>+</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>i</mi><mo>&lt;</mo><mi>j</mi><mtext> (上三角区元素 </mtext><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>a</mi><mrow><mi>j</mi><mi>i</mi></mrow></msub><mo fence="true">)</mo></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">k= \begin{cases}\frac{i(i-1)}{2}+j-1, &amp; i \geqslant j \text { (下三角区和主对角线元素) } \\ \frac{j(j-1)}{2}+i-1, &amp; \left.i&lt;j \text { (上三角区元素 } a_{i j}=a_{j i}\right)\end{cases}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.0000299999999998em;vertical-align:-1.25003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">{</span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6920000000000002em;"><span style="top:-3.6919999999999997em;"><span class="pstrut" style="height:3.01em;"></span><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mpunct">,</span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.01em;"></span><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mpunct">,</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1919999999999997em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:1em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6920000000000002em;"><span style="top:-3.6919999999999997em;"><span class="pstrut" style="height:3.01em;"></span><span class="mord"><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">⩾</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord text"><span class="mord"> (</span><span class="mord cjk_fallback">下三角区和主对角线元素</span><span class="mord">) </span></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.01em;"></span><span class="mord"><span class="minner"><span class="mopen nulldelimiter"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord text"><span class="mord"> (</span><span class="mord cjk_fallback">上三角区元素</span><span class="mord"> </span></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1919999999999997em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>对称矩阵按照上三角按行存储 ==  <strong>对称矩阵按照下三角按行存储 交换i j 位置</strong></p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mrow><mo fence="true">{</mo><mtable rowspacing="0.3599999999999999em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mfrac><mrow><mo stretchy="false">(</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>2</mn><mi>n</mi><mo>−</mo><mi>i</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></mfrac><mo>+</mo><mo stretchy="false">(</mo><mi>j</mi><mo>−</mo><mi>i</mi><mo stretchy="false">)</mo><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>i</mi><mo>⩽</mo><mi>j</mi><mtext> (上三角区和主对角线元素) </mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mfrac><mrow><mo stretchy="false">(</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>2</mn><mi>n</mi><mo>−</mo><mi>j</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></mfrac><mo>+</mo><mo stretchy="false">(</mo><mi>i</mi><mo>−</mo><mi>j</mi><mo stretchy="false">)</mo><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>i</mi><mo>&gt;</mo><mi>j</mi><mtext> (下三角区元素) </mtext></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">k= \begin{cases}\frac{(i-1)(2 n-i+2)}{2}+(j-i), &amp; i \leqslant j \text { (上三角区和主对角线元素) } \\ \frac{(j-1)(2 n-j+2)}{2}+(i-j), &amp; i&gt;j \text { (下三角区元素) }\end{cases}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.0000299999999998em;vertical-align:-1.25003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">{</span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6920000000000002em;"><span style="top:-3.6919999999999997em;"><span class="pstrut" style="height:3.01em;"></span><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span><span class="mopen mtight">(</span><span class="mord mtight">2</span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">2</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">i</span><span class="mclose">)</span><span class="mpunct">,</span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.01em;"></span><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span><span class="mopen mtight">(</span><span class="mord mtight">2</span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mbin mtight">+</span><span class="mord mtight">2</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mpunct">,</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1919999999999997em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:1em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6920000000000002em;"><span style="top:-3.6919999999999997em;"><span class="pstrut" style="height:3.01em;"></span><span class="mord"><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">⩽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord text"><span class="mord"> (</span><span class="mord cjk_fallback">上三角区和主对角线元素</span><span class="mord">) </span></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.01em;"></span><span class="mord"><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord text"><span class="mord"> (</span><span class="mord cjk_fallback">下三角区元素</span><span class="mord">) </span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1919999999999997em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>三角矩阵按照上三角按行存储</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mrow><mo fence="true">{</mo><mtable rowspacing="0.3599999999999999em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mfrac><mrow><mo stretchy="false">(</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>2</mn><mi>n</mi><mo>−</mo><mi>i</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></mfrac><mo>+</mo><mo stretchy="false">(</mo><mi>j</mi><mo>−</mo><mi>i</mi><mo stretchy="false">)</mo><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>i</mi><mo>⩽</mo><mi>j</mi><mtext> (上三角区和主对角线元素) </mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mfrac><mrow><mi>n</mi><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></mfrac><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>i</mi><mo>&gt;</mo><mi>j</mi><mtext> (下三角区元素) </mtext></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">k= \begin{cases}\frac{(i-1)(2 n-i+2)}{2}+(j-i), &amp; i \leqslant j \text { (上三角区和主对角线元素) } \\ \frac{n(n+1)}{2}, &amp; i&gt;j \text { (下三角区元素) }\end{cases}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.0000299999999998em;vertical-align:-1.25003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">{</span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6920000000000002em;"><span style="top:-3.6919999999999997em;"><span class="pstrut" style="height:3.01em;"></span><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span><span class="mopen mtight">(</span><span class="mord mtight">2</span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">2</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">i</span><span class="mclose">)</span><span class="mpunct">,</span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.01em;"></span><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mpunct">,</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1919999999999997em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:1em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6920000000000002em;"><span style="top:-3.6919999999999997em;"><span class="pstrut" style="height:3.01em;"></span><span class="mord"><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">⩽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord text"><span class="mord"> (</span><span class="mord cjk_fallback">上三角区和主对角线元素</span><span class="mord">) </span></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.01em;"></span><span class="mord"><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord text"><span class="mord"> (</span><span class="mord cjk_fallback">下三角区元素</span><span class="mord">) </span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1919999999999997em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>三对角矩阵</p>
+<p>3 条对角线上的元素 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo stretchy="false">(</mo><mn>1</mn><mo>⩽</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>⩽</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">a_{i j}(1 \leqslant i, j \leqslant n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">⩽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">⩽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∣</mi><mi>i</mi><mo>−</mo><mi>j</mi><mi mathvariant="normal">∣</mi><mo>⩽</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">|i-j| \leqslant 1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">⩽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 在一维数组 B 中存放的下标为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>2</mn><mi>i</mi><mo>+</mo><mi>j</mi><mo>−</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">k=2 i+j-3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 。(<em><em>可以理解为 2</em>(i-1) + j, 将前面所有行的主对角线右边的元素移动到本行的前面, 填充变成了一行,  所以前面每行只剩2个元素</em>*)</p>
+<p>反之, 若已知三对角线矩阵中某元素 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{i, j}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 存放于一维数组 B 的第 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 个位置, 则可得 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mo stretchy="false">⌊</mo><mo stretchy="false">(</mo><mi>k</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi></mrow><annotation encoding="application/x-tex">i=\lfloor(k+1) /</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⌊</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">/</span></span></span></span> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>+</mo><mn>1</mn><mo stretchy="false">⌋</mo><mo separator="true">,</mo><mi>j</mi><mo>=</mo><mi>k</mi><mo>−</mo><mn>2</mn><mi>i</mi><mo>+</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3+1\rfloor, j=k-2 i+3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">⌋</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 。例如, 当 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">k=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 时, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mo stretchy="false">⌊</mo><mo stretchy="false">(</mo><mn>0</mn><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>3</mn><mo>+</mo><mn>1</mn><mo stretchy="false">⌋</mo><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mi>j</mi><mo>=</mo><mn>0</mn><mo>−</mo><mn>2</mn><mo>×</mo><mn>1</mn><mo>+</mo><mn>3</mn><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i=\lfloor(0+1) / 3+1\rfloor=1, j=0-2 \times 1+3=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⌊</span><span class="mopen">(</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">⌋</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>, 存放的是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mn>1</mn><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">a_{1,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>; 当 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">k=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 时, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mo stretchy="false">⌊</mo><mo stretchy="false">(</mo><mn>2</mn><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>3</mn><mo>+</mo><mn>1</mn><mo stretchy="false">⌋</mo><mo>=</mo><mn>2</mn><mo separator="true">,</mo><mi>j</mi><mo>=</mo><mn>2</mn><mo>−</mo><mn>2</mn><mo>×</mo><mn>2</mn><mo>+</mo><mn>3</mn><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i=\lfloor(2+1) / 3+1\rfloor=2, j=2-2 \times 2+3=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⌊</span><span class="mopen">(</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">⌋</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>, 存放的是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mn>2</mn><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">a_{2,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>; 当 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">k=4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 时, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mo stretchy="false">⌊</mo><mo stretchy="false">(</mo><mn>4</mn><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>3</mn><mo>+</mo><mn>1</mn><mo stretchy="false">⌋</mo></mrow><annotation encoding="application/x-tex">i=\lfloor(4+1) / 3+1\rfloor</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⌊</span><span class="mopen">(</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">⌋</span></span></span></span> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>2</mn><mo separator="true">,</mo><mi>j</mi><mo>=</mo><mn>4</mn><mo>−</mo><mn>2</mn><mo>×</mo><mn>2</mn><mo>+</mo><mn>3</mn><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">=2, j=4-2 \times 2+3=3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span>, 存放的是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mn>2</mn><mo separator="true">,</mo><mn>3</mn></mrow></msub></mrow><annotation encoding="application/x-tex">a_{2,3}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mpunct mtight">,</span><span class="mord mtight">3</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 。</p>
+<h1>串</h1>
+<h2 id="前言">前言</h2>
+<p>大纲只要求掌握字符串的模式匹配,  我们要重点掌握kmp算法的原理以及next数组的推理过程</p>
+<h2 id="定义">定义</h2>
+<p>串是由零个或者多个字符组成的有限序列,  串中任意多个连续的字符组成的子序列称为子串</p>
+<p>两个串的长度,以及内容相等,那就说明两个串相等</p>
+<h2 id="串的模式匹配">串的模式匹配</h2>
+<p>这个通常是定位子串在主串中出现的位置</p>
+<h3 id="暴力匹配">暴力匹配</h3>
+<p>假设 子串长度为 l 主串长度为 L   依次枚举主串中从当前下标开始连续的l个元素是否和子串相等, 这个效率太低下了 时间复杂度为 O(mn)</p>
+<h3 id="kmp算法">kmp算法</h3>
+<p>我们发现暴力匹配的缺点就是,  当 子串中一个字符和主串中的不相同的时候, 就会抛弃掉所有已经匹配好的字符串, 然后再从子串 和 主串的下一个位置重新开始匹配(也就是回溯到子串开始位置, 主串当次匹配的起始位置的下一个位置),  所以这样就是效率低下的原因,  我们不妨来分析一下, 如果当前子串的字符和主串的字符不相同,  我们可以怎么样选择,   <em style="color:red">如果当前主串这个字符有可能成功的被匹配,  那么它一定只可能出现在子串的前面位置了</em>, 这个应该比较好理解吧?  如果是出现在后面的话, 那就完全不可能出现当前和子串不匹配的情况 ,     既然它只可能出现在子串的前面位置了,   <em style="color:red"> 我们完全可以不用回溯主串匹配的位置,  我们只需要将 当前子串匹配位置的移动到 “下一个可能匹配成功的位置” </em>   就是说,  如果当前主串这个字符想要在前面的子串中被匹配成功,  那么它前面一定有<strong>0个或者更多个字符记做n个</strong>被匹配成功了,  我们只需要将子串匹配位置移动到 n的位置就行了继续开始匹配,    所以我们现在要做的事情就是,  记录如果当前匹配失败了,  要移动到哪个位置就行了,  也就是next数组</p>
+<p>补充一下:   有人可能就会有疑惑了,  你怎么保证你没有忽略掉正确答案?   是的,细心的人就发现了,  我们这次移动没有回溯主串, 这样势必抛弃了不少不可能的匹配,   证明如下:</p>
+<p>如果匹配失败,  如果这个字符不会出现在匹配序列中, 那么它前面的 l-1 个元素都不可能了,  如果它能够出现在 匹配序列中,  利用已经匹配好的序列信息, 往回看,  这个匹配序列最长的前缀和后缀相等的长度是多少,  这就是它下一次该重新匹配的位置,因为我们<strong>要尽可能的保留前面匹配信息的长度</strong>,这样才不会漏掉可能匹配的序列, 重复如此, 直到当前字符匹配成功,或者没有成功,那就从主串当前位置下一个位置继续匹配.</p>
+<h4 id="next-数组">next 数组</h4>
+<p>找到当前子串字符前面序列的 最长 前缀和后缀相同的 长度, next 数组就记录这个值</p>
+<p>求解思路</p>
+<ul>
+<li>初始化, 第一个元素下标 0 它如果匹配失败, 就应该去-1(也就是当前这个字符不可能出现在匹配序列中)</li>
+<li>第 i + 1个位置的 next数组值,  是由 前 i 个序列字符 的最长前缀和后缀决定的,  因此 next[i+1] = j+1</li>
+<li>如果 出现了 j == -1,  那就说明 这个字符根本就不可能是最长后缀,  如果跟它匹配失败, 就要重新从 第一个子串开始</li>
+</ul>
+<p>看代码吧</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">getNext</span><span class="params">(<span class="built_in">string</span> &amp;str, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; &amp;next)</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> len = str.length();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第0个字符都匹配失败的话, 就是退到-1了</span></span><br><span class="line">    next.push_back(<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 由于next[i+1] 的值是由前i个字符决定的, 因此, 我们只需要将i计算到  len-2</span></span><br><span class="line">    <span class="keyword">while</span> (i &lt; len - <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// next[i+1] 的值是由前i个字符决定的, j==-1其实也是一种 str[i] == str[j] 只不过str[-1] 是一种不存在的存在</span></span><br><span class="line">        <span class="keyword">if</span> (j == <span class="number">-1</span> || str[i] == str[j])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 由于str[i] == str[j]  所以 next[i+1] = j+1  也就是 如果当前元素匹配失败, 应该要回退到j+1这个位置继续匹配</span></span><br><span class="line">            ++i;</span><br><span class="line">            ++j;</span><br><span class="line">            next.push_back(j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 如果str[i] != str[j]  就要去找next[j] 看他们是否相等</span></span><br><span class="line">            j = next[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="匹配算法">匹配算法</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">getNext</span><span class="params">(<span class="built_in">string</span> &amp;str, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; &amp;next)</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> len = str.length();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第0个字符都匹配失败的话, 就是退到-1了</span></span><br><span class="line">    next.push_back(<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 由于next[i+1] 的值是由前i个字符决定的, 因此, 我们只需要将i计算到  len-2</span></span><br><span class="line">    <span class="keyword">while</span> (i &lt; len - <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// next[i+1] 的值是由前i个字符决定的, j==-1其实也是一种 str[i] == str[j] 只不过str[-1] 是一种不存在的存在</span></span><br><span class="line">        <span class="keyword">if</span> (j == <span class="number">-1</span> || str[i] == str[j])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 由于str[i] == str[j]  所以 next[i+1] = j+1  也就是 如果当前元素匹配失败, 应该要回退到j+1这个位置继续匹配</span></span><br><span class="line">            ++i;</span><br><span class="line">            ++j;</span><br><span class="line">            next.push_back(j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 如果str[i] != str[j]  就要去找next[j] 看他们是否相等</span></span><br><span class="line">            j = next[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">funcKMP</span><span class="params">(<span class="built_in">string</span> mainstr, <span class="built_in">string</span> substr)</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; next;</span><br><span class="line">    getNext(substr, next);</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; <span class="comment">// 这里的j只需要从0 开始, 它是代表子串的位置, 而不是回退的位置, 在求next算法中 j是代表回退的位置</span></span><br><span class="line">    <span class="type">int</span> len = mainstr.length();</span><br><span class="line">    <span class="type">int</span> len1 = substr.length();</span><br><span class="line">    <span class="keyword">while</span> (i &lt; len)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (j == <span class="number">-1</span> || mainstr[i] == substr[j])</span><br><span class="line">        &#123;</span><br><span class="line">            ++i;</span><br><span class="line">            ++j;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            j = next[j];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (j == len1)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> i - j;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">string</span> mainstr = <span class="string">&quot;abaabcaba&quot;</span>;</span><br><span class="line">    <span class="built_in">string</span> substr = <span class="string">&quot;a&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; funcKMP(mainstr, substr) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="next-数组的优化">next 数组的优化</h4>
+<p>对于  s[j] == s[next[j]] 的情况,   如果主串 i 位置  和 子串 j位置匹配失败了,  那么 势必在 主串位置  和 子串 next[j] 位置也会失败, 所以 我们需要优化一下next数组  如果 第i位置的下一个位置还和自己相等,  就让next[i] = next[j]</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">getNext</span><span class="params">(<span class="built_in">string</span> &amp;str, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; &amp;next)</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> len = str.length();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第0个字符都匹配失败的话, 就是退到-1了</span></span><br><span class="line">    next.push_back(<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 由于next[i+1] 的值是由前i个字符决定的, 因此, 我们只需要将i计算到  len-2</span></span><br><span class="line">    <span class="keyword">while</span> (i &lt; len - <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// next[i+1] 的值是由前i个字符决定的, j==-1其实也是一种 str[i] == str[j] 只不过str[-1] 是一种不存在的存在</span></span><br><span class="line">        <span class="keyword">if</span> (j == <span class="number">-1</span> || str[i] == str[j])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 由于str[i] == str[j]  所以 next[i+1] = j+1  也就是 如果当前元素匹配失败, 应该要回退到j+1这个位置继续匹配</span></span><br><span class="line">            ++i;</span><br><span class="line">            ++j;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (str[i] == str[j])  <span class="comment">// 如果相等的话, 就不需要回溯到这个位置了,而是回溯到j位置对于的回溯位置,因为如果两个字符相等,那么如果回溯到这个位置, 还是会匹配失败</span></span><br><span class="line">            &#123;</span><br><span class="line">                next.push_back(next[j]); </span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                next.push_back(j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 如果str[i] != str[j]  就要去找next[j] 看他们是否相等</span></span><br><span class="line">            j = next[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>树与二叉树</h1>
+<h2 id="前言">前言</h2>
+<p>本章内容多以选择题的形式考查, 但也会涉及到树遍历相关的算法, 需要掌握各种树的定义和性质</p>
+<h2 id="树的基本概念">树的基本概念</h2>
+<p>树(Tree)是计算机科学中使用的一种抽象数据类型（ADT），或是实现这种抽象数据类型的数据结构，用来模拟具有树状结构性质的数据集合。它是由n（n&gt;=1）个有限节点组成一个具有层次关系的集合。</p>
+<p>具体地，树具有以下的特征：</p>
+<ul>
+<li>每个节点有零个或多个子节点；</li>
+<li>没有父节点的节点称为根节点；</li>
+<li>每一个非根节点有且只有一个父节点；</li>
+<li>除了根节点外，每个子节点可以分为多个不相交的子树。</li>
+</ul>
+<p>树中的一些重要概念包括：</p>
+<ul>
+<li>节点的度(Degree)：<strong>节点的子树个数</strong></li>
+<li>树的度：<strong>树中节点的最大度数</strong></li>
+<li>叶节点（或叶子节点，外部节点）：度为0的节点</li>
+<li>内部节点：度不为0的节点</li>
+<li>父亲节点：若一个节点含有子节点，则这个节点称为其子节点的父节点</li>
+<li>孩子节点：一个节点含有的子树的根节点称为该节点的孩子</li>
+<li>兄弟节点：具有相同父节点的节点互称为兄弟节点</li>
+<li><strong>节点的层次(Level)：从根开始定义起，根为第1层，根的子节点为第2层，以此类推</strong></li>
+<li>树的高度(Height)：<strong>树中节点的最大层次</strong></li>
+<li>节点的高度,深度:  高度只从根节点出发到当前节点层数,  深度指从当前节点向根节点出发</li>
+<li>路径和路径长度：从节点n1到nk的路径为一个节点序列n1, n2, …, nk，路径长度为所经分支数目，<strong>通常为路径中最后一个节点的层次数减1</strong></li>
+<li>子孙和祖先：节点n1到nk路径上，n1是nk的祖先，nk是n1的子孙</li>
+</ul>
+<p>这些是关于树的基本概念的简单介绍，理解这些概念对于深入理解树以及树的各种操作和算法都是很重要的。</p>
+<h3 id="树的性质">树的性质</h3>
+<p>树作为一种<strong>特殊的图</strong>，具有以下几个基本的性质：</p>
+<ol>
+<li><em style="color:red"><strong>树中的节点数目 = 所有分支数目 + 1</strong>：这个性质来自于树是连通无环图的特性，即树中任何两个节点之间只有一条路径。</em></li>
+<li>**在非空树中，第i层的最多节点数为：**对于度为m的树，第i层的最多节点数为 m^(i-1)，这是因为每一个非叶节点都能产生m个子节点。</li>
+<li><strong>高度为k的m叉树最多有m^0 + m^1 + m^2 + … + m^(k-1) = (m^k - 1) / (m - 1)个节点</strong>：这个公式可以通过等比数列求和公式推导出来。</li>
+<li><em><em>含有n个节点的m叉树的最小深度 k ≥ logm [(n</em>(m-1)+1)]</em>*：当树中的节点全部分布在最后一层时，树的深度最大；当节点尽可能地分布在前面的层次，即除了最后一层，其它层的节点数达到最大时，树的深度最小。</li>
+</ol>
+<p>理解这些性质可以帮助我们更深入地理解树这种数据结构的特性，对于我们在解决实际问题中使用树结构有很大的帮助。</p>
+<h2 id="二叉树">二叉树</h2>
+<p>二叉树是一种特殊的树形数据结构，其定义如下：</p>
+<p>一个二叉树是具有以下性质的有限集合：</p>
+<ol>
+<li>该集合可以为空（称为空二叉树）。</li>
+<li>如果不为空，那么它由一个称为根的元素以及两个互不相交的、被分别称为左子树和右子树的二叉树组成。</li>
+</ol>
+<p>注意，这个定义是递归的。即，一个二叉树的左子树和右子树也都是二叉树。</p>
+<p>在二叉树中，根节点是最上面的节点，每个非叶子节点都有一个或两个子节点，分别是左子节点和右子节点。左子节点和右子节点也可以看作是以它们为根的子二叉树的根节点。<strong>子节点从左到右被顺序排列</strong>。(二叉树是有序树,这里的有序不是说内容有序,而是结构有序)</p>
+<p>二叉树的一个重要特性是，它的结构可以用链表进行表示和实现，每个节点包含一个数据字段和两个指向其左右子节点的指针。二叉树可以用于实现各种数据结构，如集合、映射和列表。</p>
+<h3 id="特殊的二叉树">特殊的二叉树</h3>
+<p>二叉树的各种特殊形式具有一些有用的性质，以下列出了一些常见的特殊二叉树：</p>
+<ol>
+<li>
+<p><strong>满二叉树（Full Binary Tree）</strong>：每一个层级上的节点数都达到最大。<strong>也就是说，除了叶子节点之外，每一个节点都有两个子节点。</strong></p>
+</li>
+<li>
+<p><strong>完全二叉树（Complete Binary Tree）</strong>：除了最后一层之外，<strong>每一层都被完全填充，且所有节点都保持向左对齐</strong>。在完全二叉树中，第i层至多有2^i个节点（i从0开始，根节点层为0）。</p>
+</li>
+<li>
+<p><strong>平衡二叉树（Balanced Binary Tree）</strong>：也被称为AVL树。这是一种自平衡二叉搜索树，<strong>其中任何节点的两个子树的高度差最多为1。</strong></p>
+</li>
+<li>
+<p><strong>二叉搜索树（Binary Search Tree，简称BST）</strong>：对于每个节点，其左子树中的所有元素的值都小于该节点，右子树中的所有元素的值都大于该节点。</p>
+</li>
+<li>
+<p><strong>堆（Heap）</strong>：这是一种特殊的完全二叉树，具有一些特殊的性质，如最大堆和最小堆。在最大堆中，父节点的值总是大于或等于其子节点的值。在最小堆中，父节点的值总是小于或等于其子节点的值。</p>
+</li>
+<li>
+<p><strong>红黑树（Red-Black Tree）</strong>：这是一种自平衡二叉查找树，每个节点额外持有一个存储位表示节点颜色，可以是红或黑。通过颜色的约束和调整，红黑树确保了一条从根节点到叶子节点的最长的可能路径不多于最短的可能路径的两倍长。这个特性使得红黑树成为实现关联数组的有效数据结构。</p>
+</li>
+<li>
+<p><strong>B树和B+树</strong>：它们是自平衡的搜索树，主要用于磁盘或其他直接存取辅助设备中的数据存储。在数据库系统和文件系统中，B树和B+树的应用非常广泛。</p>
+</li>
+</ol>
+<p>以上每种特殊的二叉树都具有特定的用途和性质，使其在特定情况下更有效率。</p>
+<h3 id="二叉树的性质">二叉树的性质</h3>
+<ol>
+<li>
+<p>在任何一颗二叉树中，如果其终端节点数（叶子节点数）为n0，度为2的节点数为n2，<strong>则n0 = n2 + 1。</strong>, 我们可以利用节点个数等于节点度数和+1推出这个公式, 但是这里我不这样推,  我想用另外一种方式来说明:  <em style="color:red">  只有在度为2的结点上才会多出来一个叶子节点, 度为1的结点不多出结点, 所以 在根节点的基础上,  多出来多少个度为2的结点,就多了多少个叶子节点, 所以 度为2的结点个数+1 = 度为0的个数 </em></p>
+</li>
+<li>
+<p><em style="color:red">具有n个节点的完全二叉树的深度为floor(log2n) + 1 (底为2的对数，向下取整)。注意这里的公式, 它和  cell(log2(n+1))(向上取整) 的结果是一样的, 这个是二叉树独有的</em></p>
+</li>
+<li>
+<p>如果对一颗有n个节点的完全二叉树（其深度为<strong>floor(log2n)+1</strong>）的节点按层序编号（从第1层到第log2n+1层，每层从左到右），对任一节点i (1&lt;=i&lt;=n) 有：</p>
+<ul>
+<li>如果i=1，则节点i是二叉树的根，无父节点；如果i&gt;1，则其父节点是节点i/2。</li>
+<li>如果2i&gt;n，则节点i无左子女；否则，其左子女是节点2i。</li>
+<li>如果2i+1&gt;n，则节点i无右子女；否则，其右子女是节点2i+1。</li>
+</ul>
+</li>
+</ol>
+<h3 id="二叉树与度为2的有序树的区别">二叉树与度为2的有序树的区别</h3>
+<p>二叉树和度为2的有序树在结构上是有所区别的。</p>
+<ol>
+<li>
+<p>二叉树（Binary Tree）：每个节点最多有两个子树（即度为2），子树有左右之分，即使只有一个子树，也要区分是左子树还是右子树。这意味着，即使一个节点只有一个子节点，我们也需要明确它是一个左子节点还是一个右子节点。</p>
+</li>
+<li>
+<p>度为2的有序树：虽然每个节点也最多有两个子节点（度为2），但子节点之间没有左右之分。如果一个节点只有一个子节点，我们并不需要明确这个子节点是左还是右。</p>
+</li>
+</ol>
+<p>简单来说，二叉树强调了左右子树的顺序，而度为2的有序树没有这个要求。</p>
+<p>而且二叉树可以为空,  度为2的有序树至少三个结点</p>
+<h2 id="二叉树的遍历">二叉树的遍历</h2>
+<p>二叉树的遍历主要有四种方式：前序遍历、中序遍历、后序遍历和层次遍历。</p>
+<ol>
+<li>
+<p>前序遍历：先访问根节点，然后访问左子树，最后访问右子树。对于左、右子树的访问也是先访问根节点，然后访问左子树，最后访问右子树。</p>
+</li>
+<li>
+<p>中序遍历：先访问左子树，然后访问根节点，最后访问右子树。对于左、右子树的访问也是先访问左子树，然后访问根节点，最后访问右子树。</p>
+</li>
+<li>
+<p>后序遍历：先访问左子树，然后访问右子树，最后访问根节点。对于左、右子树的访问也是先访问左子树，然后访问右子树，最后访问根节点。</p>
+</li>
+<li>
+<p>层次遍历（广度优先遍历）：按照树的层次从上到下、从左到右进行遍历。</p>
+</li>
+</ol>
+<p>需要注意的是，前序、中序和后序遍历都是深度优先遍历的方式。</p>
+<p>遍历二叉树的主要目的是访问每一个节点，而访问的顺序则取决于特定的应用场景。不同的遍历方式对应的是不同的节点访问顺序，这个顺序决定了遍历的特性以及它可能适用的场景。</p>
+<p>以上所有的遍历方式都可以通过递归或者非递归（使用栈或队列）的方式来实现。</p>
+<p>对于这个前序后序中序, 其实都是相对于当前元素来说,  如果当前元素的数据优先被使用就是 前序,  在左节点之后就是中序,  在右节点之后就是后序,   <strong>无论哪种顺序,  左右结点的前后顺序是不变的</strong></p>
+<h3 id="非递归遍历">非递归遍历</h3>
+<ul>
+<li>前序遍历（根-左-右）：
+<ol>
+<li>创建一个空栈，首先将根节点压入栈中。</li>
+<li>当栈不为空时，弹出栈顶节点并访问。</li>
+<li>先将该节点的右子节点（如果有）压入栈中。</li>
+<li>再将该节点的左子节点（如果有）压入栈中。</li>
+<li>重复步骤2~4，直到栈为空，遍历结束。</li>
+</ol>
+</li>
+<li>中序遍历（左-根-右）：
+<ol>
+<li>创建一个空栈，设置当前节点为根节点。</li>
+<li>将当前节点入栈，设置当前节点为其左子节点。</li>
+<li>如果当前节点为空，且栈不为空，则出栈一个节点并访问，设置当前节点为该节点的右子节点。</li>
+<li>如果当前节点为空，且栈为空，则遍历结束。</li>
+<li>重复步骤2~4，直到遍历结束。</li>
+</ol>
+</li>
+<li>后序遍历（左-右-根）：
+<ol>
+<li>创建两个空栈，栈1和栈2，将根节点压入栈1。</li>
+<li>从栈1中弹出节点，将其压入栈2，<strong>并先将该节点的左子节点压入栈1，然后再压入右子节点</strong>(这里是为了让右节点先进入栈2,这样左节点的数据就会被优先访问)。</li>
+<li>重复步骤2，直到栈1为空。</li>
+<li>从栈2中弹出节点并访问，直到栈2为空，遍历结束。</li>
+</ol>
+</li>
+</ul>
+<h3 id="遍历序列构造二叉树">遍历序列构造二叉树</h3>
+<p>中序序列可以和前序序列 或者 后序序列构成唯一的二叉树,  但是 前序序列和后序序列不能,  因为 这两个序列, 你是没办法得到唯一的左子树和右子树的,  有了 中序序列 和 前序或者后序中的任意一个,  就是划分出来 唯一的左右子树</p>
+<p>给定二叉树的两种遍历序列（其中一种必须是中序遍历），可以唯一确定一个二叉树。下面分别以前序+中序和中序+后序为例，说明如何构造二叉树。</p>
+<ol>
+<li><strong>前序遍历+中序遍历构造二叉树：</strong>
+<ul>
+<li>在前序遍历序列中，第一个元素总是树的根节点。</li>
+<li>在中序遍历序列中，根节点将序列分为两部分，左边是树的左子树，右边是树的右子树。</li>
+<li>递归地将前述步骤应用于左子树和右子树，直到序列为空。</li>
+</ul>
+</li>
+<li><strong>中序遍历+后序遍历构造二叉树：</strong>
+<ul>
+<li>在后序遍历序列中，最后一个元素总是树的根节点。</li>
+<li>在中序遍历序列中，根节点将序列分为两部分，左边是树的左子树，右边是树的右子树。</li>
+<li>递归地将前述步骤应用于左子树和右子树，直到序列为空。</li>
+</ul>
+</li>
+</ol>
+<p><strong>对于只给定一种遍历序列的情况（例如只给定前序遍历或后序遍历），通常无法唯一确定一个二叉树，除非树满足某些特殊的条件，例如它是一棵完全二叉树或满二叉树。</strong></p>
+<h2 id="线索二叉树">线索二叉树</h2>
+<p>线索二叉树是为了解决二叉树遍历时需要递归或者栈的问题，通过在原来二叉树空指针的位置加入&quot;线索&quot;，使得二叉树遍历不需要使用递归或栈。线索二叉树有前序线索二叉树，中序线索二叉树，后序线索二叉树，<strong>具体线索化过程依赖于遍历的顺序</strong>。</p>
+<p><strong>定义</strong>：<br>
+在二叉树中，每个节点的左右指针域中有的会有多余的空间，这部分空间没有充分利用。我们可以用这部分空间存放指向该节点在某种遍历次序下的前驱和后继节点的指针（这些指针被称为线索）。</p>
+<p>根据线索性质的不同，线索二叉树可分为前序线索二叉树、中序线索二叉树和后序线索二叉树三种。</p>
+<p><strong>特点</strong>：</p>
+<ol>
+<li>加强了节点间的横向联系，<strong>提高了查找某一节点在某种遍历序列中的前驱和后继节点的效率</strong>。</li>
+<li>利用空闲的存储空间，节约了存储空间。</li>
+<li>避免了递归或栈的使用，简化了遍历过程。</li>
+</ol>
+<p><strong>构建</strong>：<br>
+构建线索二叉树的主要过程就是在遍历二叉树的过程中，检查当前节点的左右子节点是否为空，如果为空则将其设置为指向前驱或后继的线索。</p>
+<p><strong>遍历线索二叉树的时候，可以直接通过线索找到节点的前驱或后继节点，不需要使用递归或栈。</strong></p>
+<p>总的来说，线索二叉树是一种通过添加线索，提高遍历效率并节省存储空间的特殊的二叉树。</p>
+<h2 id="树和森林">树和森林</h2>
+<p>在图论中，&quot;森林&quot;是一种特殊类型的图，其中没有任何形成闭环的边。换句话说，森林是一个无环连通图。如果将图论中的森林概念引入到树的数据结构，我们可以定义森林为：</p>
+<p><strong>森林是0棵或多棵不相交的树的集合</strong>。换句话说，一个森林是由零棵或多棵树构成，<strong>这些树互不相交，也就是说，任何两棵树没有公共的顶点。</strong></p>
+<p>如果从树的角度看，我们可以把森林看作是一棵树去掉根后剩下的部分。或者说，<strong>一棵树就是一个森林加上一个根</strong>。</p>
+<p>值得注意的是，<strong>这些树（在森林中）可以是任何类型的树</strong>，例如，它们可以是二叉树、多叉树、AVL树、红黑树等。在树结构的许多应用中，森林都发挥着重要的作用，例如在计算机科学中的集合表示或者在自然语言处理中的句法解析等。</p>
+<p>在树和森林的表示法中，常见的有以下几种：</p>
+<ol>
+<li><strong>双亲表示法</strong>：每个节点包含自身信息和双亲位置的索引。这种方法可以快速找到任一节点的双亲节点，但查找孩子节点或兄弟节点则比较困难。</li>
+<li><strong>孩子表示法</strong>：将每个结点的孩子结点用单链表连接形成线性结构, 所以n个结点就有n个孩子链表, 叶子节点链表为空</li>
+<li><strong>孩子兄弟表示法</strong>：每个节点有两个字段，一个是指向其第一个孩子的指针，另一个是指向其兄弟的指针。这种表示法只需要使用两个指针，比较简洁。</li>
+<li><strong>二叉树表示法</strong>：通过将森林转化为二叉树进行表示。具体转化方式是：森林中每一棵树的根节点的左子树是它的第一棵子树，右子树是它的下一棵兄弟树。这样，原来的森林就转化为了一棵二叉树，可以利用二叉树的存储方式来存储森林。</li>
+<li><strong>顺序存储表示法</strong>：用一维数组表示森林，每个节点占据一个数组元素。这种方法适用于节点数量固定不变的情况，但对于节点数量动态变化的情况，可能会导致存储空间的浪费。</li>
+</ol>
+<h3 id="森林和树转成二叉树">森林和树转成二叉树</h3>
+<p>首先，我们来讨论如何将一个普通的树转化为二叉树：</p>
+<ol>
+<li>在树中，<strong>把兄弟节点用水平线相连，这样每个节点的所有子节点就形成了一个链表</strong>。</li>
+<li>保持顺序不变，将每个节点的子节点链表转向，使其从垂直变为水平。这样，<strong>原来树中的每个节点的第一个子节点变成了二叉树中的左子节点</strong>，其余子<strong>节点都变成了这个前一个兄弟节点的右子节点</strong>。</li>
+</ol>
+<p>然后，我们来讨论如何将一个森林转化为二叉树：</p>
+<ol>
+<li><strong>先把森林中的每一棵树都转化为二叉树</strong>。</li>
+<li>然后把所有二叉树按照顺序链接起来，<strong>第一棵二叉树不变，从第二棵二叉树开始，每棵二叉树的根节点都变成前一棵二叉树的根节点的右子节点。</strong></li>
+</ol>
+<p>以上就是树转二叉树和森林转二叉树的基本方法。其中，树转二叉树的方法也可以用来将森林中的每一棵树转化为二叉树。</p>
+<h2 id="树和二叉树的应用">树和二叉树的应用</h2>
+<h3 id="哈夫曼树">哈夫曼树</h3>
+<p>哈夫曼树（Huffman Tree），也称为最优二叉树，是一种带权路径长度最短的二叉树。哈夫曼树的主要应用是在数据压缩领域，特别是在无损数据压缩中。这是因为哈夫曼树能够根据数据项出现的频率为其赋予短的编码，从而实现数据的有效压缩。</p>
+<p>哈夫曼树的构建过程如下：</p>
+<ol>
+<li>
+<p>根据给定的n个权值{w1, w2, …, wn}，构造n棵只有根节点的二叉树，这些节点成为哈夫曼树的初始森林。</p>
+</li>
+<li>
+<p>在森林中选择两棵根节点的权值最小的树作为左右子树，构造一棵新的二叉树，同时将这两棵树从森林中删除。新二叉树的根节点的权值设为其左右子树上根节点的权值之和。</p>
+</li>
+<li>
+<p>将新构造的二叉树加入到森林中。</p>
+</li>
+<li>
+<p>重复步骤2和步骤3，直到森林中只剩一棵树，这棵树就是最终的哈夫曼树。</p>
+</li>
+</ol>
+<p>在哈夫曼树中，树中每个节点的权值都大于或等于其子节点的权值。树的带权路径长度（weighted path length）为树中所有叶节点的权值与其路径长度之积的总和，也就是说，哈夫曼树的带权路径长度最小。</p>
+<p>哈夫曼编码就是基于哈夫曼树进行的，每一步向左走记录一个0，向右走记录一个1(这个并不唯一, 有可能是相反的)，最后得到每个字符的哈夫曼编码。这种编码方式的优点是最小化了整体编码的平均长度，从而达到了数据压缩的目的。</p>
+<h3 id="并查集">并查集</h3>
+<p>并查集（Disjoint Set）是一种处理不相交集合（disjoint set）的数据结构。其核心思想是用一种树形结构来表示一系列不相交的集合，常用于解决一些元素分类问题。它有两个主要操作：并（Union）和查（Find）。</p>
+<ol>
+<li>
+<p><strong>并（Union）</strong>：这个操作用于将两个集合合并成一个集合。一般情况下，为了更有效率地执行这个操作，我们会使用一种称为“按秩合并”的策略，即总是将较小的集合合并到较大的集合中。</p>
+</li>
+<li>
+<p><strong>查（Find）</strong>：这个操作用于确定某个元素属于哪个集合。这通常通过找到元素的“代表元素”或者称为“根”来完成。在执行查操作的过程中，为了提高效率，我们通常会使用一种称为“路径压缩”的策略，<strong>即在查找的过程中，将元素的父节点直接设为根节点</strong>。</p>
+</li>
+</ol>
+<p>并查集的实现通常基于一个数组。数组中的每个元素都有一个父节点，如果元素是集合的根，则父节点是其自身。此外，为了实现按秩合并，我们还需要一个额外的数组来保存每个元素的秩（即以元素为根的子树的高度）。</p>
+<p>并查集在各种问题中都有应用，例如网络连通性问题、最小生成树问题等。其主要优点是对于m个操作，n个元素的问题，可以在O(mα(n))的复杂度内解决，其中α(n)是阿克曼函数的反函数，是一个增长非常慢的函数，在实际中可以认为其值不超过5，因此并查集的操作几乎可以被看做是线性的。</p>
+<h2 id="做题总结">做题总结</h2>
+<ul>
+<li>完全二叉树度为1的结点个数,  要么是0个要么是1个</li>
+<li>才用链表形式存储树,  n个结点 必有n+1个空指针   证明:  2*n - (n - 1)  用全部指针个数 -  被使用了的指针个数</li>
+<li>索引二叉树中使用了 n+1 个索引数,  也就是 上面的空指针数量</li>
+<li><strong>索引二叉树是一种物理结构</strong></li>
+<li><strong>对于先序和后序相反的二叉树,  必须满足只有一个叶节点</strong></li>
+<li>对于索引二叉树的题目,  我们可以画简单的图来表示,然后尝试连接空链域,然后作答</li>
+<li>用二叉树表示森林的时候,  <strong>从根节点往右,  只要右指针不为空,就说明包含一个子树</strong></li>
+<li>二叉树表示树的时候,  <strong>右节点是右边的兄弟结点</strong></li>
+<li>树转化成二叉树的时候,   二叉树中无右孩子结点个数 = 树中度不为零的结点数量  + 1</li>
+<li>森林和树对应的二叉树中,  左孩子结点为空,就代表它是叶子结点</li>
+<li>森林中树的数量,   已知森林中 树结点数量总和为 n, 边的数量总和为 e  则 树的数量为  n-e ,  证明如下: 设树的数量为 x , 将树全部连接到一个结点  此时  总结点数量为  n+1 边的数量为  e+x  又满足  n+1 = e+x+1 所以 x = n-e</li>
+</ul>
+<p><strong>下面这张图很重要</strong></p>
+<p><img src="/2023/06/27/%E8%80%83%E7%A0%94/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/../img/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84assets/image-20230712223228345.png" alt="image-20230712223228345"></p>
+<p>如果一个题目中有了遍历顺序,  无论是树还是森林,  我们只要把这个序列转化成  对应的二叉树序列,  然后, 根据这个二叉树的性质来做题,  比如如果这个二叉树是表示森林, 那么 根节点一直往右的结点就是每个树的根结点,   <strong>如果是森林, 那么根节点必没有右子树</strong></p>
+<h2 id="none"></h2>
+<h1>图</h1>
+<h2 id="前言">前言</h2>
+<p>主要掌握深度优先搜索和广度优先搜索算法, 掌握图的基本概念及基本性质,图的存储结构及其特性, 存储结构之间的相互转换,基于存储结构的遍历操作和各种应用.</p>
+<h2 id="基本概念">基本概念</h2>
+<p>图是一种复杂的非线性数据结构，用于表示物体间复杂的多对多关系。它由以下几部分构成：</p>
+<ol>
+<li>
+<p><strong>顶点（Vertex）</strong>：图中的元素，也被称为节点。</p>
+</li>
+<li>
+<p><strong>边（Edge）</strong>：图中的连接，它连接两个顶点。在无向图中，边没有方向；在有向图中，边有方向。</p>
+</li>
+<li>
+<p><strong>无向图（Undirected Graph）</strong>：图中的所有边都没有方向。</p>
+</li>
+<li>
+<p><strong>有向图（Directed Graph）</strong>：图中的一些或所有边有方向。</p>
+</li>
+<li>
+<p><strong>带权图（Weighted Graph）</strong>：图的边附带了权值。</p>
+</li>
+<li>
+<p><strong>路径（Path）</strong>：在图中从一个顶点到另一个顶点的顶点边序列。</p>
+</li>
+<li>
+<p><strong>循环（Cycle）</strong>：在一个路径中，第一个顶点和最后一个顶点相同的路径。</p>
+</li>
+<li>
+<p><strong>连通分量（Connected Component）</strong>：在无向图中，任意两个顶点通过路径相连的顶点集合。</p>
+</li>
+<li>
+<p><strong>强连通分量（Strongly Connected Component）</strong>：在有向图中，任意两个顶点都存在双向路径的顶点集合。</p>
+</li>
+<li>
+<p><strong>子图（Subgraph）</strong>：由图的部分顶点和部分边组成，边的端点仍在顶点集内的图。</p>
+</li>
+<li>
+<p><strong>度（Degree）</strong>：对于无向图，顶点的度是与该顶点相关联的边的数目。对于有向图，度分为入度和出度，入度表示指向顶点的边的数量，出度表示从顶点出发的边的数量。</p>
+</li>
+<li>
+<p>生成树: 在连通图中, 包含全部结点的极小连通子图,  也就是说 结点数为图的数量n, 但是边数只有n-1 而且 这n-1个边必须连通n个结点</p>
+</li>
+<li>
+<p>生成森林: 在非连通图中,  连通分量的生成树的集合就构成了生成森林</p>
+</li>
+<li>
+<p>简单路径,简单回路:  简单路径就是路径中不包含重复的结点, 简单回路就是 除了起始和结束结点相同,其他结点都不相同</p>
+</li>
+<li>
+<p>有向树: 一个顶点入度为0, 其余结点入读为1的有向图 就是 有向树</p>
+</li>
+</ol>
+<p>图广泛应用于社交网络、物联网、通信网络、交通网络、数据组织等许多领域。</p>
+<h2 id="图的存储">图的存储</h2>
+<ol>
+<li>
+<p><strong>邻接矩阵（Adjacency Matrix）</strong>：邻接矩阵是图最直接的一种存储结构，主要用一个二维数组来描述图中顶点之间的关系。邻接矩阵易于理解和实现，但是对于稀疏图（图中边的数量远小于顶点数量的平方）可能会造成空间的浪费，因为无论图的边的多少，都需要为每对顶点分配存储空间。</p>
+<p>对于无权图，邻接矩阵通常用0或1表示顶点之间是否存在边；对于有权图，则在相应的位置存储权重值。对于无向图，其邻接矩阵是对称的；对于有向图，则不一定。</p>
+</li>
+<li>
+<p><strong>邻接表（Adjacency List）</strong>：邻接表是一种更为紧凑的存储方式，特别适合于存储稀疏图。它主要由一个一维数组和几个链表组成。一维数组中的每个元素对应一个链表，链表中的元素则表示与该顶点相邻的其他顶点。邻接表比邻接矩阵更节省存储空间，但查询两个顶点之间是否存在边需要遍历链表，时间复杂度可能较高。</p>
+</li>
+<li>
+<p><strong>邻接多重表</strong>：邻接多重表是一种针对<strong>无向图</strong>的存储方式，它既方便查找顶点的度，也方便找到与给定边相邻接的边。邻接多重表在邻接表的基础上，链表中的节点存储的信息更丰富，每个节点除了保存邻接点的信息外，还保存了与邻接点相连的边的信息。</p>
+</li>
+<li>
+<p><strong>边集数组</strong>：边集数组是另一种适用于稀疏图的存储方式，它主要关注图的边，而不是顶点。边集数组由两个一维数组构成：一个存储图的顶点，另一个存储图的边和边的两个端点。</p>
+</li>
+<li>
+<p><strong>十字链表（Orthogonal List）</strong>：十字链表是一种针对<strong>有向图</strong>的存储结构，它既可以方便地获取任一顶点的入度和出度，又可以方便地找到与某条弧邻接的弧。十字链表有两个链表，一个记录顶点的出度，一个记录顶点的入度。</p>
+</li>
+<li>
+<p><strong>邻接矩阵链表（Adjacency Lists of Matrix）</strong>：它是邻接矩阵和邻接表的结合，它在存储图的结构信息时，结点数据部分采用邻接矩阵的存储方式，而结点的链接部分采用邻接表的存储方式。</p>
+</li>
+</ol>
+<p>以上就是对图存储的详细总结，每种存储方式都有各自的适用场景，需要根据实际问题来选择合适的存储结构。</p>
+<p><strong>十字链表是一种专门用于有向图存储的数据结构</strong>。对于每个顶点，它都有两个链表，一个记录该顶点的出边，另一个记录该顶点的入边。因此，十字链表不仅可以方便地找到与某个顶点邻接的所有顶点，<strong>还可以方便地获取任一顶点的入度和出度。</strong></p>
+<p>十字链表的每个节点主要包含以下部分：</p>
+<ol>
+<li>数据域：保存顶点信息；</li>
+<li>第一邻接点域：<strong>指向依附于该顶点的第一条出边</strong>； 通过这个链表能够找到所有的出边</li>
+<li>第一入边域：<strong>指向依附于该顶点的第一条入边</strong>。通过这个链表能够找到所有的入边</li>
+</ol>
+<p>除了顶点的信息外，十字链表还需要保存边的信息。边的信息是一个单链表节点，主要包含以下部分：</p>
+<ol>
+<li>数据域：保存边的信息，比如权重等；</li>
+<li>尾域：<strong>指向该边的弧尾(也就是, 出边是这条边的结点)</strong>；</li>
+<li>头域：<strong>指向该边的弧头(也就是,入边是这条边的结点)</strong>；</li>
+<li>头链域：指向下一条以该点为弧头的边，<strong>即这个结点的下一条入边</strong>；</li>
+<li>尾链域：指向下一条以该点为弧尾的边，<strong>即这个点的下一条出边</strong>。</li>
+</ol>
+<p>以这样的方式，十字链表能够方便地获取任一顶点的入度和出度，以及依附于任一顶点的所有边，可以高效地进行各种有向图操作。但需要注意的是，十字链表的存储方式较为复杂，需要维护的指针较多，因此，在实际使用时，需要根据问题的具体情况来考虑是否选择使用十字链表。</p>
+<h2 id="图的遍历">图的遍历</h2>
+<p>图的遍历是一种基本的图操作，其目标是访问图中的每个顶点并做某种操作，但每个顶点只能被访问一次。图的遍历主要有两种策略：深度优先搜索（DFS）和广度优先搜索（BFS）。</p>
+<ol>
+<li>
+<p><strong>深度优先搜索（DFS）</strong>：从图中的某一顶点开始进行遍历，沿着某一分支深入下去，直到无法继续为止，然后回溯至前一顶点，转向下一分支，重复此过程，直到所有顶点都被访问过。DFS类似于树的先序遍历。</p>
+</li>
+<li>
+<p><strong>广度优先搜索（BFS）</strong>：从图中的某一顶点开始进行遍历，首先访问该顶点的所有邻接顶点，然后再对这些邻接顶点进行同样的处理，即首先访问这些邻接顶点的所有未被访问的邻接点，以此类推，直到所有顶点都被访问过。BFS类似于树的层次遍历。</p>
+</li>
+</ol>
+<p>需要注意的是，由于图可能存在环，因此在遍历的过程中需要标记已访问过的节点，以防止陷入无限循环。此外，对于非连通图（即包含多个不相交的子图的图），需要从不同的顶点开始，重复上述过程，以确保访问到图中的所有顶点。</p>
+<p>图的遍历应用广泛，包括路径查找，环检测，连通性检查，图的复制等许多问题。</p>
+<h2 id="图的应用">图的应用</h2>
+<h3 id="最小生成树">最小生成树</h3>
+<p>最小生成树是图论中的一个重要概念，用于描述一个加权连通图中连接所有顶点的最小权值的树。</p>
+<p>最小生成树的性质包括：</p>
+<ol>
+<li>
+<p>包含图中所有顶点：一个图的最小生成树应包含图中的所有顶点。</p>
+</li>
+<li>
+<p>树中只有 (n-1) 条边：如果一个图有 n 个顶点，那么其最小生成树只有 (n-1) 条边。</p>
+</li>
+<li>
+<p>总权值最小：在所有可能的生成树中，最小生成树的权值总和最小。</p>
+</li>
+</ol>
+<p>主要的最小生成树算法有：</p>
+<ol>
+<li>
+<p><strong>普里姆（Prim）算法</strong>：从某一个顶点开始，每次选择当前已访问的顶点中距离最近的一个未访问顶点，将其添加到已访问顶点的集合中，直到所有顶点都被访问。</p>
+</li>
+<li>
+<p><strong>克鲁斯卡尔（Kruskal）算法</strong>：按照边的权值从小到大的顺序选择边，如果这条边连接的两个顶点在已经生成的森林中不在同一棵树（即不形成环），那么就将这条边添加到最小生成树中。</p>
+</li>
+</ol>
+<p>这两种算法都能有效地找到最小生成树，但是适用的场景略有不同。<strong>普里姆算法适合于稠密图</strong>，<strong>而克鲁斯卡尔算法适合于稀疏图</strong>。</p>
+<p>无论是Prim算法还是Kruskal算法，在寻找最小生成树的过程中，都会遵循一个基本原则：<strong>在保证生成树连通的前提下，每次都选择权值最小的边加入到生成树中。这种每次选择当前最好的选项，也就是所谓的&quot;贪心&quot;策略，是最小生成树算法的共同思想。</strong></p>
+<p>需要注意的是，虽然这种贪心策略在最小生成树问题上能够得到全局最优解，但在其他一些问题上，贪心策略可能无法得到全局最优解，因为它没有考虑到对未来决策的影响。</p>
+<h3 id="最短路径">最短路径</h3>
+<h4 id="迪杰斯特拉算法-单源路径">迪杰斯特拉算法(单源路径)</h4>
+<p>迪杰斯特拉算法，是由荷兰计算机科学家Edsger Wybe Dijkstra在1956年发明的，用于求解给定源节点到图中所有其他节点的最短路径问题。它的主要思想是采用贪心算法的策略，每次寻找最短的边，并更新与其相邻的节点的最短路径。以下是算法的具体步骤：</p>
+<ol>
+<li>
+<p><strong>初始化</strong>：首先设置一个集合，用来记录已经找到最短路径的节点。然后设置一个距离数组，距离数组的索引表示节点编号，值表示从源节点到该节点的最短路径长度。在开始时，源节点到自己的距离设为0，源节点到其他节点的距离设为无穷大。</p>
+</li>
+<li>
+<p><strong>选择节点</strong>：在未被加入集合的节点中，选择一个距离源节点最近（即距离值最小）的节点，将其加入到集合中。初次选择时，将会选择源节点自身。</p>
+</li>
+<li>
+<p><strong>更新距离</strong>：将新加入集合的节点，标记为当前节点。遍历与当前节点直接相连的所有未被加入集合的节点，比较从源节点到该节点的已知最短路径（即距离数组中的值）与从源节点经过当前节点到该节点的路径长度，如果后者更短，就更新该节点在距离数组中的值。</p>
+</li>
+<li>
+<p><strong>重复步骤</strong>：重复步骤2和步骤3，直到所有节点都被加入到集合中，或者找不到新的可以加入集合的节点为止。这时，距离数组中的值就表示了从源节点到各节点的最短路径长度。</p>
+</li>
+</ol>
+<p>值得注意的是，由于Dijkstra算法在选择节点时，总是选择距离源节点最近的节点，因此它不能处理图中包含负权边的情况。<strong>如果图中存在负权边，可能会导致已经被加入集合的节点的最短路径长度发生变化</strong>，这与Dijkstra算法的基本假设相矛盾。对于这种情况，可以使用其他算法如Bellman-Ford算法等来处理。</p>
+<h4 id="floyd算法求各个顶点最短路径">Floyd算法求各个顶点最短路径</h4>
+<p>Floyd算法，全称Floyd-Warshall算法，是一种解决&quot;所有节点之间的最短路径&quot;问题的动态规划算法。这种算法能够正确处理图中有向、无向以及存在负权边的情况，<strong>但不能处理存在负环的情况</strong>。以下是Floyd算法的基本步骤：</p>
+<ol>
+<li>
+<p>初始化距离矩阵：首先，构建一个n×n的矩阵（n为图中节点数量），其中矩阵的第i行第j列的元素表示从节点i到节点j的边的权重。如果i和j之间没有直接的边，那么这个值被设置为正无穷。</p>
+</li>
+<li>
+<p>动态规划更新距离：对于矩阵中的每一个元素，<strong>尝试通过所有其他的节点作为中间节点，看是否能够找到一条更短的路径</strong>。具体来说，对于矩阵中的每一个元素dist[i][j]，遍历所有的k（0≤k&lt;n），并将dist[i][j]更新为min(dist[i][j], dist[i][k]+dist[k][j])。</p>
+</li>
+<li>
+<p>返回结果：最后，矩阵中的每一个元素dist[i][j]表示的就是从节点i到节点j的最短路径的长度。</p>
+</li>
+</ol>
+<p>Floyd算法的时间复杂度是O(n^3)，其中n是图中节点的数量。尽管它比许多其他的最短路径算法更慢，但是它的优点是简单、直观，且能够处理所有节点对之间的最短路径问题。</p>
+<h3 id="拓扑排序">拓扑排序</h3>
+<p>在图论中，有向无环图（Directed Acyclic Graph，<strong>简称DAG</strong>）是一种特殊的图，它的特性就是没有形成环路（或者称为循环、回路）的有向边。由于其无环的特性，有向无环图在很多场合都有应用，如任务调度、数据分析、编译优化等。</p>
+<p>AOV网（Activity On Vertex network）又称顶点活动图，是一种特殊的有向无环图（DAG，Directed Acyclic Graph），<strong>在AOV网中，每个顶点都对应一个活动，而边则表示活动之间的优先关系。</strong></p>
+<p>**拓扑排序（Topological Sorting）**是针对有向无环图（DAG, Directed Acyclic Graph）的一种排序算法，它的结果是一个线性序列，满足对于图中的每对有向边(u, v)，u在序列中都出现在v之前。也可以理解为，如果存在一条从顶点u到顶点v的路径，那么在拓扑排序结果中，u总是出现在v的前面。</p>
+<p>以下是一种常用的拓扑排序的步骤：</p>
+<ol>
+<li>
+<p>找到图中所有入度为0的顶点，将它们放入队列。</p>
+</li>
+<li>
+<p>从队列中移除一个顶点，将它添加到排序结果的尾部。</p>
+</li>
+<li>
+<p>遍历由该顶点出发的所有边，将这些边指向的顶点的入度减1。如果某个顶点的入度减为0，那么将它加入到队列。</p>
+</li>
+<li>
+<p>重复步骤2和3，直到队列为空。</p>
+</li>
+<li>
+<p>如果得到的排序结果中包含的顶点数量和图中的顶点数量相同，那么这个排序就是图的一个拓扑排序。如果顶点数量不同，那么说明图中存在环，无法进行拓扑排序。</p>
+</li>
+</ol>
+<p>拓扑排序在诸如项目调度、编译器的指令调度、解决具有依赖关系的任务等领域有广泛应用。</p>
+<p><strong>逆拓扑排序就是 找出度为0的顶点, 然后删除所有以它为终点的边</strong></p>
+<h3 id="关键路径">关键路径</h3>
+<p>AOE（Activity On Edge）网络，又称边表示活动的网络，是一种特殊的有向图，其中的顶点表示事件，边表示活动，边上的权值通常表示活动的时间。AOE网络常用于项目管理中，如PERT（Program Evaluation Review Technique）/CPM（Critical Path Method）技术中，用于表示和分析任务的先后关系。</p>
+<p>在一个AOE网络中：</p>
+<ol>
+<li>
+<p>顶点代表事件，是一个状态或条件，通常表示活动的开始或结束。</p>
+</li>
+<li>
+<p>边代表活动，是在两个事件之间发生的工作或任务。边上的权重通常代表完成这个活动所需的时间或资源。</p>
+</li>
+<li>
+<p>AOE网是一个有向无环图，从开始事件到结束事件至少存在一条路径。</p>
+</li>
+<li>
+<p>最长路径（即具有最大权重的路径）被称为关键路径，关键路径上的活动称为关键活动。这些活动是影响整个项目完成时间的关键，任何一个关键活动的延迟都会导致整个项目的延迟。</p>
+</li>
+<li>
+<p>AOE网只存在一个入度为0的顶点, 也只存在一个出度为0的顶点</p>
+</li>
+</ol>
+<p>AOE网和AOV网的区别在于  一个边有权值,另外一个没有,仅仅表示前后关系</p>
+<p>在AOE（Activity On Edge）网络中，关键活动是那些最早开始时间等于最晚开始时间（或最早完成时间等于最晚完成时间）的活动。这些活动是非常重要的，因为任何关键活动的延误都会导致整个项目的延误。以下是如何计算这些参量的:</p>
+<ol>
+<li>最早开始时间（EST）和最早完成时间（EFT）：</li>
+</ol>
+<ul>
+<li>EST: 对于一个具有多个前驱的顶点，其最早开始时间应该是所有前驱节点的最早完成时间的最大值。</li>
+<li>EFT: 一旦确定了活动的EST，我们可以通过将活动的持续时间加到EST上来计算其EFT。</li>
+</ul>
+<p>计算EST和EFT的过程是从AOE网络的源节点（无入度的顶点）开始，按照拓扑排序的顺序进行的。</p>
+<ol start="2">
+<li>最晚开始时间（LST）和最晚完成时间（LFT）：</li>
+</ol>
+<ul>
+<li>LFT: 对于一个具有多个后继的顶点，其最晚完成时间应该是所有后继节点的最晚开始时间的最小值。</li>
+<li>LST: 一旦确定了活动的LFT，我们可以通过从LFT中减去活动的持续时间来计算其LST。</li>
+</ul>
+<p>计算LST和LFT的过程是从AOE网络的汇点（无出度的顶点）开始，按照拓扑排序的逆序进行的。</p>
+<ol start="3">
+<li>松弛时间（Slack Time）：每个活动的松弛时间等于其LST减去其EST，或者其LFT减去其EFT。</li>
+</ol>
+<p><strong>关键活动就是松弛时间为0的活动。它们构成了项目的关键路径，即整个项目中最长的路径，其长度决定了项目的最短完成时间。</strong></p>
+<h2 id="做题总结">做题总结</h2>
+<ul>
+<li>对于非连通图 来说,   最多的边数便是  (n-1)*(n-2) / 2  单独拿出一个结点成为连通分量,  这样的话,边数是最多的  =&gt; 这样可以等价于已知边数求 最小节点数</li>
+<li>已知结点数, 求图是连通的最小边数,  这个可以利用上面的结论, 求出非连通的图的最多边数+1 便是答案</li>
+<li>连通分量是极大连通子图,<strong>它包含了里面的所有顶点和所有边</strong>, 因此<strong>生成树可能不是一个连通分量</strong></li>
+<li>强连通分量是指 极大强连通子图,  它和极大连通子图还有有很大差别的, 极大连通子图是指一块的所有边和顶点,  而极大强连通子图是指 这个子图中  所有的顶点都有相互到达的弧</li>
+</ul>
+<h1>查找</h1>
+<h2 id="前言">前言</h2>
+<p>本章是考研命题的重点, 对于散列查找, 要掌握散列表的构造, 冲突解决方法, 查找成功和失败的平均查找长度,散列查找的特征和性能分析, 对于折半查找,应掌握折半查找的过程,构造判定树,分析平均查找长度,  B树和B+树 要要掌握基本概念与操作</p>
+<h2 id="顺序查找">顺序查找</h2>
+<h3 id="一般线性表的顺序查找">一般线性表的顺序查找</h3>
+<h3 id="有序表的顺序查找">有序表的顺序查找</h3>
+<p>这里和折半查找的思想还是有所不同的,  它是顺序往下比较, 如果发现条件不满足了,说明后续的元素肯定也不满足,直接返回查找失败</p>
+<p>而且这里的有序表可以使用链式存储结构, 对于折半查找, 是不能使用链式的</p>
+<h2 id="折半查找">折半查找</h2>
+<h2 id="分块查找">分块查找</h2>
+<h2 id="树形查找">树形查找</h2>
+<h3 id="二叉排序树">二叉排序树</h3>
+<p>二叉排序树， 又被称为二叉查找树或二叉搜索树，是一种特殊的二叉树。它或者是空树，或者是满足以下性质的二叉树：</p>
+<ol>
+<li>
+<p>如果左子树不为空，则左子树上所有节点的值均小于它的根节点的值。</p>
+</li>
+<li>
+<p>如果右子树不为空，则右子树上所有节点的值均大于它的根节点的值。</p>
+</li>
+<li>
+<p>它的左、右子树也分别为二叉排序树。</p>
+</li>
+</ol>
+<p>二叉排序树的主要操作有：插入、删除和查找。</p>
+<ul>
+<li>
+<p><strong>插入操作</strong>：新插入的节点总是作为叶子节点，并且满足二叉排序树的性质。</p>
+</li>
+<li>
+<p><strong>删除操作</strong>：删除节点时需要考虑以下三种情况：</p>
+<ul>
+<li>
+<p>删除的节点是叶子节点，直接删除。</p>
+</li>
+<li>
+<p>删除的节点只有一个子树（只有左子树或只有右子树），将其子树连到其父节点上。</p>
+</li>
+<li>
+<p>删除的节点有两个子树，通常有两种处理方式：一种是找到这个节点的前驱（左子树中的最大值）或者后继（右子树中的最小值）来替代当前节点，然后删除这个前驱或后继节点；另一种是直接删除这个节点，然后重新构造左右子树。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>查找操作</strong>：从根节点开始，如果查找的值等于当前节点的值，查找成功；如果查找的值小于当前节点的值，则继续在左子树中查找；如果查找的值大于当前节点的值，则继续在右子树中查找。</p>
+</li>
+</ul>
+<p>二叉排序树的主要优点是查找、插入和删除的时间复杂度在平均情况下都为O(log n)，但在最坏情况下（如树变成链状结构）会退化到O(n)。为了解决这个问题，引入了平衡二叉排序树（如AVL树、红黑树等），它们在插入和删除时会通过旋转等操作来保持树的平衡，确保操作的时间复杂度始终为O(log n)。</p>
+<h3 id="平衡二叉树">平衡二叉树</h3>
+<p>平衡二叉树（Balanced Binary Tree）是一种特殊的二叉树，它的每一个节点的左右子树的高度差的绝对值不能超过1。平衡二叉树主要用于解决普通二叉查找树在数据极度偏斜时的效率问题，也就是说，对于任何一个节点来说，它的左子树和右子树的高度差不能超过1。</p>
+<p><strong>平衡因子（Balance Factor）</strong>：某节点的左子树与右子树的高度差。在平衡二叉树中，所有节点的平衡因子只可能是 -1、0 或 1。</p>
+<p>AVL树的特性是：对任一节点，其左子树和右子树的高度差的绝对值最多为1。也就是说，AVL树始终保持&quot;平衡&quot;的状态。当进行插入或删除导致平衡被破坏时，AVL树会通过旋转操作来恢复平衡。</p>
+<p><strong>旋转操作</strong>：</p>
+<ul>
+<li>左旋（Right rotation）：针对右子树的高度大于左子树，且插入在右子树的右边的情况。也就是&quot;右-右&quot;情况，或简写为RR情况。</li>
+<li>右旋（Left rotation）：针对左子树的高度大于右子树，且插入在左子树的左边的情况。也就是&quot;左-左&quot;情况，或简写为LL情况。</li>
+<li>左右旋（Right-left rotation）：针对左子树的高度大于右子树，且插入在左子树的右边的情况。也就是&quot;左-右&quot;情况，或简写为LR情况。</li>
+<li>右左旋（Left-right rotation）：针对右子树的高度大于左子树，且插入在右子树的左边的情况。也就是&quot;右-左&quot;情况，或简写为RL情况。</li>
+</ul>
+<p>AVL树的主要优点是查找、插入和删除的最坏情况时间复杂度都是O(log N)。然而，AVL树的缺点是每次插入或删除都可能需要一次或多次旋转来维持平衡，造成较大的开销。因此，当需要频繁插入和删除的时候，可以选择使用其它自平衡二叉搜索树，如红黑树等。</p>
+<h3 id="红黑树">红黑树</h3>
+<p>红黑树是一种自平衡二叉查找树，它在1972年由Rudolf Bayer首次提出，并在1978年由Leonidas J. Guibas和Robert Sedgewick进行了改进。红黑树的名字来源于节点可以被标记为红色或黑色。</p>
+<p>在红黑树中，我们维护以下性质：</p>
+<ol>
+<li>每个节点都被赋予红色或黑色。</li>
+<li>树的根节点是黑色的。</li>
+<li>所有的叶子节点（这里指的是空的叶子节点，或称为NIL节点）都是黑色的。<strong>(相当于引入了n+1个外部结点)</strong></li>
+<li>如果一个节点是红色的，那么它的两个子节点都是黑色的（也就是说，在红黑树中，不能有两个相邻的红色节点，红色节点是被黑色节点隔开的）。</li>
+<li>对于每个节点，从该节点到其所有后代叶子节点的简单路径上，包含相同数量的黑色节点。</li>
+</ol>
+<p>这些性质确保了红黑树的关键特性：从根到叶子的最长的可能路径不多于最短的可能路径的两倍长。结果是这个树大致上是平衡的。因为操作比如插入、删除和查找某个值的最坏情况时间复杂度都是对数级别的。<strong>红结点要么度为0,要么度为2</strong></p>
+<ul>
+<li>
+<p><strong>插入操作</strong>：当插入一个节点时，我们首先按照二叉查找树的规则插入该节点。然后，我们将它标记为红色。插入红色节点可能会违反红黑树的性质，所以可能需要进行一些颜色调整和/或树旋转操作来修复可能的红黑树性质的破坏。</p>
+</li>
+<li>
+<p><strong>删除操作</strong>：当删除一个节点时，我们首先按照二叉查找树的规则删除该节点。然后，我们通过颜色调整和/或树旋转操作来修复可能的红黑树性质的破坏。</p>
+</li>
+<li>
+<p><strong>查找操作</strong>：查找操作和在普通的二叉查找树中完全一样。我们从根节点开始，如果查找的值等于当前节点的值，查找成功；如果查找的值小于当前节点的值，则继续在左子树中查找；如果查找的值大于当前节点的值，则继续在右子树中查找。</p>
+</li>
+</ul>
+<p>红黑树是许多数据结构和算法的核心，例如Java的TreeMap和TreeSet，Linux内核的完全公平调度器，还有C++的标准模板库等都使用了红黑树。</p>
+<h4 id="红黑树的插入">红黑树的插入</h4>
+<p>插入结点都是红色结点, 如果使用黑色结点的话,那必然每次插入都会破坏红黑树的性质</p>
+<p>设插入结点为 x 父节点为 p,  叔叔结点为 y  爷爷结点为 z</p>
+<ol>
+<li>
+<p>如果父节点是黑色结点,则直接插入,无需调整</p>
+</li>
+<li>
+<p>如果父节点是红色结点,  那么就需要调整,  如果叔叔结点(空节点也算)是黑结点,  那么在局部就能调整好</p>
+</li>
+</ol>
+<ul>
+<li>x是z的左子树的左孩子结点  对p  做LL(右旋)旋转</li>
+<li>x是z的左子树的右孩子结点  对p 做 LR(先左后右) 旋转</li>
+<li>x是z的右子树的左孩子   对 p 做 RL 旋转</li>
+<li>x是z的右子树的右孩子  对p 做 RR旋转</li>
+</ul>
+<p>调整完毕后,  需要交换一下颜色,  将原先z的颜色 跟当前z的颜色对调  (也就是把原先z变成红色, 现在的z变成黑色)</p>
+<ol start="3">
+<li>如果父节点是红色结点,而且叔叔结点是红色结点,  这种情况是增加黑高的唯一情况(可能增加也可能不增加),  这种情况需要现在局部调整好,然后再继续向上调整</li>
+</ol>
+<ul>
+<li>将z的黑色变成红色, 将z的左右孩子变成黑色</li>
+<li>把z当成插入结点, 如果z是根节点, 那么直接变成黑色, 黑高加1, 否则继续向上调整, 直到满足红黑树的性质</li>
+</ul>
+<p>对于插入节点的父亲结点是红色的总结:   如果叔叔结点是黑色, 那我们完全可以在局部调整好, 让这颗子树的高度不变, 即我们可以给叔叔那边的子树添加一个红结点,  如果叔叔结点也是红色, 那局部是调整不好的, 此时需要把爷爷结点变成红色, 叔叔和父节点变成黑色, 让把爷爷结点当成插入结点继续处理</p>
+<h4 id="红黑树的删除">红黑树的删除</h4>
+<ol>
+<li>首先将红黑树的删除转变为二叉排序树的删除, 即转化为删除叶节点</li>
+<li>经过上面步骤后得到要删除的结点x(假设在左子树), 父节点p, 兄弟结点 y, 兄弟结点左孩子yl 右孩子 yr</li>
+<li>如果x为红色, 直接删除</li>
+<li>如果x为黑色 将x视为双黑结点
+<ul>
+<li>如果兄弟结点y为红色,   将p进行左旋,交换原来p与新p的颜色,变成后续情况(新y必为黑色)</li>
+<li>如果兄弟结点y为黑色,   y的靠近x的子节点为红色,另外一个为黑色,  比如如果x在左边, 那么靠近它的就是yl, 将y进行右旋,交换现在的y和原来y的颜色, 变成下面这个情况</li>
+<li>如果兄弟结点y为黑色,   y的远离x的子节点为红色,  比如如果x在左边, 那么远离它的就是yr, 将p进行左旋, 将yr变成黑色, 交换先p与原p的颜色</li>
+<li>如果兄弟结点y为黑色, 且yr和yl都是黑色, 给p结点加一层黑色,x和y都去掉一层黑色, 如果p是双黑就继续向上调整p, 直到p为根节点,然后黑高减一</li>
+</ul>
+</li>
+</ol>
+<p>总结:  如果兄弟结点为红色, 或者兄弟结点的子节点有红色, 那么是可以在局部调整好的, 可以把这个多余红色变成黑色然后弥补删除节点后少了的黑高, 如果兄弟结点为黑色且其子节点都是黑色, 那么局部是不能调整好的,需要向上调整</p>
+<h2 id="b树和b-树">B树和B+树</h2>
+<p>B树，也称为平衡多路查找树，是一种对读写操作进行优化的自平衡的搜索树，能够保持数据有序。这种数据结构能够广泛应用于大型系统的文件系统和数据库系统里。</p>
+<p>下面是B树的几个基本特性：</p>
+<ol>
+<li>
+<p>B树的每个节点X都有以下属性：</p>
+<ul>
+<li>n[X]：存储在节点X中的关键字的数量</li>
+<li>n[X]个关键字本身，已经从小到大排序：key1[X] &lt; key2[X] &lt; … &lt; keyn[X]</li>
+<li>leaf[X]：一个布尔值，如果节点X是叶子节点，则为true，否则为false。</li>
+</ul>
+</li>
+<li>
+<p>B树的每个节点X还包含n[X]+1个指向其孩子的指针：c1[X], c2[X], …, cn[X]+1[X]。关键字ki[X]分割存储在各个孩子中的关键字，例如：所有在ci[X]中的关键字小于ki[X]，所有在ci+1[X]中的关键字大于ki[X]。</p>
+</li>
+<li>
+<p>所有叶子节点都有相同的深度，即树的高度。</p>
+</li>
+<li>
+<p>有上限和下限界定节点的关键字的数量。设t是树的最小度数：</p>
+<ul>
+<li>每个节点关键字的数量必须至少有t-1个，除了根节点外。</li>
+<li>每个节点的关键字数量不能超过2t-1个。如果一个节点的关键字数量达到2t-1，称为满节点。</li>
+</ul>
+</li>
+</ol>
+<p>操作方面，B树支持查找、插入和删除操作：</p>
+<ul>
+<li>
+<p><strong>查找</strong>：由于B树的定义，一个简单的从根节点到叶子节点的递归遍历过程可以找到关键字。</p>
+</li>
+<li>
+<p><strong>插入</strong>：插入新的关键字到B树中，首先找到应该插入的位置（必须是叶子节点）。如果叶子节点未满（即关键字数量少于2t-1），那么直接在节点中插入关键字。否则，需要分裂节点并将关键字向上推到父节点，可能需要递归这个过程，直到找到一个未满的父节点或者创建新的根节点。</p>
+</li>
+<li>
+<p><strong>删除</strong>：删除操作是最复杂的，首先需要找到关键字所在的节点。如果关键字在内部节点中，通常需要通过替换关键字和适当的重新组织子树，使问题简化为在叶子节点中删除关键字。叶子节点中的关键字可以直接删除，如果删除后节点仍满足关键字数量限制则完成，否则需要通过关键字借用或节点合并来维持B树的性质。</p>
+</li>
+</ul>
+<p>B树的一个重要优点是能够保持树的高度较低，减少磁盘I/O操作，这使得它非常适合于大型存储系统中的数据查找。</p>
+<h2 id="散列表">散列表</h2>
+<p>散列表（Hash Table），也被称为哈希表或映射，是一种常用的数据结构，它能够在平均时间复杂度为O(1)的情况下插入、删除和查找元素。下面是散列表的基本概念和操作：</p>
+<ol>
+<li>
+<p><strong>散列函数</strong>：散列表使用一种叫做散列函数（Hash Function）的函数来将输入（通常是一个关键字）映射到表中的一个位置。理想的散列函数能够将所有可能的输入均匀地分布在整个散列表上，这样可以最大程度地减少冲突。</p>
+</li>
+<li>
+<p><strong>冲突解决</strong>：冲突是指两个或更多的输入通过散列函数映射到同一位置的情况。这是一个必须要解决的问题，因为它会影响到散列表的效率。常用的冲突解决方法有开放寻址（如线性探测、二次探测和双重散列）和链地址法。</p>
+</li>
+<li>
+<p><strong>插入操作</strong>：要将一个元素插入到散列表中，我们先用散列函数计算出该元素应该放在哪个位置，然后将其放在那个位置。如果那个位置已经有其他元素了（即发生了冲突），我们就需要使用某种冲突解决方法来找一个新的位置。</p>
+</li>
+<li>
+<p><strong>删除操作</strong>：首先使用散列函数找到要删除的元素在哪个位置，然后将其删除。如果使用的是开放寻址法解决冲突，还需要做一些额外的操作来保证其它元素仍然可以被找到。</p>
+</li>
+<li>
+<p><strong>查找操作</strong>：和插入操作类似，先用散列函数计算出元素应该在哪个位置，然后在那个位置查找。如果没有找到或者那个位置有其他元素，我们需要使用之前的冲突解决方法来在表中其他位置寻找。</p>
+</li>
+<li>
+<p><strong>扩容和缩容</strong>：当散列表中的元素太多（或太少）时，我们可能需要增大（或减小）散列表的大小以保持良好的性能。扩容和缩容通常涉及到创建一个新的散列表，然后将原散列表中的所有元素重新插入到新表中。</p>
+</li>
+<li>
+<p><strong>负载因子</strong>：散列表的负载因子是指散列表中已经存储的元素数量和散列表的大小的比值。当负载因子过高时，冲突的可能性会增加，这会降低散列表的性能。因此，当负载因子达到一定阈值（如0.7）时，就需要进行扩容。</p>
+</li>
+</ol>
+<p>注意，尽管散列表的平均时间复杂度为O(1)，但在最坏的情况下（所有的输入都映射到同一位置），插入、删除和查找的时间复杂度都可能达到O(n)，其中n为元素的数量。因此，散列表的性能在很大程度上取决于散列函数的质量和冲突解决方法的效率。</p>
+<h2 id="做题总结">做题总结</h2>
+<ul>
+<li>对于折半查找的平均成功查找长度和失败查找长度我们可以这样来做 ( 1*1+2*2 + 3*4 + 4*8 + … h*2^(h-1)) 其中 h = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">log_2n+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>(向上取整)  这个是总共的查找成功的次数  我们可以发现,  乘积后面这一项 其实就是二叉树每一层的结点最多数量,  但是最后一层的时候结点可能是没有充满的   除以n就是 平均成功查找长度,   而对于失败的查找长度, 我们需要画出对应的平衡二叉树,  去找度为1 和 度为0的结点,  然后用  (度为1的结点* h-1  + 度为0的结点*2*h)/n+1   <strong>根据这个公式  其实我们也可以不用画图   直接推算公式</strong>   n1 + 2n0-1 = n, 所以( n1(h-1) + 2n0*h ) /n+1 = (nh - n + 2n0 + h -1) / n+1 = h-1 + 2n0/(n+1)</li>
+<li>折半查找生成的是一颗平衡二叉树,  所以 折半查找的速率 和 二叉排序树的速率还是有区别的</li>
+<li>判断一个二叉树可不可能是折半查找生成树的时候, 我们先看它是不是平衡二叉树,  然后再根据树的结构给每个结点编号,如果它的中序序列是升序的, 那它就可能是折半查找生成树(说可能是因为 折半的时候中间位置可以向上取整,也可以向下取整)</li>
+<li><strong>平衡二叉树具有这个公式:  nk代表第k层最小结点数     nh = nh-1 + nh-2 +1   其中n0 = 0 n1 = 1</strong>   达到最小结点数的情况,此时也是所有非叶子节点平衡因子为1的情况   证明:  只有每棵树的平衡因子为1或者-1的时候, 树节点才最少, 假设左子树高度为 h-1 右子树的高度为 h-2  ,  当前树的高度为h, 左右子树也满足最小结点, 所以当前树的结点个数为  nh = nh-1 + nh-2 +1</li>
+<li>对于b树来说,   叶节点个数 = n+1 n代表关键字个数    这里的叶节点是 外部结点    因此 对于树的最小高度和最大高度问题  可以转换成叶节点的最大数量和最小数量</li>
+<li>对于散列表的查找失败,  我们只需要看每个位置查找失败的次数</li>
+</ul>
+<h1>排序</h1>
+<h2 id="前言">前言</h2>
+<p>堆排序和快速排序还有归并排序是本章的重点,  应该要深入掌握各种排序思想, 排序过程和特征.</p>
+<h2 id="基本概念">基本概念</h2>
+<p>排序是将一组数据按照某种特定的顺序进行排列的过程。排序算法的设计是计算机科学中的一个重要主题，因为排序是数据处理中非常常见的需求，而且不同的排序算法适用于不同的场景和需求。</p>
+<p>排序算法的分类：</p>
+<ol>
+<li>
+<p><strong>比较类排序</strong>：通过比较来决定元素间的相对次序，时间复杂度不能突破O(nlogn)，例如：冒泡排序、选择排序、插入排序、快速排序、归并排序、堆排序等。</p>
+</li>
+<li>
+<p><strong>非比较类排序</strong>：不通过比较来决定元素间的相对次序，可以达到线性时间复杂度，例如：计数排序、桶排序、基数排序等。</p>
+</li>
+</ol>
+<p>根据算法稳定性还可以分为：</p>
+<ul>
+<li>
+<p><strong>稳定排序算法</strong>：如果a原本在b前面，而a=b，排序之后a仍然在b的前面。</p>
+</li>
+<li>
+<p><strong>不稳定排序算法</strong>：如果a原本在b的前面，而a=b，排序之后a可能会在b的后面。</p>
+</li>
+</ul>
+<p>每种排序算法都有其特点：</p>
+<ul>
+<li>冒泡排序：简单，但是效率较低，适用于小规模数据或者部分有序的数据。</li>
+<li>选择排序：简单，但效率较低，不稳定，适用于小规模数据。</li>
+<li>插入排序：相对简单，对部分有序的数据效率较高，稳定，适用于小规模数据或部分有序的数据。</li>
+<li>快速排序：效率高，但极端情况下效率降低，不稳定，适用于大规模数据。</li>
+<li>归并排序：效率高，稳定，但需要额外的内存空间，适用于对稳定性有要求的大规模数据。</li>
+<li>堆排序：效率高，不稳定，适用于大规模数据。</li>
+<li>计数排序、桶排序、基数排序：非比较排序，效率高，适用于一些特定条件的大规模数据。</li>
+</ul>
+<p>排序算法是一种基本的算法类型，学习理解各种排序算法，不仅可以帮助理解算法的设计和运作，也是许多更高级算法和数据结构的基础。</p>
+<h2 id="插入排序">插入排序</h2>
+<p>插入排序的基本思想是每步将一个待排序的记录，按其顺序码的大小插入到前面已经排序的序列中的适当位置，直到全部插入完成为止。</p>
+<p>插入排序主要有三种形式：直接插入排序，折半插入排序，和希尔排序。</p>
+<ol>
+<li>
+<p><strong>直接插入排序</strong>：其基本操作是将一个记录插入到已经排好序的有序表中，从而得到一个新的、记录数增1的有序表。对于未排序的数据，在已排序序列中从后向前扫描，找到相应位置并插入。<strong>直接插入排序是稳定的排序算法</strong>，最好情况下的时间复杂度为O(n)，最坏情况下的时间复杂度为O(n²)，平均情况下的时间复杂度也是O(n²)。</p>
+</li>
+<li>
+<p><strong>折半插入排序</strong>：这是对直接插入排序算法的改进。由于在前面部分的排序过程中，插入一条记录需要比较的次数较多，所以改进的方法是将插入的记录的查找和后移同时进行。每次将待插入的记录与已排序区的中间记录比较，可以确定插入的位置范围，从而减少了比较的次数。<strong>折半插入排序是稳定的排序算法</strong>，时间复杂度为O(n²)。</p>
+</li>
+<li>
+<p><strong>希尔排序</strong>：又称缩小增量排序，是对直接插入排序算法的改进，它对直接插入排序进行了简单而又高效的改进：先将待排序的序列分割成若干个子序列分别进行直接插入排序，待整个序列中的记录基本有序时，再对全体记录进行一次直接插入排序**。希尔排序是不稳定的排序算法**，最坏情况下的时间复杂度为O(n²)，但是实际的性能要好于O(n²)。</p>
+</li>
+</ol>
+<p>以上三种排序方法都属于插入排序的范畴，但它们的效率和应用场景有所不同，可以根据实际需要选择使用。</p>
+<h2 id="交换排序">交换排序</h2>
+<p>交换排序的基本思想是通过不断地交换相邻的两个错位元素达到排序的目的。主要有冒泡排序和快速排序两种实现方式：</p>
+<ol>
+<li>
+<p><strong>冒泡排序（Bubble Sort）</strong>：冒泡排序是一种简单的排序算法，通过重复地遍历要排序的列表，比较每对相邻的元素，如果它们的顺序错误就把它们交换过来，遍历列表的工作是重复地进行直到没有更多的交换为止。这种算法的名字由来是因为越小（或越大）的元素会经过交换慢慢“浮”到数列的顶端，仿佛这些元素在液体中像是气泡一样向上冒泡。冒泡排序是稳定的排序方法，时间复杂度为O(n²)。</p>
+</li>
+<li>
+<p><strong>快速排序（Quick Sort）</strong>：快速排序是冒泡排序的一种改进，其基本思想是选择一个基准元素，通过一趟排序将待排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。<strong>快速排序是不稳定的排序方法</strong>，最坏情况下的时间复杂度为O(n²)，但在平均情况下时间复杂度为O(nlogn)，并且常数因子较小，因此在实际中快速排序的效率通常比其他的复杂度为O(nlogn)的排序算法要好。</p>
+</li>
+</ol>
+<p>两种交换排序的方式在实际应用中都有广泛的使用，它们各有优缺点，可以根据具体的需求进行选择使用。</p>
+<h2 id="选择排序">选择排序</h2>
+<p>选择排序是一种简单直观的排序算法，它的工作原理如下：</p>
+<ol>
+<li>在未排序的序列中找到最小（或最大）元素，存放到排序序列的起始位置。</li>
+<li>再从剩余未排序元素中继续寻找最小（或最大）元素，然后放到已排序序列的末尾。</li>
+<li>以此类推，直到所有元素均排序完毕。</li>
+</ol>
+<p>选择排序有两种类型：简单选择排序和堆排序。</p>
+<ul>
+<li>
+<p><strong>简单选择排序</strong>：是最基本的选择排序算法，它的基本思想是在每一趟排序中，从待排序的数据元素中选出最小（或最大）的一个元素，放在序列的起始位置，然后依次移动“窗口”，并在剩余的未排序元素中寻找最小（或最大）元素，放到已排序序列的末尾，直到全部待排序的数据元素排完。简单选择排序是不稳定的排序方法，时间复杂度为O(n²)。</p>
+</li>
+<li>
+<p><strong>堆排序</strong>：堆排序是一种树形选择排序，是对直接选择排序的有效改进。堆的定义是：具有n个元素的序列（h1,h2,…,hn)，当且仅当满足（hi&lt;=h2i, hi&lt;=h2i+1或者hi&gt;=h2i, hi&gt;=h2i+1） (i=1,2,…,n/2)时称之为堆。在这里只讨论满足前者条件的堆。由堆的定义可以看出，堆顶元素（即第一个元素）必为最小项（小顶堆）。完全二叉树可以很直观地表示堆的结构。堆顶为根，其他元素自上而下、由左到右填入。堆排序的时间复杂度为O(nlogn)，<strong>堆排序是不稳定的排序方法</strong>，但是空间复杂度为O(1)。</p>
+</li>
+</ul>
+<p>总结来说，选择排序在实际应用中使用不多，主要因为其效率较低，尤其是简单选择排序。然而，堆排序在需要排序大量数据，且对内存使用有较严格限制的场景下，仍有一定的使用价值。</p>
+<h2 id="归并排序">归并排序</h2>
+<p>归并排序（Merge sort）是建立在归并操作上的一种有效、<strong>稳定的排序算法</strong>，该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。其主要包括两个过程：分解和合并。</p>
+<ol>
+<li>
+<p><strong>分解</strong>：将需要排序的数组不断地一分为二，直到每个子数组只有一个元素为止。一个元素的数组自然是有序的。</p>
+</li>
+<li>
+<p><strong>合并</strong>：将两个有序的子数组合并成一个有序的数组。重复这个过程，直到最后只剩下一个有序的数组。</p>
+</li>
+</ol>
+<p><strong>步骤如下</strong>：</p>
+<ol>
+<li>把长度为n的输入序列分成两个长度为n/2的子序列。</li>
+<li>对这两个子序列分别进行归并排序。</li>
+<li>将两个排序好的子序列合并成一个最终的排序序列。</li>
+</ol>
+<p>归并排序的时间复杂度为 O(n log n)，空间复杂度为 O(n)。因为在合并阶段，需要额外的空间来临时存储合并后的结果。在实际应用中，归并排序适用于数据量大，且对稳定性有要求的情况。但由于其需要较大的额外空间，对于空间要求较高的场景则不太适合。</p>
+<p>一般说归并排序，我们都是指自顶向下的归并排序，也就是首先进行分解，然后再合并。还有一种自底向上的归并排序，是先进行两两合并，然后四四合并，然后八八合并，直到最后全部合并完成。自底向上的归并排序常用于链表排序，因为链表的特性更适合从局部开始合并。</p>
+<h2 id="基数排序">基数排序</h2>
+<p>基数排序（Radix sort）是一种<strong>非比较型整数排序算法</strong>，其思想是将整数按位数切割成不同的数字，然后按每个位数分别比较。</p>
+<p>基本步骤是：</p>
+<ol>
+<li>
+<p>从最低位开始，将所有数值进行分类，将其放入对应的桶中。</p>
+</li>
+<li>
+<p>收集所有桶中的数值，按照桶的顺序（一般从0到9）将数值一次放回原来的序列中。</p>
+</li>
+<li>
+<p>对下一个较高的位数进行1和2的步骤，直到所有的位数都被分类过。</p>
+</li>
+</ol>
+<p>这种方法对于位数较少的数值排序效果非常好，特别是对于非负整数。其时间复杂度在最坏情况下为 O(nk)，其中 n 是输入的数值数量，k 是数值的最大位数。然而，这种方法对于位数较多或数值范围较大的数值，效率并不是很高，因为 k 会很大。而且这种方法只适用于整数排序，对于浮点数则需要额外的处理方法。</p>
+<p><strong>基数排序是稳定的</strong>，也就是说，对于相等的元素，我们可以得到它们的原始相对顺序。另外，基数排序的过程是线性的，不需要比较操作。</p>
+<h2 id="外部排序">外部排序</h2>
+<p>外部排序是处理大数据量排序的一种方式，当要排序的数据无法全部加载到内存中时，我们需要使用到外部排序。外部排序最常见的算法是多路归并排序，其基本思想是分阶段进行。</p>
+<p>在外部排序中，常常采用的是一种“排序-归并”的策略：</p>
+<ol>
+<li>
+<p><strong>排序阶段</strong>：将大文件划分为n个能加载到内存中的小文件，然后分别加载到内存中进行排序（使用任意内部排序算法，比如快速排序），最后将排序好的小文件写回磁盘。</p>
+</li>
+<li>
+<p><strong>归并阶段</strong>：将小文件合并为一个有序的大文件。因为每个小文件已经是有序的，我们可以对这些小文件进行归并排序。由于文件数量可能非常大，以至于无法全部加载到内存中，我们可以采用<strong>多路归并排序</strong>的方式。</p>
+</li>
+</ol>
+<p>在多路归并排序中，首先采用归并的方式将小文件k路合并，得到n/k个新的小文件；然后再对新的小文件进行k路归并，如此循环下去，直到所有的小文件全部归并为一个大文件。</p>
+<p>这个过程中，会用到一个最小堆来维护当前归并段中的最小值，每次从堆中取出最小值，并将该值所在文件的下一个值（如果有的话）加入堆中。通过这种方式，我们可以一次从所有文件中找出最小值，这样就能保证归并出来的大文件是有序的。(这个是我个人的想法, 但是书上是用的败者树,但是也都是为了最快选出最小值)</p>
+<p>外部排序的主要瓶颈在于磁盘的I/O操作，因此在实际操作中，会采用各种手段来优化I/O操作，比如使用缓冲区，一次读写多个数据等。</p>
+<h3 id="败者树">败者树</h3>
+<p>败者树是一种特殊的树形数据结构，常用于实现多路归并排序。它的名字“败者树”来源于其构建方式：在一次比较中，“胜利”的节点提升至上一层，而“失败”的节点留在原地。换句话说，这棵树的“根”实际上保存的是“败者”。</p>
+<p>具体来说，败者树是一种二叉树，树中每个节点保存两个信息：节点对应的值，以及一个指向其“败者”的指针。当我们要从多个有序队列中选择最小的元素时，我们只需要比较树的叶节点，然后按照一种特殊的方式更新树的内部节点。这种方式保证了树根处总是当前所有叶节点中的最小值。</p>
+<p>下面是构建和使用败者树的一般步骤：</p>
+<ol>
+<li>
+<p><strong>初始化</strong>：首先，将所有队列的第一个元素作为叶节点，构建一棵完全二叉树。每个内部节点保存其两个子节点中较大的一个元素，并保留一个指向较小元素的“败者”指针。</p>
+</li>
+<li>
+<p><strong>寻找最小元素</strong>：由于根节点保存的是所有叶节点中的最小值，我们直接从根节点获取这个最小值。</p>
+</li>
+<li>
+<p><strong>更新败者树</strong>：在从败者树中取出最小值后，我们需要从相应的队列中取出下一个元素，然后将这个新元素和败者树中的现有元素进行比较，更新败者树的结构。这个更新过程从叶节点开始，向上至根节点。  更新过程是:  将新元素与父节点比较, 更新败者,  然后拿胜者继续向上比较直到根节点, 此时将根节点更新为胜者</p>
+</li>
+<li>
+<p><strong>重复步骤2和3</strong>，直到所有的元素都被处理完。</p>
+</li>
+</ol>
+<p>通过这种方式，败者树能够在O(log n)的时间复杂度内，从多个有序队列中选取最小的元素，这使得它在实现多路归并排序时非常有用。</p>
+<p>疑惑:  为什么沿着一条路径向上就能更新出胜者?</p>
+<p><strong>因为每个结点存放虽然是败者,  但是它是左右子树中的一颗的最胜者,  所以, 一路向上比较就能得到最胜者,  可以这样理解,  第二名是第一名的败者,  但他是第三名的胜者啊</strong>,  如果更新了一个结点,  他先跟父节点也就是败者结点比较, 如果它失败了, 就让这个败者再向上挑战, 然后更新当前败者,  如果胜了, 就它继续向上比较,  这样直到根节点一定能得出胜者</p>
+<h3 id="置换-选择排序-生成初始归并段-有序">置换-选择排序(生成初始归并段(有序))</h3>
+<p>置换-选择排序是一种外部排序算法，专门针对内存空间不足，只能将部分数据加载到内存中的情况。置换-选择排序基于内存和磁盘的交互来进行数据排序。</p>
+<p>这个算法的步骤如下：</p>
+<ol>
+<li>
+<p><strong>初始化</strong>：选择内存中的第一个记录作为初始的最小记录。</p>
+</li>
+<li>
+<p><strong>选择过程</strong>：在输入的剩余记录中选出关键字最小的记录。</p>
+</li>
+<li>
+<p>如果这个最小记录的关键字大于内存中最小记录的关键字，那么将其和内存中的当前记录（即之前的最小记录）进行交换，并且更新内存中的最小记录。这个步骤被称为<strong>置换</strong>。</p>
+</li>
+<li>
+<p>如果这个最小记录的关键字小于内存中最小记录的关键字，那么将其放入一个称为“败者树”的内存结构中。</p>
+</li>
+<li>
+<p>重复步骤2-4，直到内存中的所有记录都被输出为一个有序的序列。<strong>这个序列被称为一个“初始归并段</strong>”。</p>
+</li>
+<li>
+<p>重复步骤1-5，直到所有的输入记录都被输出到若干个初始归并段。</p>
+</li>
+<li>
+<p>使用合并排序（如最佳归并树或K路归并等方法）将这些初始归并段合并成一个完全有序的序列。</p>
+</li>
+</ol>
+<p>整个过程中，通过选取剩余记录中的最小值，并且只有在其大于内存中的当前最小记录时才进行置换，<strong>我们能够最大程度地利用内存空间，生成尽可能长的初始归并段，这有助于减少后续的归并操作，提高排序效率。</strong></p>
+<p>值得注意的是，这个算法并非内部排序算法，而是针对外部存储（如磁盘）设计的排序算法。对于可以完全加载到内存中的数据，通常使用其他的内部排序算法会更高效。</p>
+<h3 id="最佳归并树">最佳归并树</h3>
+<p>最佳归并树是一种应用于外部排序和文件的多路归并等问题的数据结构。<strong>它的目标是最小化所有归并操作的总开销</strong>。这种适用于归并段中元素个数不同  也就是相当于多路哈夫曼树</p>
+<p>构造最佳归并树的步骤大致如下：</p>
+<ol>
+<li>
+<p>首先，我们要对所有待归并的文件（或者其他类型的数据集）进行评估，确定它们的大小或者说归并开销（通常用一些数值来表示）。</p>
+</li>
+<li>
+<p>然后，我们以这些开销作为叶节点，开始构建一个多叉（例如k叉）树。这个树最初只有叶节点，没有内部节点。</p>
+</li>
+<li>
+<p><strong>如果叶节点数合成不足以生成完全k叉树,我们需要添加虚拟结点</strong>   对于完全k叉树有   n0 = (k-1)nk + 1 所以 nk = (n0-1)/(k-1) 因此我们只需要看 u = (n0-1)%(k-1)  如果u是0那么就是满足的, 如果不是0  就需要补充  k-1-u个虚拟0结点</p>
+</li>
+<li>
+<p>在每一步中，我们从所有的叶节点中选择k个权值最小的节点，然后将它们归并为一个新的内部节点。这个内部节点的权值等于这k个叶节点的权值之和。</p>
+</li>
+<li>
+<p>我们将这k个叶节点从树中移除，并把新的内部节点加入到树中。</p>
+</li>
+<li>
+<p>我们重复上述过程，直到树中只剩下一个节点。这个节点就是我们要找的最佳归并树的根节点。</p>
+</li>
+</ol>
+<p>在最佳归并树中，权值最小的文件总是最先被归并，这就保证了总的归并开销最小。虚拟节点的存在则确保了我们可以构造出完全k叉树，而且不会对结果产生任何影响。</p>
+<h2 id="做题">做题</h2>
+<ul>
+<li>比较排序比较次数最少为  2^t &gt;= n!  其中 t为比较次数</li>
+<li>外部排序总时间 = 初始归并段时间(使用内部排序对每段排序)  +  外存读写时间  +  内部归并时间</li>
+<li>在外部排序中  k路归并的树是一颗严格k叉树,  因此  h-1 = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><msub><mi>g</mi><mi>k</mi></msub><mi>r</mi></mrow><annotation encoding="application/x-tex">log_kr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>(向上取整) = 归并趟数,   由于每次都需要对这整个文件进行读写,  因此每趟归并i/o读写次数是不变的,  我们要注重减少归并趟数,  可以通过增加归并路数k和减少初始归并段数r</li>
+<li>归并路数为k, 初始归并段数为r, n为每趟归并元素个数,  则s趟归并排序的比较次数  =  s (n-1) (k-1) = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><msub><mi>g</mi><mi>k</mi></msub><mi>r</mi></mrow><annotation encoding="application/x-tex">log_kr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>(向上取整)  (n-1)(k-1) = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>r</mi></mrow><annotation encoding="application/x-tex">log_2r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>(向上取整) (n-1)(k-1) / <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>k</mi></mrow><annotation encoding="application/x-tex">log_2k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>(向上取整)   可以看出如果一直增大k的话,  比较次数是在增加的, (k-1) / <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>k</mi></mrow><annotation encoding="application/x-tex">log_2k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>(向上取整)是k的增函数,   这种情况是因为k增加后导致了, 从k个归并段中选出一个元素的时间变慢了,  因此我们得优化算法, 使用败者树来得到元素, 就不需要k-1次 而是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>k</mi></mrow><annotation encoding="application/x-tex">log_2k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>(向上取整)次  此时比较次数 = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>r</mi></mrow><annotation encoding="application/x-tex">log_2r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>(向上取整) (n-1)      这样就与k无关了, 但是这不意味着k越大越好,  因为k越大,需要的缓冲区就越多,  当内存不够的时候, 也会使得内外存读写次数增加</li>
+<li>最佳归并树不同于归并树, 归并树的叶节点都在同一层,  而最佳归并树不是这样的,  当归并段个树相同的时候, 最佳归并树就跟普通归并树一样了,  对于最佳归并树 它是采用了哈夫曼树的思想,  让权值最小, 此时读写次数最少,   如果初始段个数不足以满足严格k叉树的要求, 我们需要补充虚拟段数, 即长度为0的段     判断准则为:  nk*(k-1) + 1= n0 =&gt; nk = (n0-1)/(k-1)  如果n0-1 % k-1 ==0 则说明满足, 否则就需要补充  (k-1) -  (n0-1 % k-1) 个0段</li>
+</ul>
+<h1>总结</h1>
+<h1>额外补充</h1>
+<h2 id="存储密度">存储密度</h2>
+<p>存储密度是衡量数据存储效率的一个重要指标，它表示数据元素值所占存储空间与数据结构总占用存储空间的比率。公式表达如下：</p>
+<p>存储密度 = <strong>数据元素值所占存储空间 / 数据结构总占用存储空间</strong></p>
+<p>数据元素值所占存储空间是指实际存储数据元素值所需的空间，而数据结构总占用存储空间则是包括存储数据元素值、元素之间的关系以及其他信息所需的全部空间。</p>
+<p>存储密度的值介于0和1之间，值越接近1，表示存储利用率越高，空间效率越高。反之，值越接近0，表示存储利用率越低，空间效率越低。</p>
+<p>例如，在顺序存储结构中，只需要存储数据元素本身，没有额外的空间需求，因此存储密度接近或等于1。<strong>而在链式存储结构中，除了存储数据元素本身，还需要额外的空间来存储指向下一元素的指针，因此其存储密度一般小于1。</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://djmnb.github.io">戴晶明</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://djmnb.github.io/2023/06/27/%E8%80%83%E7%A0%94/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">https://djmnb.github.io/2023/06/27/%E8%80%83%E7%A0%94/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://djmnb.github.io" target="_blank">戴晶明的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9C%80%E8%A6%81%E5%A4%8D%E4%B9%A0/">需要复习</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></div><div class="post_share"><div class="social-share" data-image="/img/site/touxiang.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/27/%E8%80%83%E7%A0%94/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">操作系统</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/27/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">计算机网络</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/06/12/C%E5%92%8CC++/MFC/" title="MFC学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-12</div><div class="title">MFC学习</div></div></a></div><div><a href="/2023/06/22/C%E5%92%8CC++/c++/" title="c++"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-22</div><div class="title">c++</div></div></a></div><div><a href="/2023/06/12/C%E5%92%8CC++/c%E8%AF%AD%E8%A8%80/" title="c语言学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-12</div><div class="title">c语言学习</div></div></a></div><div><a href="/2023/06/27/English/%E8%AF%AD%E6%B3%95/" title="考研英语语法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-27</div><div class="title">考研英语语法</div></div></a></div><div><a href="/2022/11/25/git/git%E6%80%BB%E7%BB%93/" title="git"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-25</div><div class="title">git</div></div></a></div><div><a href="/2024/09/19/java/thinking%20in%20java/" title="thinking in java"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-19</div><div class="title">thinking in java</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/site/touxiang.gif" onerror="this.onerror=null;this.src='/404.html'" alt="avatar"/></div><div class="author-info__name">戴晶明</div><div class="author-info__description">不积跬步,无以至千里</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="/img/site/weixin.jpg" target="_blank" title="WeChat"><i class="fab fa-weixin"></i></a><a class="social-icon" href="/img/site/qq.jpg" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎光临</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%89%E8%A6%81%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">数据结构的三要性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">2.3.</span> <span class="toc-text">时间复杂度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">2.4.</span> <span class="toc-text">空间复杂度</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">线性表(有序表)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8"><span class="toc-number">3.1.</span> <span class="toc-text">顺序表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8"><span class="toc-number">3.2.</span> <span class="toc-text">链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%B4%E7%BB%93%E7%82%B9"><span class="toc-number">3.2.1.</span> <span class="toc-text">头结点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%B4%E6%8F%92%E6%B3%95-%E5%92%8C-%E5%B0%BE%E6%8F%92%E6%B3%95"><span class="toc-number">3.2.2.</span> <span class="toc-text">头插法 和 尾插法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8"><span class="toc-number">3.3.</span> <span class="toc-text">循环链表</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">栈 队列  数组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">4.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88"><span class="toc-number">4.2.</span> <span class="toc-text">栈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">4.2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.2.2.</span> <span class="toc-text">实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.2.2.1.</span> <span class="toc-text">顺序表实现:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0-%E4%B8%8D%E5%B8%A6%E5%A4%B4%E7%BB%93%E7%82%B9"><span class="toc-number">4.2.2.2.</span> <span class="toc-text">单向链表实现(不带头结点):</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E6%A0%88"><span class="toc-number">4.2.3.</span> <span class="toc-text">共享栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9A%E9%A2%98%E6%96%B9%E6%B3%95"><span class="toc-number">4.2.4.</span> <span class="toc-text">做题方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%9F%E5%88%97"><span class="toc-number">4.3.</span> <span class="toc-text">队列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.3.1.</span> <span class="toc-text">实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8"><span class="toc-number">4.3.1.1.</span> <span class="toc-text">顺序表:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B%E9%A1%BA%E5%BA%8F%E8%A1%A8%E4%B8%BA%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97"><span class="toc-number">4.3.1.2.</span> <span class="toc-text">改进顺序表为循环队列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8"><span class="toc-number">4.3.1.3.</span> <span class="toc-text">链表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97"><span class="toc-number">4.3.2.</span> <span class="toc-text">双端队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9A%E9%A2%98%E6%96%B9%E6%B3%95"><span class="toc-number">4.3.3.</span> <span class="toc-text">做题方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">4.4.</span> <span class="toc-text">栈和队列的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D"><span class="toc-number">4.4.1.</span> <span class="toc-text">括号匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC"><span class="toc-number">4.4.2.</span> <span class="toc-text">表达式求值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92"><span class="toc-number">4.4.3.</span> <span class="toc-text">递归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%9F%E5%88%97%E5%9C%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">4.4.4.</span> <span class="toc-text">队列在计算机系统中的应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%92%8C%E7%89%B9%E6%AE%8A%E7%9F%A9%E9%98%B5"><span class="toc-number">4.5.</span> <span class="toc-text">数组和特殊矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84"><span class="toc-number">4.5.1.</span> <span class="toc-text">数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E7%9F%A9%E9%98%B5%E7%9A%84%E5%8E%8B%E7%BC%A9"><span class="toc-number">4.5.2.</span> <span class="toc-text">特殊矩阵的压缩</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E7%9F%A9%E9%98%B5"><span class="toc-number">4.5.2.1.</span> <span class="toc-text">对称矩阵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E8%A7%92%E7%9F%A9%E9%98%B5"><span class="toc-number">4.5.2.2.</span> <span class="toc-text">三角矩阵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E5%AF%B9%E8%A7%92%E7%9F%A9%E9%98%B5"><span class="toc-number">4.5.2.3.</span> <span class="toc-text">三对角矩阵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5"><span class="toc-number">4.5.2.4.</span> <span class="toc-text">稀疏矩阵</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.5.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">5.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">5.2.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%B2%E7%9A%84%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D"><span class="toc-number">5.3.</span> <span class="toc-text">串的模式匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9A%B4%E5%8A%9B%E5%8C%B9%E9%85%8D"><span class="toc-number">5.3.1.</span> <span class="toc-text">暴力匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kmp%E7%AE%97%E6%B3%95"><span class="toc-number">5.3.2.</span> <span class="toc-text">kmp算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#next-%E6%95%B0%E7%BB%84"><span class="toc-number">5.3.2.1.</span> <span class="toc-text">next 数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95"><span class="toc-number">5.3.2.2.</span> <span class="toc-text">匹配算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#next-%E6%95%B0%E7%BB%84%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-number">5.3.2.3.</span> <span class="toc-text">next 数组的优化</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">树与二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">6.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">6.2.</span> <span class="toc-text">树的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%91%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="toc-number">6.2.1.</span> <span class="toc-text">树的性质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">6.3.</span> <span class="toc-text">二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E7%9A%84%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">6.3.1.</span> <span class="toc-text">特殊的二叉树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="toc-number">6.3.2.</span> <span class="toc-text">二叉树的性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%8E%E5%BA%A6%E4%B8%BA2%E7%9A%84%E6%9C%89%E5%BA%8F%E6%A0%91%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">6.3.3.</span> <span class="toc-text">二叉树与度为2的有序树的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86"><span class="toc-number">6.4.</span> <span class="toc-text">二叉树的遍历</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86"><span class="toc-number">6.4.1.</span> <span class="toc-text">非递归遍历</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">6.4.2.</span> <span class="toc-text">遍历序列构造二叉树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">6.5.</span> <span class="toc-text">线索二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%91%E5%92%8C%E6%A3%AE%E6%9E%97"><span class="toc-number">6.6.</span> <span class="toc-text">树和森林</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%AE%E6%9E%97%E5%92%8C%E6%A0%91%E8%BD%AC%E6%88%90%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">6.6.1.</span> <span class="toc-text">森林和树转成二叉树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">6.7.</span> <span class="toc-text">树和二叉树的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91"><span class="toc-number">6.7.1.</span> <span class="toc-text">哈夫曼树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E6%9F%A5%E9%9B%86"><span class="toc-number">6.7.2.</span> <span class="toc-text">并查集</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E9%A2%98%E6%80%BB%E7%BB%93"><span class="toc-number">6.8.</span> <span class="toc-text">做题总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#none"><span class="toc-number">6.9.</span> <span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">7.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">7.2.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%9A%84%E5%AD%98%E5%82%A8"><span class="toc-number">7.3.</span> <span class="toc-text">图的存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%9A%84%E9%81%8D%E5%8E%86"><span class="toc-number">7.4.</span> <span class="toc-text">图的遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">7.5.</span> <span class="toc-text">图的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91"><span class="toc-number">7.5.1.</span> <span class="toc-text">最小生成树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84"><span class="toc-number">7.5.2.</span> <span class="toc-text">最短路径</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95-%E5%8D%95%E6%BA%90%E8%B7%AF%E5%BE%84"><span class="toc-number">7.5.2.1.</span> <span class="toc-text">迪杰斯特拉算法(单源路径)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#floyd%E7%AE%97%E6%B3%95%E6%B1%82%E5%90%84%E4%B8%AA%E9%A1%B6%E7%82%B9%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84"><span class="toc-number">7.5.2.2.</span> <span class="toc-text">Floyd算法求各个顶点最短路径</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F"><span class="toc-number">7.5.3.</span> <span class="toc-text">拓扑排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84"><span class="toc-number">7.5.4.</span> <span class="toc-text">关键路径</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E9%A2%98%E6%80%BB%E7%BB%93"><span class="toc-number">7.6.</span> <span class="toc-text">做题总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">查找</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">8.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E6%9F%A5%E6%89%BE"><span class="toc-number">8.2.</span> <span class="toc-text">顺序查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E6%9F%A5%E6%89%BE"><span class="toc-number">8.2.1.</span> <span class="toc-text">一般线性表的顺序查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E5%BA%8F%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E6%9F%A5%E6%89%BE"><span class="toc-number">8.2.2.</span> <span class="toc-text">有序表的顺序查找</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%98%E5%8D%8A%E6%9F%A5%E6%89%BE"><span class="toc-number">8.3.</span> <span class="toc-text">折半查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%9D%97%E6%9F%A5%E6%89%BE"><span class="toc-number">8.4.</span> <span class="toc-text">分块查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%91%E5%BD%A2%E6%9F%A5%E6%89%BE"><span class="toc-number">8.5.</span> <span class="toc-text">树形查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%8E%92%E5%BA%8F%E6%A0%91"><span class="toc-number">8.5.1.</span> <span class="toc-text">二叉排序树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">8.5.2.</span> <span class="toc-text">平衡二叉树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A2%E9%BB%91%E6%A0%91"><span class="toc-number">8.5.3.</span> <span class="toc-text">红黑树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E6%8F%92%E5%85%A5"><span class="toc-number">8.5.3.1.</span> <span class="toc-text">红黑树的插入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E5%88%A0%E9%99%A4"><span class="toc-number">8.5.3.2.</span> <span class="toc-text">红黑树的删除</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b%E6%A0%91%E5%92%8Cb-%E6%A0%91"><span class="toc-number">8.6.</span> <span class="toc-text">B树和B+树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%A3%E5%88%97%E8%A1%A8"><span class="toc-number">8.7.</span> <span class="toc-text">散列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E9%A2%98%E6%80%BB%E7%BB%93"><span class="toc-number">8.8.</span> <span class="toc-text">做题总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text">排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">9.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">9.2.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-number">9.3.</span> <span class="toc-text">插入排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F"><span class="toc-number">9.4.</span> <span class="toc-text">交换排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="toc-number">9.5.</span> <span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="toc-number">9.6.</span> <span class="toc-text">归并排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F"><span class="toc-number">9.7.</span> <span class="toc-text">基数排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E6%8E%92%E5%BA%8F"><span class="toc-number">9.8.</span> <span class="toc-text">外部排序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%A5%E8%80%85%E6%A0%91"><span class="toc-number">9.8.1.</span> <span class="toc-text">败者树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%AE%E6%8D%A2-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F-%E7%94%9F%E6%88%90%E5%88%9D%E5%A7%8B%E5%BD%92%E5%B9%B6%E6%AE%B5-%E6%9C%89%E5%BA%8F"><span class="toc-number">9.8.2.</span> <span class="toc-text">置换-选择排序(生成初始归并段(有序))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%BD%92%E5%B9%B6%E6%A0%91"><span class="toc-number">9.8.3.</span> <span class="toc-text">最佳归并树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E9%A2%98"><span class="toc-number">9.9.</span> <span class="toc-text">做题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">10.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">11.</span> <span class="toc-text">额外补充</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%AF%86%E5%BA%A6"><span class="toc-number">11.1.</span> <span class="toc-text">存储密度</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E9%9B%B6%E9%9B%B6%E6%95%A3%E6%95%A3/plantuml/" title="plantuml">plantuml</a><time datetime="2024-09-19T08:25:10.368Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AF%BB%E6%96%87%E7%8C%AE%E6%8C%87%E4%BB%A4/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.366Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%82%A1%E7%A5%A8/temp/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.365Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 戴晶明</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'BkV10wtzbo9nuKwtsBG04Idw-gzGzoHsz',
+      appKey: 'CLv4OkdYGyropWktyqSDf2af',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

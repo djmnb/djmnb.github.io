@@ -1,0 +1,1186 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>8086汇编学习 | 戴晶明的个人博客</title><meta name="author" content="戴晶明"><meta name="copyright" content="戴晶明"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言 在考研过程中好好学了一下计算机组成原理,  让我对底层这些东西产生了浓厚的兴趣,  因此就先学学基础汇编  本文章 是掺杂8086 和  x86一起总结的,  可能有些地方在8086里面不具备  基本信息  机器字长为 16位    存储字长为16位    地址线20根   数据线16根 由于机器字长只有16位,  地址线有20根,  计算物理地址需要特别处理  物理地址 &#x3D;  段地址*16">
+<meta property="og:type" content="article">
+<meta property="og:title" content="8086汇编学习">
+<meta property="og:url" content="https://djmnb.github.io/2023/09/15/%E6%B1%87%E7%BC%96/8086%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="戴晶明的个人博客">
+<meta property="og:description" content="前言 在考研过程中好好学了一下计算机组成原理,  让我对底层这些东西产生了浓厚的兴趣,  因此就先学学基础汇编  本文章 是掺杂8086 和  x86一起总结的,  可能有些地方在8086里面不具备  基本信息  机器字长为 16位    存储字长为16位    地址线20根   数据线16根 由于机器字长只有16位,  地址线有20根,  计算物理地址需要特别处理  物理地址 &#x3D;  段地址*16">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://djmnb.github.io/img/site/touxiang.gif">
+<meta property="article:published_time" content="2023-09-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-19T08:25:10.358Z">
+<meta property="article:author" content="戴晶明">
+<meta property="article:tag" content="汇编">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://djmnb.github.io/img/site/touxiang.gif"><link rel="shortcut icon" href="/img/site/icon.jfif"><link rel="canonical" href="https://djmnb.github.io/2023/09/15/%E6%B1%87%E7%BC%96/8086%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '8086汇编学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-19 16:25:10'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/site/touxiang.gif" onerror="onerror=null;src='/404.html'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: /img/site/beijing.jfif"><nav id="nav"><span id="blog-info"><a href="/" title="戴晶明的个人博客"><span class="site-name">戴晶明的个人博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">8086汇编学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-14T16:00:00.000Z" title="发表于 2023-09-15 00:00:00">2023-09-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-19T08:25:10.358Z" title="更新于 2024-09-19 16:25:10">2024-09-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>20分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="8086汇编学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>前言</h1>
+<p>在考研过程中好好学了一下计算机组成原理,  让我对底层这些东西产生了浓厚的兴趣,  因此就先学学基础汇编</p>
+<blockquote>
+<p>本文章 是掺杂8086 和  x86一起总结的,  可能有些地方在8086里面不具备</p>
+</blockquote>
+<h1>基本信息</h1>
+<ul>
+<li>机器字长为 16位    存储字长为16位    地址线20根   数据线16根</li>
+<li>由于机器字长只有16位,  地址线有20根,  计算物理地址需要特别处理  物理地址 =  段地址*16 + 段内地址    (物理地址表示不唯一)</li>
+<li>AX,BX,CX,DX  都是通用寄存器, 用来存放数据  段地址寄存器有: CS  DS ES SS  偏移地址寄存器有:  SP,BP,SI,DI,IP,BX</li>
+<li>CS:IP  指定下一条执行指令的位置,   SS:SP 指定栈顶位置 (进栈操作 SP-字节数  放入数据, 出栈操作 拿出数据 SP+数据字节数)  DS , ES是数据段位置</li>
+<li>数据在内存中都是小端存放</li>
+</ul>
+<h1>寄存器</h1>
+<p>下面是8086 CPU的主要寄存器及其英文全称和功能：</p>
+<ol>
+<li>
+<p><strong>AX (Accumulator Register)</strong>：累加寄存器。</p>
+<ul>
+<li>主要用于算数运算和数据传输。</li>
+</ul>
+</li>
+<li>
+<p><strong>BX (Base Register)</strong>：基址寄存器。</p>
+<ul>
+<li>除了可以用于算术运算外，它还经常用于地址运算。 <strong>默认使用ds作为段地址</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>CX (Count Register)</strong>：计数寄存器。</p>
+<ul>
+<li>通常用于循环计数。</li>
+</ul>
+</li>
+<li>
+<p><strong>DX (Data Register)</strong>：数据寄存器。</p>
+<ul>
+<li>用于算数运算和某些特殊指令，如某些I/O操作。</li>
+</ul>
+</li>
+<li>
+<p><strong>SI (Source Index)</strong>：源索引寄存器。 <strong>默认使用ds作为段地址</strong></p>
+<ul>
+<li>主要用于字符串操作，表示源字符串的地址。</li>
+</ul>
+</li>
+<li>
+<p><strong>DI (Destination Index)</strong>：目标索引寄存器。<strong>默认使用es作为段地址</strong></p>
+<ul>
+<li>主要用于字符串操作，表示目标字符串的地址。</li>
+</ul>
+</li>
+<li>
+<p><strong>BP (Base Pointer)</strong>：基指针寄存器。</p>
+<ul>
+<li>通常用于基于堆栈的参数和局部变量的地址引用。 <strong>默认使用 ss作为段地址</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>SP (Stack Pointer)</strong>：堆栈指针寄存器。</p>
+<ul>
+<li>始终指向堆栈的顶部，随着数据的压入和弹出而变化。</li>
+</ul>
+</li>
+</ol>
+<p>此外，8086还有段寄存器，用于段地址运算：</p>
+<ol>
+<li>
+<p><strong>CS (Code Segment)</strong>：代码段寄存器。</p>
+<ul>
+<li>指向当前执行代码的段。</li>
+</ul>
+</li>
+<li>
+<p><strong>DS (Data Segment)</strong>：数据段寄存器。</p>
+<ul>
+<li>用于大多数数据操作指令的默认段。</li>
+</ul>
+</li>
+<li>
+<p><strong>SS (Stack Segment)</strong>：堆栈段寄存器。</p>
+<ul>
+<li>指向堆栈的段。</li>
+</ul>
+</li>
+<li>
+<p><strong>ES (Extra Segment)</strong>：附加段寄存器。</p>
+<ul>
+<li>为某些字符串操作提供一个附加的段选择。</li>
+</ul>
+</li>
+</ol>
+<p>8086还有一个特殊的寄存器：</p>
+<ol>
+<li><strong>IP (Instruction Pointer)</strong>：指令指针。
+<ul>
+<li>与CS寄存器一起，CS:IP总是指向下一条要执行的指令。</li>
+</ul>
+</li>
+</ol>
+<p>以上列举的是8086微处理器的主要寄存器。这些寄存器为低级编程提供了大量的灵活性和功能。</p>
+<h2 id="标志位寄存器">标志位寄存器</h2>
+<p>下面是8086微处理器中标志位寄存器的总结，以及在DEBUG工具中显示的符号及其意义：</p>
+<ol>
+<li>
+<p><strong>CF (Carry Flag)</strong> - 表示进位或借位</p>
+<ul>
+<li>值: 0 或 1
+<ul>
+<li><code>0</code> (NC: No Carry) 表示没有进位</li>
+<li><code>1</code> (CY: Carry) 表示有进位</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>PF (Parity Flag)</strong> - 反映了结果字节中1的数量。</p>
+<ul>
+<li>值: 0 或 1
+<ul>
+<li><code>0</code> (PO: Parity Odd) 表示1的数量为奇数</li>
+<li><code>1</code> (PE: Parity Even) 表示1的数量为偶数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>AF (Auxiliary Carry Flag)</strong> - 在BCD（二进制编码十进制）运算中使用，当低4位产生进位或借位时设置。</p>
+<ul>
+<li>值: 0 或 1
+<ul>
+<li><code>0</code> (NA: No Auxiliary Carry) 表示低4位没有进位</li>
+<li><code>1</code> (AC: Auxiliary Carry) 表示低4位产生了进位</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>ZF (Zero Flag)</strong> - 如果最后一个操作的结果为零，则设置ZF。</p>
+<ul>
+<li>值: 0 或 1
+<ul>
+<li><code>0</code> (NZ: Not Zero) 表示结果不为零</li>
+<li><code>1</code> (ZR: Zero) 表示结果为零</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>SF (Sign Flag)</strong> - 反映了最后操作的结果的符号。</p>
+<ul>
+<li>值: 0 或 1
+<ul>
+<li><code>0</code> (PL: Positive) 表示结果为正数或零</li>
+<li><code>1</code> (NG: Negative) 表示结果为负数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>TF (Trap Flag)</strong> - 允许单步执行。</p>
+<ul>
+<li>值: 0 或 1
+<ul>
+<li><code>0</code> (NT: No Trap) 表示TF未被设置</li>
+<li><code>1</code> (TR: Trap) 表示TF被设置</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>IF (Interrupt Flag)</strong> - 控制外部中断的响应。</p>
+<ul>
+<li>值: 0 或 1
+<ul>
+<li><code>0</code> (DI: Disable Interrupts) 禁止中断</li>
+<li><code>1</code> (EI: Enable Interrupts) 允许中断</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>DF (Direction Flag)</strong> - 控制字符串操作的方向。</p>
+<ul>
+<li>值: 0 或 1
+<ul>
+<li><code>0</code> (UP: Increment) 字符串操作地址自增</li>
+<li><code>1</code> (DN: Decrement) 字符串操作地址自减</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>OF (Overflow Flag)</strong> - 在有符号运算中，如果结果超出了有符号数值范围，则设置OF。</p>
+<ul>
+<li>值: 0 或 1
+<ul>
+<li><code>0</code> (NV: No Overflow) 表示没有溢出</li>
+<li><code>1</code> (OV: Overflow) 表示有溢出</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>总的来说，ALU不是基于有符号和无符号数的概念来执行操作的。而是执行二进制运算，然后设置或清除相关标志以提供有关操作结果的信息。然后，程序员或编译器可以根据这些标志来解释和处理结果。</p>
+<h1>Debug的使用</h1>
+<p>通过debug 能够查看寄存器的内容, 以及内存的内容, 并且指令执行跟踪</p>
+<ol>
+<li><strong>A [address]</strong>: Assemble
+<ul>
+<li>用于在指定地址开始手动汇编代码。</li>
+<li>当你输入<code>A</code>然后按Enter，你可以开始输入汇编指令。</li>
+<li>使用空行结束汇编。</li>
+</ul>
+</li>
+<li><strong>D [range]</strong>: Dump
+<ul>
+<li>用于显示内存中的内容。</li>
+<li><code>D</code>后面可以跟一个地址范围，如<code>D 100 150</code>，表示显示从100到150的内存内容。</li>
+</ul>
+</li>
+<li><strong>E address [list]</strong>: Enter
+<ul>
+<li>用于修改指定地址的内存内容。</li>
+<li>例如，<code>E 100 90 91 92</code>会将地址100、101、102的内存值分别设为90、91、92。</li>
+<li>询问式更改 :  E 地址 空格继续,回车结束</li>
+</ul>
+</li>
+<li><strong>G [=address] [breakpoints]</strong>: Go
+<ul>
+<li>执行程序直到遇到指定的断点。</li>
+<li><code>G=100</code>表示从地址100开始执行。</li>
+</ul>
+</li>
+<li><strong>I port</strong>: Input
+<ul>
+<li>从指定的I/O端口读取值。</li>
+<li>例如，<code>I 60</code>会读取端口60的值。</li>
+</ul>
+</li>
+<li><strong>L range address</strong>: Load
+<ul>
+<li>从磁盘上的文件加载数据到指定地址的内存。</li>
+</ul>
+</li>
+<li><strong>N [filename]</strong>: Name
+<ul>
+<li>指定一个文件名，用于后续的读/写操作。</li>
+</ul>
+</li>
+<li><strong>R [register]</strong>: Register
+<ul>
+<li>查看或修改CPU寄存器的值。</li>
+<li>输入<code>R</code>会显示所有寄存器的值。<code>R AX</code>会显示AX寄存器的值，并允许你修改它。</li>
+</ul>
+</li>
+<li><strong>T [=address] [count]</strong>: Trace
+<ul>
+<li>单步执行指令。</li>
+<li><code>T=100 5</code>表示从地址100开始执行，并执行5条指令。</li>
+</ul>
+</li>
+<li><strong>U [range]</strong>: Unassemble
+<ul>
+<li>将指定内存地址的机器代码反汇编为汇编语言。</li>
+<li><code>U 100 150</code>表示将从100到150的地址反汇编。</li>
+</ul>
+</li>
+<li><strong>Q</strong>: Quit
+<ul>
+<li>退出DEBUG。</li>
+</ul>
+</li>
+</ol>
+<h1>指令</h1>
+<h2 id="数据传送指令">数据传送指令</h2>
+<ol>
+<li>
+<p><strong><code>MOV dest, src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：传送源操作数（src）的值到目标操作数（dest）。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>MOV AX, BX</code>：将BX寄存器的值复制到AX寄存器。</li>
+<li><code>MOV AL, [BX]</code>：将地址BX处的字节值复制到AL寄存器。</li>
+<li><code>MOV [BX], AL</code>：将AL的值存到地址BX处。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：不能直接在两个内存操作数之间进行数据传送。例如，<code>MOV [1000h], [2000h]</code> 是非法的。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>PUSH src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：将源操作数的值推送到堆栈顶部。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>PUSH AX</code>：将AX寄存器的内容推送到堆栈。</li>
+<li><code>PUSH DS</code>：将段寄存器DS的内容推送到堆栈。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：可以推送所有的16位寄存器和段寄存器，但不能直接推送8位寄存器和内存字节。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>POP dest</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：从堆栈顶部取一个值并放入目标操作数。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>POP BX</code>：从堆栈中弹出顶部值并放入BX寄存器。</li>
+<li><code>POP ES</code>：从堆栈中弹出顶部值并放入段寄存器ES。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：可以弹出到所有的16位寄存器和段寄存器，但不能直接弹出到8位寄存器和内存字节。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>LEA reg, mem</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：加载有效地址到指定的寄存器，不是传送内存处的数据，而是传送数据的地址。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>LEA AX, [BX+SI]</code>：将BX和SI的和（即它们表示的内存地址）加载到AX。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：通常用于地址计算，不改变内存内容。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>LDS reg, mem</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：加载指针到数据段（DS）和寄存器。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>LDS AX, [BX]</code>：将地址BX处的两个字作为AX的内容，接下来的两个字作为DS的内容。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：经常在准备进行内存访问之前使用。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>LES reg, mem</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：加载指针到额外段（ES）和寄存器。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>LES BX, [SI]</code>：将地址SI处的两个字作为BX的内容，接下来的两个字作为ES的内容。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：与LDS类似，但影响ES而不是DS。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>XCHG op1, op2</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：交换两个操作数的值。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>XCHG AX, BX</code>：交换AX和BX寄存器的内容。</li>
+<li><code>XCHG AL, [BX]</code>：交换AL和地址BX处的字节值。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：该指令可以用于任意寄存器对，也可以用于一个寄存器和一个内存位置。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>MOVSB</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：从源字符串位置（由DS:SI指定）传送一个字节到目标字符串位置（由ES:DI指定），并根据DF标志更新SI和DI。</li>
+<li>用法
+<ul>
+<li><code>MOVSB</code>：从DS:SI处复制一个字节到ES:DI处。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：如果DF=0，SI和DI都会递增；如果DF=1，SI和DI都会递减。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>MOVSW</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：从源字符串位置（由DS:SI指定）传送一个字（两个字节）到目标字符串位置（由ES:DI指定），并根据DF标志更新SI和DI。</li>
+<li>用法
+<ul>
+<li><code>MOVSW</code>：从DS:SI处复制一个字到ES:DI处。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：与<code>MOVSB</code>类似，但操作的单位是一个字而不是一个字节。</li>
+</ul>
+</li>
+</ol>
+<h2 id="算术指令">算术指令</h2>
+<p>当然可以，以下是8086中关于算术指令的详细总结：</p>
+<ol>
+<li>
+<p><strong><code>ADD dest, src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：将两个操作数相加并将结果存储在目标操作数中。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>ADD AX, BX</code>：将AX和BX的值相加，并将结果存放在AX中。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：可能会设置或清除AF、CF、OF、PF、SF和ZF标志。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>ADC dest, src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：将两个操作数与进位标志（CF）相加并将结果存储在目标操作数中。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>ADC AX, BX</code>：将AX、BX和CF的值相加，并将结果存放在AX中。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：这个指令在多字节或多字的加法操作中非常有用，其中一个字节或一个字的加法可能会影响到下一个字节或字的加法。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>SUB dest, src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：从目标操作数中减去源操作数，并将结果存放在目标操作数中。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>SUB AX, BX</code>：从AX的值中减去BX的值，并将结果存放在AX中。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：可能会设置或清除AF、CF、OF、PF、SF和ZF标志。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>SBB dest, src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：从目标操作数中减去源操作数和进位标志（CF）。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>SBB AX, BX</code>：从AX的值中减去BX和CF，并将结果存放在AX中。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：与ADC类似，SBB在多字节或多字的减法操作中很有用。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>MUL src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：无符号乘法。将AX与源操作数相乘。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>MUL BX</code>：如果源操作数是8位，结果将是16位，存放在AX中；如果源操作数是16位，结果将是32位，高16位存放在DX中，低16位存放在AX中。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：如果结果是16位数，则DX将被清零；如果结果是32位数，DX将包含高16位。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>IMUL src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：有符号乘法。将AX与源操作数相乘。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>IMUL BX</code>：与MUL类似，但考虑操作数的符号。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：与MUL不同，IMUL是用于有符号数的乘法。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>DIV src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：无符号除法。将DX:AX与源操作数相除。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>DIV BX</code>：如果源操作数是8位，那么AX将被视为被除数，结果的商将存放在AL中，余数将存放在AH中。如果源操作数是16位，则DX:AX将被视为被除数，结果的商将存放在AX中，余数将存放在DX中。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：除数不应为零。如果是，会触发一个除以零的中断。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>IDIV src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：有符号除法。将DX:AX与源操作数相除。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>IDIV BX</code>：与DIV类似，但考虑操作数的符号。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：与DIV不同，IDIV用于有符号数的除法。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>INC dest</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：将目标操作数增加1。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>INC AX</code>：将AX增加1。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：可能会设置或清除AF、OF、PF、SF和ZF标志，但不会影响CF标志。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>DEC dest</code></strong>:</p>
+<ul>
+<li>
+<p><strong>功能</strong>：将目标操作数减少1。</p>
+<ul>
+<li><strong>用法</strong>：
+<ul>
+<li><code>DEC AX</code>：将AX减少1。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>注意点</strong>：可能会设置或清除AF、OF、PF、SF和ZF标志，但不会影响CF标志。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>NEG dest</code></strong>:</p>
+<ul>
+<li>
+<p><strong>功能</strong>：求目标操作数的二进制补码。</p>
+<ul>
+<li><strong>用法</strong>：
+<ul>
+<li><code>NEG AX</code>：将AX的值替换为其二进制补码。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>注意点</strong>：如果操作数为0，则CF被清除；如果操作数不为0，则CF被设置。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>CMP dest, src</code></strong>:</p>
+<ul>
+<li>
+<p><strong>功能</strong>：比较两个操作数，实际上执行一个SUB操作但不保存结果，只设置标志。</p>
+<ul>
+<li><strong>用法</strong>：
+<ul>
+<li><code>CMP AX, BX</code>：比较AX和BX的值。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>注意点</strong>：可能会设置或清除AF、CF、OF、PF、SF和ZF标志。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>这些是8086的主要算术指令。每当执行算术指令时，都应该注意相关的标志，因为它们提供了关于操作结果的信息，如是否产生进位、溢出等。</p>
+<h2 id="逻辑指令">逻辑指令</h2>
+<ol>
+<li>
+<p><strong><code>AND dest, src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：执行位与操作。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>AND AX, BX</code>：将AX与BX执行按位与，并将结果存放在AX中。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：会设置或清除OF、CF、PF、SF、ZF标志。OF和CF始终被清零。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>OR dest, src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：执行位或操作。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>OR AX, BX</code>：将AX与BX执行按位或，并将结果存放在AX中。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：OF和CF标志始终被清零。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>XOR dest, src</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：执行位异或操作。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>XOR AX, BX</code>：将AX与BX执行按位异或，并将结果存放在AX中。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：当两个操作数相同时，结果为0。OF和CF标志始终被清零。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>NOT dest</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：求操作数的一元反码（按位取反）。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>NOT AX</code>：求AX的一元反码。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：此指令不影响标志。</li>
+</ul>
+</li>
+</ol>
+<h2 id="移位指令">移位指令</h2>
+<ol start="5">
+<li>
+<p><strong><code>SHL dest, count</code> 或 <code>SAL dest, count</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：将目标操作数向左移动指定的位数。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>SHL AX, 1</code>：将AX左移1位。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：移出的最后一位存储在CF中，最高位的空位被清零。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>SHR dest, count</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：将目标操作数向右移动指定的位数。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>SHR AX, 1</code>：将AX右移1位。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：移出的最后一位存储在CF中，最低位的空位被清零。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>SAR dest, count</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：算术右移，保持最高位不变。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>SAR AX, 1</code>：将AX算术右移1位。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：移出的最后一位存储在CF中。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>ROL dest, count</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：循环左移操作数。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>ROL AX, 1</code>：将AX循环左移1位。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：移出的最后一位存储在CF中，并从右边重新输入。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>ROR dest, count</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：循环右移操作数。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>ROR AX, 1</code>：将AX循环右移1位。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：移出的最后一位存储在CF中，并从左边重新输入。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>RCL dest, count</code></strong>:</p>
+<ul>
+<li>
+<p><strong>功能</strong>：带进位的循环左移。</p>
+<ul>
+<li><strong>用法</strong>：
+<ul>
+<li><code>RCL AX, 1</code>：将AX和CF一起循环左移1位。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>注意点</strong>：移出的最后一位存储在CF中。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>RCR dest, count</code></strong>:</p>
+<ul>
+<li>
+<p><strong>功能</strong>：带进位的循环右移。</p>
+<ul>
+<li><strong>用法</strong>：
+<ul>
+<li><code>RCR AX, 1</code>：将AX和CF一起循环右移1位。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>注意点</strong>：移出的最后一位存储在CF中。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="比较指令">比较指令</h2>
+<ol start="12">
+<li>
+<p><strong><code>TEST dest, src</code></strong>:</p>
+<ul>
+<li>
+<p><strong>功能</strong>：执行逻辑与操作，但结果不存储，仅用于设置标志。</p>
+<ul>
+<li><strong>用法</strong>：
+<ul>
+<li><code>TEST AX, BX</code>：将AX和BX进行逻辑与操作。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>注意点</strong>：此指令与AND类似，但不会存储结果。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="控制转移指令">控制转移指令</h2>
+<p>8086的控制转移指令可以分为三类：无条件跳转、条件跳转和循环控制。以下是它们的详细总结：</p>
+<h3 id="1-无条件跳转指令">1. 无条件跳转指令</h3>
+<ol>
+<li><strong><code>JMP destination</code></strong>:
+<ul>
+<li><strong>功能</strong>：跳转到指定的地址。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>JMP LABEL</code>：跳转到LABEL标签指定的地址。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：该跳转是无条件的，执行此指令后，总会跳转到指定的地址。</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-条件跳转指令">2. 条件跳转指令</h3>
+<p>这些指令基于标志寄存器中的某个或某些标志的状态来决定是否进行跳转。</p>
+<ol>
+<li>
+<p><strong><code>JE/JZ destination</code></strong> (Jump if Equal/Zero):</p>
+<ul>
+<li><strong>功能</strong>：如果ZF标志为1，则跳转。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>JE LABEL</code>：如果上一指令的结果为零（ZF=1），则跳转到LABEL。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>JNE/JNZ destination</code></strong> (Jump if Not Equal/Not Zero):</p>
+<ul>
+<li><strong>功能</strong>：如果ZF标志为0，则跳转。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>JNE LABEL</code>：如果上一指令的结果非零（ZF=0），则跳转到LABEL。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>JB/JNAE/JC destination</code></strong> (Jump if Below/Not Above or Equal/Carry):</p>
+<ul>
+<li><strong>功能</strong>：如果CF标志为1，则跳转。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>JB LABEL</code>：如果上一指令产生了进位（CF=1），则跳转。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>JAE/JNB/JNC destination</code></strong> (Jump if Above or Equal/Not Below/No Carry):</p>
+<ul>
+<li><strong>功能</strong>：如果CF标志为0，则跳转。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>JAE LABEL</code>：如果上一指令没有产生进位（CF=0），则跳转。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>… 以此类推。8086有一系列的条件跳转指令，如：<code>JL</code>, <code>JGE</code>, <code>JO</code>, <code>JNO</code>, <code>JP</code>, <code>JNP</code>, <code>JS</code>, <code>JNS</code> 等，它们基于OF、SF、ZF、PF和CF的组合来决定是否跳转。</p>
+<h3 id="3-循环控制指令">3. 循环控制指令</h3>
+<ol>
+<li>
+<p><strong><code>LOOP destination</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>：递减CX，并且如果CX不为0，则跳转。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>LOOP LABEL</code>：减少CX的值。如果CX不为0，则跳转到LABEL。</li>
+</ul>
+</li>
+<li><strong>注意点</strong>：无论是否跳转，CX都会递减。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>LOOPE/LOOPZ destination</code></strong> (Loop while Equal/Zero):</p>
+<ul>
+<li><strong>功能</strong>：递减CX，如果CX不为0且ZF为1，则跳转。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>LOOPE LABEL</code>：如果上一指令的结果为零且CX不为0，则跳转。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>LOOPNE/LOOPNZ destination</code></strong> (Loop while Not Equal/Not Zero):</p>
+<ul>
+<li><strong>功能</strong>：递减CX，如果CX不为0且ZF为0，则跳转。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>LOOPNE LABEL</code>：如果上一指令的结果非零且CX不为0，则跳转。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>这些指令都依赖于特定的条件。在使用这些指令时，程序员需要确保在跳转之前设置了相应的条件（通常是上一个算术或逻辑指令的结果）。而循环控制指令则常常与算术指令结合使用，以创建计数器控制的循环。</p>
+<h2 id="标志操作指令">标志操作指令</h2>
+<p>8086的标志操作指令主要用于操作或测试标志寄存器（Flags Register）中的特定标志。以下是相关的标志操作指令的详细总结：</p>
+<h3 id="1-clc">1. <strong>CLC</strong></h3>
+<ul>
+<li><strong>功能</strong>：清除进位标志（Carry Flag, CF）。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>CLC</code></li>
+</ul>
+</li>
+<li><strong>注意点</strong>：此指令将CF置为0，不影响其他标志。</li>
+</ul>
+<h3 id="2-cmc">2. <strong>CMC</strong></h3>
+<ul>
+<li><strong>功能</strong>：反转进位标志（Complement Carry Flag）。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>CMC</code></li>
+</ul>
+</li>
+<li><strong>注意点</strong>：如果CF原来是1，则将其变为0；如果原来是0，则将其变为1。</li>
+</ul>
+<h3 id="3-stc">3. <strong>STC</strong></h3>
+<ul>
+<li><strong>功能</strong>：设置进位标志。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>STC</code></li>
+</ul>
+</li>
+<li><strong>注意点</strong>：此指令将CF置为1，不影响其他标志。</li>
+</ul>
+<h3 id="4-cld">4. <strong>CLD</strong></h3>
+<ul>
+<li><strong>功能</strong>：清除方向标志（Direction Flag, DF）。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>CLD</code></li>
+</ul>
+</li>
+<li><strong>注意点</strong>：此指令将DF置为0，这意味着在使用字符串指令时，SI和DI寄存器会递增。</li>
+</ul>
+<h3 id="5-std">5. <strong>STD</strong></h3>
+<ul>
+<li><strong>功能</strong>：设置方向标志。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>STD</code></li>
+</ul>
+</li>
+<li><strong>注意点</strong>：此指令将DF置为1，这意味着在使用字符串指令时，SI和DI寄存器会递减。</li>
+</ul>
+<h3 id="6-cli">6. <strong>CLI</strong></h3>
+<ul>
+<li><strong>功能</strong>：清除中断标志（Interrupt Flag, IF）。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>CLI</code></li>
+</ul>
+</li>
+<li><strong>注意点</strong>：此指令将IF置为0，禁止外部中断。必须谨慎使用以避免禁止长时间的中断。</li>
+</ul>
+<h3 id="7-sti">7. <strong>STI</strong></h3>
+<ul>
+<li><strong>功能</strong>：设置中断标志。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>STI</code></li>
+</ul>
+</li>
+<li><strong>注意点</strong>：此指令将IF置为1，允许外部中断。</li>
+</ul>
+<h3 id="8-lahf">8. <strong>LAHF</strong></h3>
+<ul>
+<li><strong>功能</strong>：加载标志到AH寄存器。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>LAHF</code></li>
+</ul>
+</li>
+<li><strong>注意点</strong>：此指令将当前的标志（SF, ZF, AF, PF, CF）的值加载到AH寄存器中。</li>
+</ul>
+<h3 id="9-sahf">9. <strong>SAHF</strong></h3>
+<ul>
+<li><strong>功能</strong>：将AH寄存器的内容存储到标志寄存器。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>SAHF</code></li>
+</ul>
+</li>
+<li><strong>注意点</strong>：此指令将AH寄存器中的值加载到标志寄存器中的标志（SF, ZF, AF, PF, CF）。</li>
+</ul>
+<h3 id="10-pushf">10. <strong>PUSHF</strong></h3>
+<ul>
+<li><strong>功能</strong>：将标志寄存器的内容压入堆栈。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>PUSHF</code></li>
+</ul>
+</li>
+<li><strong>注意点</strong>：标志寄存器的当前值被压入堆栈中。</li>
+</ul>
+<h3 id="11-popf">11. <strong>POPF</strong></h3>
+<ul>
+<li><strong>功能</strong>：从堆栈中弹出值到标志寄存器。</li>
+<li><strong>用法</strong>：
+<ul>
+<li><code>POPF</code></li>
+</ul>
+</li>
+<li><strong>注意点</strong>：堆栈的顶部值被加载到标志寄存器中。</li>
+</ul>
+<p>这些标志操作指令允许程序员直接控制或测试标志寄存器中的标志。当使用这些指令时，需要特别注意确保不会不小心改变无意中改变的标志，因为这可能会影响程序的其他部分。</p>
+<h1>中断</h1>
+<p>8086 微处理器中的中断系统是该处理器响应外部和内部事件的一种机制。在8086中，中断可以分为两类：硬件中断和软件中断。</p>
+<ol>
+<li>
+<p><strong>硬件中断</strong>：</p>
+<ul>
+<li><strong>外部中断</strong>：由外部事件触发，例如外部设备发出的请求。这些中断通常用于设备驱动程序中，使得微处理器能够响应外部设备的需求。</li>
+<li><strong>NMI（非屏蔽中断）</strong>：是一个特殊的外部中断，它不能被程序禁用。在8086中，NMI由特定的硬件条件触发，如电源故障。</li>
+<li><strong>INTR（可屏蔽中断）</strong>：不同于NMI，INTR是可以被程序通过CLI指令禁用或通过STI指令启用的。</li>
+</ul>
+</li>
+<li>
+<p><strong>软件中断</strong>：</p>
+<ul>
+<li>通过指令（如<code>INT</code>指令）明确生成。在8086中，软件中断常常用于系统调用或其他高级功能，例如BIOS中的服务调用。</li>
+</ul>
+</li>
+</ol>
+<p><strong>中断过程</strong>：<br>
+当中断发生时，8086会完成当前的指令，然后执行以下动作：</p>
+<ul>
+<li>当前的标志寄存器、CS和IP被推送到堆栈中。</li>
+<li>根据中断类型和<strong>中断号</strong>，从中断向量表（IVT）中查找中断处理程序的地址。<strong>IVT位于物理地址0000:0000到0000:03FF的内存区域，其中每个中断使用一个4字节的条目（2字节的偏移量和2字节的段地址）</strong>。</li>
+<li>微处理器从IVT中取得中断处理程序的段地址和偏移量，然后跳转到该地址以执行中断处理程序。</li>
+<li>中断处理程序执行结束后，通常使用<code>IRET</code>指令返回到被中断的程序。</li>
+</ul>
+<p><strong>总之</strong>，8086的中断系统为微处理器提供了与外部设备交互和执行系统级服务的机制。</p>
+<h1>补充</h1>
+<h2 id="cmos-ram">CMOS RAM</h2>
+<p>访问的时候直接使用这个数就行,   比如 0,2,4,6,8,  拿出来的数据都是一个字节</p>
+<ul>
+<li>00h: 存储秒信息</li>
+<li>02h: 存储分钟信息</li>
+<li>04h: 存储小时信息</li>
+<li>06h: 存储一周中的某一天的信息</li>
+<li>07h: 存储月中的某一天的信息</li>
+<li>08h: 存储月份信息</li>
+<li>09h: 存储年份信息</li>
+</ul>
+<h2 id="偏移地址寄存器与段地址寄存器的默认对应">偏移地址寄存器与段地址寄存器的默认对应</h2>
+<p>在x86架构中，段寄存器和偏移寄存器一起为我们提供了物理地址。在实模式下（比如早期的DOS系统），通过段地址和偏移地址的组合，我们得到物理地址：[ \text{物理地址} = (\text{段地址} \times 16) + \text{偏移地址} ]</p>
+<p>在实模式下，不同的指令或操作经常有一个默认的段寄存器。以下是x86架构中各偏移寄存器默认对应的段寄存器：</p>
+<ol>
+<li><strong>BX、SI、DI</strong>：默认与<strong>DS</strong>（数据段寄存器）相关联。</li>
+<li><strong>SP、BP</strong>：默认与<strong>SS</strong>（堆栈段寄存器）相关联。</li>
+<li><strong>IP</strong>：默认与<strong>CS</strong>（代码段寄存器）相关联。IP是指令指针寄存器，用于指向当前执行的指令。</li>
+</ol>
+<p>但是，这些默认的段：偏移关系可以通过使用段重写前缀来更改。例如，你可以使用<code>ES:</code>前缀来明确地指定使用<code>ES</code>段寄存器与<code>DI</code>或其他寄存器组合。</p>
+<p>在受保护模式和长模式中（例如，现代32位和64位操作系统中），段寄存器的行为和意义与实模式中有所不同。在这些模式下，段寄存器主要是用于访问描述符表，而不是简单地提供物理地址的基地址。但了解实模式下的默认段：偏移组合对于理解x86架构的历史和基本概念很有帮助。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://djmnb.github.io">戴晶明</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://djmnb.github.io/2023/09/15/%E6%B1%87%E7%BC%96/8086%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0/">https://djmnb.github.io/2023/09/15/%E6%B1%87%E7%BC%96/8086%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://djmnb.github.io" target="_blank">戴晶明的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></div><div class="post_share"><div class="social-share" data-image="/img/site/touxiang.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/09/16/English/%E8%AF%8D%E7%BB%84%E7%A7%AF%E7%B4%AF/" title="英语短语积累"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">英语短语积累</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/28/%E6%95%B0%E5%AD%A6/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" title="高等数学"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">高等数学</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/site/touxiang.gif" onerror="this.onerror=null;this.src='/404.html'" alt="avatar"/></div><div class="author-info__name">戴晶明</div><div class="author-info__description">不积跬步,无以至千里</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="/img/site/weixin.jpg" target="_blank" title="WeChat"><i class="fab fa-weixin"></i></a><a class="social-icon" href="/img/site/qq.jpg" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎光临</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%BF%97%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">标志位寄存器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">Debug的使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4"><span class="toc-number">5.1.</span> <span class="toc-text">数据传送指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E6%8C%87%E4%BB%A4"><span class="toc-number">5.2.</span> <span class="toc-text">算术指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%8C%87%E4%BB%A4"><span class="toc-number">5.3.</span> <span class="toc-text">逻辑指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E4%BD%8D%E6%8C%87%E4%BB%A4"><span class="toc-number">5.4.</span> <span class="toc-text">移位指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E6%8C%87%E4%BB%A4"><span class="toc-number">5.5.</span> <span class="toc-text">比较指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4"><span class="toc-number">5.6.</span> <span class="toc-text">控制转移指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%97%A0%E6%9D%A1%E4%BB%B6%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="toc-number">5.6.1.</span> <span class="toc-text">1. 无条件跳转指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9D%A1%E4%BB%B6%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="toc-number">5.6.2.</span> <span class="toc-text">2. 条件跳转指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6%E6%8C%87%E4%BB%A4"><span class="toc-number">5.6.3.</span> <span class="toc-text">3. 循环控制指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%BF%97%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4"><span class="toc-number">5.7.</span> <span class="toc-text">标志操作指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-clc"><span class="toc-number">5.7.1.</span> <span class="toc-text">1. CLC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-cmc"><span class="toc-number">5.7.2.</span> <span class="toc-text">2. CMC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-stc"><span class="toc-number">5.7.3.</span> <span class="toc-text">3. STC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-cld"><span class="toc-number">5.7.4.</span> <span class="toc-text">4. CLD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-std"><span class="toc-number">5.7.5.</span> <span class="toc-text">5. STD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-cli"><span class="toc-number">5.7.6.</span> <span class="toc-text">6. CLI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-sti"><span class="toc-number">5.7.7.</span> <span class="toc-text">7. STI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-lahf"><span class="toc-number">5.7.8.</span> <span class="toc-text">8. LAHF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-sahf"><span class="toc-number">5.7.9.</span> <span class="toc-text">9. SAHF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-pushf"><span class="toc-number">5.7.10.</span> <span class="toc-text">10. PUSHF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-popf"><span class="toc-number">5.7.11.</span> <span class="toc-text">11. POPF</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">中断</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">补充</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cmos-ram"><span class="toc-number">7.1.</span> <span class="toc-text">CMOS RAM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%8E%E6%AE%B5%E5%9C%B0%E5%9D%80%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E9%BB%98%E8%AE%A4%E5%AF%B9%E5%BA%94"><span class="toc-number">7.2.</span> <span class="toc-text">偏移地址寄存器与段地址寄存器的默认对应</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E9%9B%B6%E9%9B%B6%E6%95%A3%E6%95%A3/plantuml/" title="plantuml">plantuml</a><time datetime="2024-09-19T08:25:10.368Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AF%BB%E6%96%87%E7%8C%AE%E6%8C%87%E4%BB%A4/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.366Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%82%A1%E7%A5%A8/temp/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.365Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 戴晶明</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'BkV10wtzbo9nuKwtsBG04Idw-gzGzoHsz',
+      appKey: 'CLv4OkdYGyropWktyqSDf2af',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

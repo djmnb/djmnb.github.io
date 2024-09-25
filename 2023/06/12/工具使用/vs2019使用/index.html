@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>vs2019使用 | 戴晶明的个人博客</title><meta name="author" content="戴晶明"><meta name="copyright" content="戴晶明"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一个解决方案对应多个项目 在vs2019中 解决方案是一个容器,它可以包含多个项目 创建一个空白解决方案  创建项目  这样我们就可以把多个项目在vs2019中打开了 项目调用 有时候我们希望一个项目能够调用另外一个项目,我们可以这样 现在有两个项目, 一个Dao,一个Service,  其中Service需要通过Dao项目访问数据库  将Dao项目输出为lib  在Service项目中引入 指定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vs2019使用">
+<meta property="og:url" content="https://djmnb.github.io/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="戴晶明的个人博客">
+<meta property="og:description" content="一个解决方案对应多个项目 在vs2019中 解决方案是一个容器,它可以包含多个项目 创建一个空白解决方案  创建项目  这样我们就可以把多个项目在vs2019中打开了 项目调用 有时候我们希望一个项目能够调用另外一个项目,我们可以这样 现在有两个项目, 一个Dao,一个Service,  其中Service需要通过Dao项目访问数据库  将Dao项目输出为lib  在Service项目中引入 指定">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://djmnb.github.io/img/site/touxiang.gif">
+<meta property="article:published_time" content="2023-06-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-19T08:25:10.356Z">
+<meta property="article:author" content="戴晶明">
+<meta property="article:tag" content="工具的使用">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://djmnb.github.io/img/site/touxiang.gif"><link rel="shortcut icon" href="/img/site/icon.jfif"><link rel="canonical" href="https://djmnb.github.io/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'vs2019使用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-19 16:25:10'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/site/touxiang.gif" onerror="onerror=null;src='/404.html'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: /img/site/beijing.jfif"><nav id="nav"><span id="blog-info"><a href="/" title="戴晶明的个人博客"><span class="site-name">戴晶明的个人博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">vs2019使用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-11T16:00:00.000Z" title="发表于 2023-06-12 00:00:00">2023-06-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-19T08:25:10.356Z" title="更新于 2024-09-19 16:25:10">2024-09-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="vs2019使用"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>一个解决方案对应多个项目</h1>
+<p>在vs2019中 解决方案是一个容器,它可以包含多个项目</p>
+<h2 id="创建一个空白解决方案">创建一个空白解决方案</h2>
+<p><img src="/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/../img/vs2019%E4%BD%BF%E7%94%A8assets/image-20230612225900504.png" alt="image-20230612225900504"></p>
+<h2 id="创建项目">创建项目</h2>
+<p><img src="/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/../img/vs2019%E4%BD%BF%E7%94%A8assets/image-20230612230214227.png" alt="image-20230612230214227"></p>
+<p>这样我们就可以把多个项目在vs2019中打开了</p>
+<h1>项目调用</h1>
+<p>有时候我们希望一个项目能够调用另外一个项目,我们可以这样</p>
+<p>现在有两个项目, 一个Dao,一个Service,  其中Service需要通过Dao项目访问数据库</p>
+<p><img src="/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/../img/vs2019%E4%BD%BF%E7%94%A8assets/image-20230612230843154.png" alt="image-20230612230843154"></p>
+<h2 id="将dao项目输出为lib">将Dao项目输出为lib</h2>
+<p><img src="/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/../img/vs2019%E4%BD%BF%E7%94%A8assets/image-20230612231039248.png" alt="image-20230612231039248"></p>
+<h2 id="在service项目中引入">在Service项目中引入</h2>
+<h3 id="指定头文件">指定头文件</h3>
+<p><img src="/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/../img/vs2019%E4%BD%BF%E7%94%A8assets/image-20230612231338073.png" alt="image-20230612231338073"></p>
+<h3 id="指定库地址">指定库地址</h3>
+<p><img src="/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/../img/vs2019%E4%BD%BF%E7%94%A8assets/image-20230612232646864.png" alt="image-20230612232646864"></p>
+<h2 id="定义项目依赖">定义项目依赖</h2>
+<p>这一步不是必须的,  你可以手动将Dao项目生成为lib,  这里是自动生成lib</p>
+<p><img src="/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/../img/vs2019%E4%BD%BF%E7%94%A8assets/image-20230612233059903.png" alt="image-20230612233059903"></p>
+<p><img src="/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/../img/vs2019%E4%BD%BF%E7%94%A8assets/image-20230612233112397.png" alt="image-20230612233112397"></p>
+<p><strong>如果我们没有修改Dao里面的代码,  是不会重新对Dao进行构建的, 这一点很重要</strong></p>
+<h1>动态链接库DLL生成</h1>
+<h2 id="方式一-使用-declspec-dllexport-创建dll">方式一 使用 __declspec(dllexport) 创建dll</h2>
+<p>Math.h</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> MATHLIBRARY_EXPORTS</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MATHLIBRARY_API __declspec(dllexport) </span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MATHLIBRARY_API __declspec(dllimport) </span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 为了确保使用c++编译器的时候能够正确被连接</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> _cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">MATHLIBRARY_API <span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span>, <span class="type">int</span>)</span>;</span><br><span class="line"><span class="keyword">extern</span> MATHLIBRARY_API <span class="type">int</span> sum;</span><br><span class="line"></span><br><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">MATHLIBRARY_API</span> <span class="title">Math</span> &#123;</span>   <span class="comment">// 注意 MATHLIBRARY_API 一定要在class右侧</span></span><br><span class="line">public:</span><br><span class="line">	<span class="type">int</span> <span class="title function_">sub</span><span class="params">(<span class="type">int</span>, <span class="type">int</span>)</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> _cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>这里的MATHLIBRARY_API其实做两个用处的,  如果是生成dll的话,  那就是导出,  否则就是是引入dll</p>
+<blockquote>
+<p>注意这里也可以导出变量和类</p>
+</blockquote>
+<p>Math.cpp</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//#define MATHLIBRARY_EXPORTS</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Math.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"> <span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">	sum += a + b;</span><br><span class="line">	<span class="keyword">return</span> (a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">Math::sub</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> a-b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>然后添加一个宏, 当然, 这里我们也可以直接在代码上面写, 比如上面注释掉那部分</p>
+<img src="/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/../img/vs2019使用assets/image-20230621175457266.png" alt="image-20230621175457266" style="zoom:67%;">
+<p>修改程序输出为dll</p>
+<img src="/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/../img/vs2019使用assets/image-20230621175602417.png" alt="image-20230621175602417" style="zoom: 67%;">
+<p>然后生成, 生成东西如下</p>
+<p><img src="/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/../img/vs2019%E4%BD%BF%E7%94%A8assets/image-20230621175703035.png" alt="image-20230621175703035"></p>
+<ol>
+<li><code>.dll</code> 文件：这是动态链接库（DLL）文件本身。这是一个二进制文件，它包含了你的代码编译后的机器代码以及其他一些信息，例如资源（如图标、图片、对话框等）、元数据（例如导出的函数和类、导入的函数和类等）等。你的程序在运行时可以加载这个DLL，并使用其中的函数和类。</li>
+<li><code>.exp</code> 文件：这是导出文件（export file）。它包含了你的DLL导出的函数和数据的信息。当链接器生成DLL时，它会首先生成一个.exp文件，然后再生成DLL和.lib文件。.exp文件通常不需要分发，它主要是在构建过程中使用。</li>
+<li><code>.lib</code> 文件：这是导入库（import library）。<strong>当你的程序在编译时链接到这个DLL时</strong>，链接器会使用这个.lib文件来找到DLL中的函数和类。.lib文件包含了DLL中导出的函数和类的名称以及它们在DLL中的位置。你可以把.lib文件看作是一个索引，链接器可以用它来在DLL中找到函数和类。</li>
+<li><code>.pdb</code> 文件：这是程序数据库（program database）文件。它包含了调试信息，例如源文件的位置、变量的名称、函数的堆栈信息等。当你在Visual Studio中调试你的程序时，调试器会使用.pdb文件来找到源代码的位置，并显示变量的值、函数的调用堆栈等信息。.pdb文件通常不需要分发，除非你想让其他人能够调试你的DLL。</li>
+</ol>
+<p>以上就是这四种文件类型的基本解释。需要注意的是，通常你只需要分发 <code>.dll</code> 和 <code>.lib</code> 文件，其他的 <code>.exp</code> 和 <code>.pdb</code> 文件主要是在构建和调试过程中使用。</p>
+<h2 id="方式二-模块定义文件">方式二  模块定义文件</h2>
+<p><code>.def</code>文件被称为模块定义文件（Module-Definition File）。这种文件类型是微软Visual Studio的一部分，主要用于为Windows的动态链接库（DLLs）和可执行文件（EXEs）提供信息。</p>
+<p>模块定义文件可以包含很多种信息，例如DLL的描述、DLL数据的段名称和特性、函数导出等等。这些信息可以影响到链接器如何处理DLL或可执行文件。</p>
+<p>比如，你可以通过模块定义文件来导出DLL中的符号。在<code>.def</code>文件中，可以使用<code>EXPORTS</code>关键字列出你希望导出的所有符号。这可以作为<code>__declspec(dllexport)</code>的替代方法来导出符号。</p>
+<p>模块定义文件虽然在一些场合下仍然有用，但是现代的C++代码通常会选择使用<code>__declspec(dllexport)</code>和<code>__declspec(dllimport)</code>来控制符号的导出和导入，因为这种方式更加直观和灵活。</p>
+<p>在Windows环境下创建一个模块定义文件的模板可以是如下的形式：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">LIBRARY &quot;libraryname&quot; </span><br><span class="line">EXPORTS </span><br><span class="line">    function1 @1 </span><br><span class="line">    function2 @2 </span><br><span class="line">    function3 @3 </span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>在这个模板中:</p>
+<ul>
+<li>
+<p><code>LIBRARY &quot;libraryname&quot;</code> 是声明此模块定义文件对应的库的名字，<code>&quot;libraryname&quot;</code>需要替换成你的实际库名。</p>
+</li>
+<li>
+<p><code>EXPORTS</code> 是导出函数的声明。在这之后，你需要列出你想要从 DLL 中导出的所有函数。每一个函数后面的 @ 符号和数字是可选的，用于指定函数在导出表中的索引。</p>
+</li>
+</ul>
+<p>请注意，模块定义文件的内容会根据实际需求变化，上述仅仅是一个基本的模板。你可能需要根据你的实际需求对其进行修改。</p>
+<p><strong>现在我们通常使用第一种方式</strong></p>
+<h2 id="注意点">注意点</h2>
+<p>在Windows中，如果你的函数或者变量没有使用<code>__declspec(dllexport)</code>进行显式导出，它们仍然会被编译并打包到DLL中，但是它们不会被DLL的导出表所列出。这意味着，尽管这些函数和变量存在于DLL中，但是在DLL的外部是无法直接访问到它们的。</p>
+<p>实际上，一个DLL文件可以被看作是一个包含了一组函数和数据的容器。当你创建一个DLL时，所有的源代码都会被编译，并且所有的函数和数据都会被包含在DLL中。然后，通过使用<code>__declspec(dllexport)</code>关键字，你可以选择哪些函数和数据应该被添加到DLL的导出表中，也就是哪些函数和数据可以被DLL的用户访问。</p>
+<p>因此，如果你没有使用<code>__declspec(dllexport)</code>导出任何函数或数据，那么你的DLL将不会对外部公开任何接口。然而，DLL中的所有代码仍然存在，并且可以在DLL内部被其他函数和数据访问。</p>
+<p>另外，如果你希望在DLL中隐藏某些函数或数据，你也可以使用<code>__declspec(dllexport)</code>关键字的对立面，即<code>__declspec(dllimport)</code>。这个关键字可以阻止函数或数据被导出，即使它们在源代码中被定义了出来。</p>
+<p>**如果一个DLL没有暴露任何函数或数据（**即没有使用<code>__declspec(dllexport)</code>关键字导出任何接口），那么它在DLL的外部将几乎无法使用。</p>
+<p>当你创建一个DLL时，目的通常是为了提供一些函数或数据给其他的应用程序或者DLL来使用。这些函数和数据被称为DLL的“导出符号”。如果一个DLL没有导出任何符号，那么其他的应用程序或者DLL就无法直接访问到DLL中的任何代码。</p>
+<p>然而，<strong>即使一个DLL没有导出任何符号，也不意味着它是完全无用的。DLL中的代码仍然可以执行</strong>，如果DLL被设计为在加载时执行某些操作（例如，初始化静态数据或执行其他一些代码），那么这些操作仍然会在DLL被加载时执行。但是，这种情况相对罕见，并且通常只用于特殊的情况。</p>
+<p>通常情况下，如果你创建一个DLL，你应该至少导出一个函数或数据供其他代码使用。否则，创建DLL的意义就不大了。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://djmnb.github.io">戴晶明</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://djmnb.github.io/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/">https://djmnb.github.io/2023/06/12/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/vs2019%E4%BD%BF%E7%94%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://djmnb.github.io" target="_blank">戴晶明的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/">工具的使用</a></div><div class="post_share"><div class="social-share" data-image="/img/site/touxiang.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/12/C%E5%92%8CC++/c%E8%AF%AD%E8%A8%80/" title="c语言学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">c语言学习</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/05/%E4%BA%91%E5%8E%9F%E7%94%9F/k8s%E6%80%BB%E7%BB%93/" title="k8s总结"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">k8s总结</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/site/touxiang.gif" onerror="this.onerror=null;this.src='/404.html'" alt="avatar"/></div><div class="author-info__name">戴晶明</div><div class="author-info__description">不积跬步,无以至千里</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">107</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="/img/site/weixin.jpg" target="_blank" title="WeChat"><i class="fab fa-weixin"></i></a><a class="social-icon" href="/img/site/qq.jpg" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎光临</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">一个解决方案对应多个项目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A9%BA%E7%99%BD%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">1.1.</span> <span class="toc-text">创建一个空白解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.2.</span> <span class="toc-text">创建项目</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">项目调用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86dao%E9%A1%B9%E7%9B%AE%E8%BE%93%E5%87%BA%E4%B8%BAlib"><span class="toc-number">2.1.</span> <span class="toc-text">将Dao项目输出为lib</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8service%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%BC%95%E5%85%A5"><span class="toc-number">2.2.</span> <span class="toc-text">在Service项目中引入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="toc-number">2.2.1.</span> <span class="toc-text">指定头文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E5%BA%93%E5%9C%B0%E5%9D%80"><span class="toc-number">2.2.2.</span> <span class="toc-text">指定库地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96"><span class="toc-number">2.3.</span> <span class="toc-text">定义项目依赖</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">动态链接库DLL生成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80-%E4%BD%BF%E7%94%A8-declspec-dllexport-%E5%88%9B%E5%BB%BAdll"><span class="toc-number">3.1.</span> <span class="toc-text">方式一 使用 __declspec(dllexport) 创建dll</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C-%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89%E6%96%87%E4%BB%B6"><span class="toc-number">3.2.</span> <span class="toc-text">方式二  模块定义文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">3.3.</span> <span class="toc-text">注意点</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E9%9B%B6%E9%9B%B6%E6%95%A3%E6%95%A3/plantuml/" title="plantuml">plantuml</a><time datetime="2024-09-19T08:25:10.368Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AF%BB%E6%96%87%E7%8C%AE%E6%8C%87%E4%BB%A4/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.367Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.366Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/19/%E8%82%A1%E7%A5%A8/temp/" title="无题">无题</a><time datetime="2024-09-19T08:25:10.365Z" title="发表于 2024-09-19 16:25:10">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 戴晶明</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'BkV10wtzbo9nuKwtsBG04Idw-gzGzoHsz',
+      appKey: 'CLv4OkdYGyropWktyqSDf2af',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
