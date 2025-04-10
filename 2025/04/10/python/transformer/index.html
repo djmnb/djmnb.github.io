@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>transformer及其变体学习 | 戴晶明的个人博客</title><meta name="author" content="戴晶明"><meta name="copyright" content="戴晶明"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="显存占用 对于transformer中, 最占用显存的部分就是注意力计算了,  他会产生一个很大的注意力得分矩阵, 这个矩阵形状通常是 ( batch , head, N, N) N代表序列维度 如果我们使用32批次, 一张640 640 的图片, 然后patch选 16 那 N就是1600, head选8, 显存占用就有 132 * 8 * 1600 * 1600 * 4 &#x2F; 1024 &#x2F; 10">
+<meta property="og:type" content="article">
+<meta property="og:title" content="transformer及其变体学习">
+<meta property="og:url" content="https://djmnb.github.io/2025/04/10/python/transformer/index.html">
+<meta property="og:site_name" content="戴晶明的个人博客">
+<meta property="og:description" content="显存占用 对于transformer中, 最占用显存的部分就是注意力计算了,  他会产生一个很大的注意力得分矩阵, 这个矩阵形状通常是 ( batch , head, N, N) N代表序列维度 如果我们使用32批次, 一张640 640 的图片, 然后patch选 16 那 N就是1600, head选8, 显存占用就有 132 * 8 * 1600 * 1600 * 4 &#x2F; 1024 &#x2F; 10">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://djmnb.github.io/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A23.png">
+<meta property="article:published_time" content="2025-04-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-04-10T13:13:59.406Z">
+<meta property="article:author" content="戴晶明">
+<meta property="article:tag" content="博客系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://djmnb.github.io/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A23.png"><link rel="shortcut icon" href="/img/site/icon.jfif"><link rel="canonical" href="https://djmnb.github.io/2025/04/10/python/transformer/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'transformer及其变体学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-04-10 21:13:59'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/site/touxiang.gif" onerror="onerror=null;src='/404.html'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">98</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A23.png')"><nav id="nav"><span id="blog-info"><a href="/" title="戴晶明的个人博客"><span class="site-name">戴晶明的个人博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/why"><i class="fa-fw fas fa-question"></i><span> 十万个为什么</span></a></div><div class="menus_item"><a class="site-page" href="/goodarticle"><i class="fa-fw fas fa-book"></i><span> 好文推荐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">transformer及其变体学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-04-09T16:00:00.000Z" title="发表于 2025-04-10 00:00:00">2025-04-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-10T13:13:59.406Z" title="更新于 2025-04-10 21:13:59">2025-04-10</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="transformer及其变体学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>显存占用</h1>
+<p>对于transformer中, 最占用显存的部分就是注意力计算了,  他会产生一个很大的注意力得分矩阵, 这个矩阵形状通常是 ( batch , head, N, N) N代表序列维度</p>
+<p>如果我们使用32批次, 一张640 640 的图片, 然后patch选 16 那 N就是1600, head选8, 显存占用就有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">32 * 8 * 1600 * 1600 * 4 / 1024 / 1024 / 1024 = 2.44GB</span><br></pre></td></tr></table></figure>
+<p>一个注意力分数矩阵就已经2.44G了, 通常encoder和decoder有6层,  这个显存占用就已经很大了</p>
+<p>主要减少显存占用的方法:</p>
+<ol>
+<li>减小batch</li>
+<li>增大patch, 也就可以减少N, 这个是O(N^2)级别的, 降低起来很有效</li>
+</ol>
+<h1>问题汇总</h1>
+<blockquote>
+<p>这个是我学习transformer中的一些疑惑</p>
+</blockquote>
+<h2 id="词嵌入的目的">词嵌入的目的</h2>
+<p>问: 能否直接将词在词库中的编码直接交给transformer而不使用词嵌入</p>
+<p>答:</p>
+<p>直接使用单词在词库中的索引数字（即数字ID）作为输入是不可行的，原因有以下几点：</p>
+<ol>
+<li><strong>缺乏语义信息</strong>：数字ID只是单纯的标识符，不包含任何语义信息。例如，&quot;猫&quot;的ID可能是42，&quot;狗&quot;的ID可能是128，但这些数字之间的差值（86）没有任何语义意义。</li>
+<li><strong>缺乏相似性表示</strong>：相似词汇应该有相似的表示，但数字ID无法体现这一点。&quot;猫&quot;和&quot;猫咪&quot;语义接近，但它们的ID可能是完全不相关的数字。</li>
+<li><strong>模型无法学习</strong>：神经网络在处理连续数值时，会假设数值的大小关系反映了某种含义。但词汇ID的大小关系是随机的，没有语义基础，这会导致模型无法学习有意义的模式。</li>
+<li><strong>梯度问题</strong>：在反向传播过程中，如果直接使用数字ID，无法为相似的词建立相似的梯度更新路径，阻碍了模型的学习过程。</li>
+<li><strong>维度问题</strong>：使用单一数字会将所有词汇信息压缩到一维，而词嵌入通常是几百维的向量，能够捕捉词汇的多种语义特征。</li>
+</ol>
+<p>这就是为什么词嵌入层是必要的 - 它将离散的词汇ID转换为连续的向量表示，为每个词创建一个具有丰富语义信息的表示，使模型能够理解词与词之间的关系和相似性，从而更好地学习和理解文</p>
+<h2 id="计算损失方式的区别">计算损失方式的区别</h2>
+<p>问: 在Transformer模型特别是解码器（decoder）训练过程中，为什么我们不直接用解码器的输出向量（维度为[序列长度-1, 512]）与经过词嵌入和位置编码后的真实标签向量（同样维度为[序列长度-1, 512]）直接计算损失？而是要先将解码器输出通过线性层和softmax转换成词汇表大小的概率分布，然后与真实标签的独热编码计算交叉熵损失？这两种方法在原理和效果上有什么不同？</p>
+<p>答:</p>
+<ol>
+<li><strong>目标不同</strong>：模型的目标是预测下一个词，而不是预测下一个词的嵌入向量。嵌入空间是连续的，同一个词的嵌入表示可能有多种合理的变体，而我们关心的是最终预测出正确的词。</li>
+<li><strong>嵌入空间的冗余性</strong>：嵌入空间是高维的（通常是512维），且存在大量冗余。同一个语义概念可能有多种有效的嵌入表示，直接在这个空间中比较会导致不必要的惩罚。</li>
+<li><strong>一词多嵌入问题</strong>：同一个词在不同上下文中可能有略微不同的嵌入表示，直接比较嵌入向量会惩罚这种合理的变化。</li>
+<li><strong>训练稳定性</strong>：在离散的词汇分布上计算损失（通常是交叉熵）比在连续的嵌入空间中计算损失（如MSE）更加稳定，梯度更加明确。</li>
+<li><strong>评估一致性</strong>：最终我们评估模型时是看它预测词的准确性，而不是嵌入的相似度，所以损失函数应该与评估指标一致。</li>
+<li><strong>梯度传播效率</strong>：通过softmax和交叉熵损失，模型可以获得更明确的梯度信号，知道应该增强或减弱哪些词的概率，而不是在高维空间中进行模糊的调整。</li>
+</ol>
+<p>这种设计让模型明确地学习&quot;选择正确的词&quot;这一任务，而不是&quot;生成一个与目标嵌入相似的向量&quot;，使训练更加聚焦和高效。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://djmnb.github.io">戴晶明</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://djmnb.github.io/2025/04/10/python/transformer/">https://djmnb.github.io/2025/04/10/python/transformer/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://djmnb.github.io" target="_blank">戴晶明的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/site/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A23.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/04/03/python/python%E5%9C%BA%E6%99%AF%E6%96%B9%E6%A1%88%E8%A7%A3%E5%86%B3/" title="python场景方案解决"><div class="cover" style="background: /img/site/乔丹绝杀文章封面.jfif"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">python场景方案解决</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/site/touxiang.gif" onerror="this.onerror=null;this.src='/404.html'" alt="avatar"/></div><div class="author-info__name">戴晶明</div><div class="author-info__description">不积跬步,无以至千里</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">98</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="/img/site/weixin.jpg" target="_blank" title="WeChat"><i class="fab fa-weixin"></i></a><a class="social-icon" href="/img/site/qq.jpg" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎光临</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">显存占用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">问题汇总</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%8D%E5%B5%8C%E5%85%A5%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="toc-number">2.1.</span> <span class="toc-text">词嵌入的目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%8D%9F%E5%A4%B1%E6%96%B9%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.2.</span> <span class="toc-text">计算损失方式的区别</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/10/python/transformer/" title="transformer及其变体学习">transformer及其变体学习</a><time datetime="2025-04-09T16:00:00.000Z" title="发表于 2025-04-10 00:00:00">2025-04-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/03/python/python%E5%9C%BA%E6%99%AF%E6%96%B9%E6%A1%88%E8%A7%A3%E5%86%B3/" title="python场景方案解决">python场景方案解决</a><time datetime="2025-04-03T06:50:09.195Z" title="发表于 2025-04-03 14:50:09">2025-04-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/09/python/python%E5%8C%85%E5%AD%A6%E4%B9%A0/" title="python常用包学习">python常用包学习</a><time datetime="2025-03-08T16:00:00.000Z" title="发表于 2025-03-09 00:00:00">2025-03-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B/" title="目标检测领域的经典模型">目标检测领域的经典模型</a><time datetime="2024-12-10T16:00:00.000Z" title="发表于 2024-12-11 00:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/29/python/yolo%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/" title="yolo框架学习">yolo框架学习</a><time datetime="2024-11-28T16:00:00.000Z" title="发表于 2024-11-29 00:00:00">2024-11-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2025 By 戴晶明</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'BkV10wtzbo9nuKwtsBG04Idw-gzGzoHsz',
+      appKey: 'CLv4OkdYGyropWktyqSDf2af',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
